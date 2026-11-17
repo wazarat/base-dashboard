@@ -1,0 +1,37 @@
+Project,Address,Role,Source,Verified,Name,Symbol,Decimals
+Aerodrome Finance,0x3f5bf3edac59d650d8fdf9657a71f2f904a3a4ee,project-token,"DefiLlama listing (aero-basic, aero-slipstream, aerodrome-ignition, aerodrome-slipstream, aerodrome-v1)","Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Aero,AERO,18
+Alien Base,0x1dd2d631c92b1acdfcdd51a0f7145a50130050c4,project-token,"DefiLlama listing (alien-base-area51, alien-base-stableswap, alien-base-v2, alien-base-v3)","Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",AlienBase Token,ALB,18
+BaseSwap,0x78a087d713be963bf307b18f2ff8122ef9a63ae9,project-token,"DefiLlama listing (baseswap-v2, basex)","Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Baseswap Token,BSWAP,18
+BIM,0x555fff48549c1a25a723bd8e7ed10870d82e8379,project-token,DefiLlama listing (bim-yield),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",BIM,BIM,18
+BMX,0x548f93779fbc992010c07467cbaf329dd5f059b7,project-token,DefiLlama listing (bmx-classic-perps),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",BMX,BMX,18
+Dackieswap,0x73326b4d0225c429bed050c11c4422d91470aaf4,project-token,"DefiLlama listing (dackieswap-v2, dackieswap-v3)","Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",DACKIE Superchain,DACKIE,18
+DIEM Relay,0xf4d97f2da56e8c3098f3a8d538db630a2606a024,project-token,DefiLlama listing (diem-relay),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Diem,DIEM,18
+FLock.io,0x5ab3d4c385b400f3abb49e80de2faf6a88a7b691,project-token,DefiLlama listing (flock.io),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",FLock.io,FLOCK,18
+Friend.tech,0x0bd4887f7d41b35cd75dff9ffee2856106f86670,project-token,DefiLlama listing (friend.tech-v1),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",FRIEND,FRIEND,18
+Giza,0x590830dfdf9a3f68afcdde2694773debdf267774,project-token,DefiLlama listing (giza),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Giza,GIZA,18
+GoPlus Locker,0x0c1dc73159e30c4b06170f2593d3118968a0dca5,project-token,"DefiLlama listing (goplus-locker-v2, goplus-locker-v3)","Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",GoPlus Security,GPS,18
+iAero Protocol,0x7ee8964160126081cebc443a42482e95e393e6a8,project-token,DefiLlama listing (iaero-protocol),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Liquid,LIQ,18
+Kaito,0x98d0baa52b2d063e780de12f615f963fe8537553,project-token,DefiLlama listing (kaito-stake),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",KAITO,KAITO,18
+Keeta Bridge,0xc0634090f2fe6c6d75e61be2b949464abb498973,project-token,DefiLlama listing (keeta-bridge),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Keeta,KTA,18
+Limitless,0x9eadbe35f3ee3bf3e28180070c429298a1b02f93,project-token,DefiLlama listing (limitless-exchange),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Limitless Official Token,LMTS,18
+Moonwell,0xa88594d404727625a9437c3f886c7643872296ae,project-token,"DefiLlama listing (moonwell-lending, moonwell-vaults)","Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",WELL,WELL,18
+Pinto,0xb170000aeefa790fa61d6e837d1035906839a3c8,project-token,DefiLlama listing (pinto),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Pinto,PINTO,6
+Ripe Finance,0x2a0a59d6b975828e781ecac125dba40d7ee5ddc0,project-token,DefiLlama listing (ripe-protocol),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Ripe DAO Governance Token,RIPE,18
+RocketSwap,0x6653dd4b92a0e5bf8ae570a98906d9d6fd2eec09,project-token,DefiLlama listing (rocketswap-base),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",RocketSwap,RCKT,18
+Rubicon,0xb3836098d1e94ec651d74d053d4a0813316b2a2f,project-token,DefiLlama listing (rubicon),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Rubicon Token,RUBI,18
+Sapien,0xc729777d0470f30612b1564fd96e8dd26f5814e3,project-token,DefiLlama listing (sapien-vault),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Sapien,SAPIEN,18
+Seamless Protocol,0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85,project-token,"DefiLlama listing (seamless-v1, seamless-v2, seamless-vaults)","Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Seamless,SEAM,18
+Spectra,0x64fcc3a02eeeba05ef701b7eed066c6ebd5d4e51,project-token,"DefiLlama listing (spectra-metavaults, spectra-metavaults-outside-v2, spectra-v2)","Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Spectra Token,SPECTRA,18
+Sport.fun,0x16ee7ecac70d1028e7712751e2ee6ba808a7dd92,project-token,DefiLlama listing (sport.fun),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Sport.fun,FUN,18
+Summer.fi (Lazy Summer),0x194f360d130f2393a5e9f3117a6a1b78abea1624,project-token,"DefiLlama listing (lazy-summer-protocol, summer.fi-pro)","Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",SummerToken,SUMR,18
+Superfluid,0xa69f80524381275a7ffdb3ae01c54150644c8792,project-token,DefiLlama listing (superfluid),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Superfluid Token,SUP,18
+SwapBased,0xd07379a755a8f11b57610154861d694b2a0f615a,project-token,"DefiLlama listing (swapbased-amm, swapbased-concentrated-liquidity, swapbased-perp)","Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",BASE,BASE,18
+Symmio,0x800822d361335b4d5f352dac293ca4128b5b605f,project-token,DefiLlama listing (symmio),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Symmio,SYMM,18
+Treble,0xb96450dcb16e4a30b999cb5f4087bae9c0ffac4e,project-token,"DefiLlama listing (treble-spot, treble-v2)","Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",TREB,TREB,18
+Trueo,0x21cfcfc3d8f98fc728f48341d10ad8283f6eb7ab,project-token,DefiLlama listing (trueo),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",True,TRUE,18
+Umia,0x56ab53b77f07da3af732150e8aec4783eb5bba7d,project-token,DefiLlama listing (umia),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Umia,umia,18
+URM (Ultra Round Money),0xc0df50143ea93aec63e38a6ed4e92b378079ea15,project-token,DefiLlama listing (rage-protocol),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Rage Protocol,RAGE,18
+Venice,0xacfe6019ed1a7dc6f7b508c02d1b04ec88cc21bf,project-token,DefiLlama listing (venice),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Venice Token,VVV,18
+Veranta (formerly Avantis),0x696f9436b67233384889472cd7cd58a6fb5df4f1,project-token,DefiLlama listing (veranta),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Avantis,AVNT,18
+Virtuals Protocol,0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b,project-token,DefiLlama listing (virtuals-protocol),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",Virtual Protocol,VIRTUAL,18
+ZebraDAO,0xf0ce1d83b5fc9c67f157d8b97fd09e2cf8af899e,project-token,DefiLlama listing (zebradao),"Yes (DefiLlama address, symbol matches the CSV and GeckoTerminal)",ZebraDAO,ZEB,18

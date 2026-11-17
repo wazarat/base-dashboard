@@ -4,7 +4,7 @@ import type { Series, StablecoinRecord, TokenSnapRow } from "@/lib/history-types
 import { kpiValue } from "@/lib/kpi";
 import { computeOnchain, onchainSupply, parseStablecoinMap, stablecoinSummary, transfers30d, type OnchainStore } from "@/lib/onchain";
 import { higherTier, onchainTier } from "@/lib/tier";
-import { guardToken } from "@/lib/token-guard";
+import { CIRCLE_USDC_BASE, guardToken } from "@/lib/token-guard";
 import { legacyLive, tractionReasons, TRACTION_RULES } from "@/lib/traction";
 import type { ChainData } from "@/lib/types";
 import { parseChainChart, parseChainCoins, parseCoinHistory } from "../scripts/fetch/stablecoins";
@@ -59,6 +59,13 @@ describe("spoof guard", () => {
     const issues = guardToken({ project: "Circle", address: "0x1111111111111111111111111111111111111111", role: "stablecoin", symbol: "USDC", decimals: 18, name: "USD Coin" }, meta);
     expect(issues.length).toBeGreaterThan(0);
     expect(issues.join(" ")).toMatch(/copy/);
+  });
+
+  it("accepts Circle's USDC on Base and rejects a USDC-named copy at any other address", () => {
+    const meta = { name: "USD Coin", symbol: "USDC", decimals: 6, type: "ERC-20", checked: "2026-11-17" };
+    expect(guardToken({ project: "USDC", address: CIRCLE_USDC_BASE, role: "stablecoin", symbol: "USDC", decimals: 6, name: "USD Coin" }, meta)).toEqual([]);
+    const copy = guardToken({ project: "USDC", address: "0x2222222222222222222222222222222222222222", role: "stablecoin", symbol: "USDC", decimals: 6, name: "USD Coin" }, meta);
+    expect(copy.join(" ")).toMatch(/is a copy/);
   });
 
   it("rejects decimals or names that contradict the source, and accepts a match", () => {

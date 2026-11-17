@@ -18,7 +18,9 @@ export interface GuardRow {
 const norm = (s: string | null | undefined) => (s ?? "").toLowerCase().replace(/[^a-z0-9]/g, "");
 
 /** Circle's USDC uses 6 decimals everywhere; a USDC-named token with other decimals is a copy. */
-const KNOWN_DECIMALS: Record<string, number> = { usdc: 6, usdt: 6, usdg: 6, pyusd: 6 };
+const KNOWN_DECIMALS: Record<string, number> = { usdc: 6, usdt: 6, usdg: 6, pyusd: 6, eurc: 6 };
+/** Circle's native USDC on Base, from developers.circle.com/stablecoins/usdc-contract-addresses. */
+export const CIRCLE_USDC_BASE = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
 
 export function guardToken(row: GuardRow, meta: TokenMetaRecord | undefined): string[] {
   const out: string[] = [];
@@ -26,7 +28,8 @@ export function guardToken(row: GuardRow, meta: TokenMetaRecord | undefined): st
   const known = KNOWN_DECIMALS[sym];
   const dec = meta?.decimals ?? row.decimals;
   if (known !== undefined && dec !== null && dec !== known) out.push(`${meta?.symbol ?? row.symbol} with ${dec} decimals is a copy, the real one has ${known}`);
-  if (sym === "usdc" && row.role === "stablecoin") out.push("No Circle-issued USDC is on the chain, so no USDC-named token may be mapped");
+  // Circle's native USDC on Base has one address (developers.circle.com); any other USDC-named stablecoin is a copy.
+  if (sym === "usdc" && row.role === "stablecoin" && row.address.toLowerCase() !== CIRCLE_USDC_BASE) out.push(`USDC on Base is ${CIRCLE_USDC_BASE}, so ${row.address} is a copy`);
   if (!meta) return out;
   if (row.decimals !== null && meta.decimals !== null && row.decimals !== meta.decimals) out.push(`decimals ${meta.decimals} on Blockscout, ${row.decimals} in the source`);
   if (row.symbol && meta.symbol && norm(row.symbol) !== norm(meta.symbol)) out.push(`symbol ${meta.symbol} on Blockscout, ${row.symbol} in the source`);

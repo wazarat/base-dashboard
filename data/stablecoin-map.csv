@@ -1,6 +1,6 @@
 DefiLlama id,Symbol,Project,Address,Decimals,Source
-2,USDC,USDC,,,https://defillama.com/stablecoin/usd-coin
-50,EURC,EURC,,,https://defillama.com/stablecoin/eurc
-146,USDe,Ethena,,,https://defillama.com/stablecoin/ethena-usde
+2,USDC,USDC,0x833589fcd6edb6e08f4c7c32d4f71b54bda02913,6,https://developers.circle.com/stablecoins/usdc-contract-addresses
+50,EURC,EURC,0x60a3e35cc302bfa44cb288bc5a4f316fdb1adb42,6,https://developers.circle.com/stablecoins/eurc-contract-addresses
+146,USDe,Ethena,0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34,18,https://docs.ethena.fi/solution-design/key-addresses
 209,USDS,Sky (USDS),,,https://defillama.com/stablecoin/sky-dollar
-118,GHO,GHO,,,https://defillama.com/stablecoin/gho
+118,GHO,GHO,0x6bb7a212910682dcfdbd5bcbb3e28fb4e8da10ee,18,https://aave.com/docs/resources/addresses
