@@ -94,10 +94,16 @@ The Vercel project `base-dashboard` (team "Wazarat's projects") deploys `main` t
 
 With the Clerk keys present the wall is on. Overview, Methodology and the footer pages are public. Sectors, Traction, Funding, Explorer and the hidden pages show a blurred preview with a "Log in for free access" pop-up, and Clerk opens in modal mode and returns the reader to the tab or action they clicked. Compare shows a comparison already in the URL, and Add to compare asks for a login. Gated data reaches the browser only from `/api/data/gated/` for a signed-in reader (401 otherwise, `Cache-Control: private`), and `scripts/check-public-bundle.mjs` fails the build if a gated investor name shows up in `.next/static` or the prerendered pages. Without keys the app builds and runs with the wall off and logs one warning.
 
-Clerk production keys only answer on the Clerk application's own domain, so sign-in works once `base.canhav.com` points at this project. On the `*.vercel.app` host the wall shows but sign-in cannot complete. `NEXT_PUBLIC_SITE_URL` is `https://base.canhav.com` in production, and `base.canhav.com` is added to the project as its domain.
+Clerk production keys only answer on the Clerk application's own domain (canhav.com and its subdomains), so sign-in works on `base.canhav.com` and not on the `*.vercel.app` host, where the wall shows but sign-in cannot complete. One login covers canhav.com, robinhood.canhav.com, near.canhav.com and base.canhav.com.
+
+## Reviewing submissions
+
+`npm run review` prints each exported Tally response next to the current CSV row, and never writes to the data. The forms, their fields and the weekly loop are in [docs/REVIEW.md](docs/REVIEW.md).
 
 ## Pointing base.canhav.com at the Vercel project
 
-1. In Vercel, open the project, then Settings, Domains, and add `base.canhav.com`.
-2. At the DNS host for canhav.com, add the CNAME record Vercel shows (usually `cname.vercel-dns.com`) for `base`.
-3. Set `NEXT_PUBLIC_SITE_URL=https://base.canhav.com` in the Vercel project and redeploy, so canonical URLs, Open Graph URLs and the sitemap use the domain.
+This is done (Nov 17 2026). To repeat it for another host:
+
+1. In Vercel, open the project, then Settings, Domains, and add the domain.
+2. At the DNS host for canhav.com (Namecheap), add the CNAME record Vercel shows for the subdomain. For `base` it is `695ec71fad8875c1.vercel-dns-016.com.`
+3. Set `NEXT_PUBLIC_SITE_URL` to the new origin in the Vercel project and redeploy, so canonical URLs, Open Graph URLs and the sitemap use the domain.
