@@ -30,7 +30,7 @@ const font = (file: string) => {
 
 export function ogCard(asOfLabel: string, mark: string | null) {
   const footer = `Data as of ${asOfLabel}, updated daily`;
-  const tagline = "Independent research by CanHav Research, not affiliated with Robinhood";
+  const tagline = "Independent research by CanHav Research, not affiliated with Base or Coinbase";
   return (
     <div style={{ width: "100%", height: "100%", display: "flex", background: INK_950, padding: 48 }}>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: "100%", height: "100%", background: INK_900, border: `1px solid ${INK_700}`, borderRadius: 24, padding: 56 }}>
