@@ -277,7 +277,7 @@
 "ensify":{"doublecounted":true,"source":"https://github.com/DefiLlama/DefiLlama-Adapters/blob/main/projects/ensify/index.js","checked":"2026-11-17"},
 "epoch-island":{"doublecounted":null,"source":"https://github.com/DefiLlama/DefiLlama-Adapters/blob/main/registries/sumTokens.js","checked":"2026-11-17"},
 "equilibria":{"doublecounted":true,"source":"https://github.com/DefiLlama/DefiLlama-Adapters/blob/main/projects/equilibria/index.js","checked":"2026-11-17"},
-"escapehub":{"doublecounted":false,"source":"https://github.com/DefiLlama/DefiLlama-Adapters/blob/main/projects/escapehub/index.js","checked":"2026-11-17"},
+"escapehub-launchpad":{"doublecounted":false,"source":"https://github.com/DefiLlama/DefiLlama-Adapters/blob/main/projects/escapehub/index.js","checked":"2026-11-17"},
 "ether.fi-stake":{"doublecounted":true,"source":"https://github.com/DefiLlama/DefiLlama-Adapters/blob/main/projects/ether-fi/index.js","checked":"2026-11-17"},
 "ethos-markets":{"doublecounted":null,"source":"https://github.com/DefiLlama/DefiLlama-Adapters/blob/main/registries/sumTokens.js","checked":"2026-11-17"},
 "ethos-network":{"doublecounted":null,"source":"https://github.com/DefiLlama/DefiLlama-Adapters/blob/main/registries/sumTokens.js","checked":"2026-11-17"},

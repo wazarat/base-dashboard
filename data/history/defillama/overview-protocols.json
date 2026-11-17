@@ -171,6 +171,7 @@
 {"name":"Elixir","defillamaId":"5140","module":"elixir","parentProtocol":null,"category":"Yield","slug":"elixir"},
 {"name":"Elk","defillamaId":"420","module":"elk","parentProtocol":null,"category":"Dexs","slug":"elk"},
 {"name":"ERC Burner","defillamaId":"5859","module":"erc-burner","parentProtocol":null,"category":"DEX Aggregator","slug":"erc-burner"},
+{"name":"EscapeHub Launchpad","defillamaId":"9461","module":"escapehub","parentProtocol":"parent#escapehub","category":"Launchpad","slug":"escapehub-launchpad"},
 {"name":"Euler DAO","defillamaId":"6200","module":"euler-dao","parentProtocol":null,"category":"Risk Curators","slug":"euler-dao"},
 {"name":"Euler V2","defillamaId":"5044","module":"euler","parentProtocol":"parent#euler","category":"Lending","slug":"euler-v2"},
 {"name":"Exa Card","defillamaId":"7378","module":"exa-card","parentProtocol":null,"category":"Crypto Card Issuer","slug":"exa-card"},
