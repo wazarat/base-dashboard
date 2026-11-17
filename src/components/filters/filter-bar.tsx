@@ -44,7 +44,7 @@ function colorFor(key: FacetKey, value: string): string | undefined {
 }
 
 /** Search and facets. There is no global chart control: metrics and time ranges live on the cards they drive. */
-export function FilterBar(_props: { scope?: "projects" } = {}) {
+export function FilterBar() {
   const { state, setState, filtered, setFacet, reset, activeCount } = useFilters();
   // Funding types are gated data: the facet appears once a signed-in reader's data has arrived.
   const { ready, version } = useGatedData();

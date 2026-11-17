@@ -20,7 +20,7 @@ import { events, rounds } from "@/lib/data";
 import { useFilters } from "@/lib/filters";
 import { fmtDate, fmtPct, fmtUsd } from "@/lib/format";
 import { FUNDING_DEFINITIONS, fundingCounts, fundingSlices, type FundingCounts, type FundingSlice } from "@/lib/funding";
-import { filterFlow, FLOW_ALL, flowTypes, moneyFlow, ROUND_FLOW_TYPE } from "@/lib/money-flow";
+import { filterFlow, FLOW_ALL, flowTypes, moneyFlow } from "@/lib/money-flow";
 import { useEventDialog } from "@/lib/use-event";
 import { useFundingType } from "@/lib/use-funding-type";
 

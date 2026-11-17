@@ -5,6 +5,7 @@
  * Coinbase Ventures, an acquisition, or another Base related round), skipping a round when an event
  * already covers the same project in the same month.
  */
+import { canonicalInvestor } from "./rounds";
 import type { EcosystemEvent, Round } from "./types";
 
 export const FLOW_EVENT_TYPES = ["Program", "Funding", "Incentive"] as const;
@@ -48,7 +49,7 @@ export function moneyFlow(events: EcosystemEvent[], rounds: Round[]): FlowItem[]
     const type = roundFlowType(r);
     if (!type) continue;
     if (r.projectId && covered.has(`${r.projectId}|${month(r.date)}`)) continue;
-    const from = r.leadInvestors.length ? `${type === "Acquisition" ? "By" : "From"} ${r.leadInvestors.join(", ")}.` : null;
+    const from = r.leadInvestors.length ? `${type === "Acquisition" ? "By" : "From"} ${Array.from(new Set(r.leadInvestors.map(canonicalInvestor))).join(", ")}.` : null;
     items.push({
       id: `round-${r.id}`,
       type,

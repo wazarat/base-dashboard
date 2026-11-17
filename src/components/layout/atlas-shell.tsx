@@ -28,7 +28,7 @@ export function AtlasShell({ children, prerendered = false }: { children: React.
   const full = useAccess().can({ action: "project-detail" }) && ready;
   return (
     <>
-      {!prose && <FilterBar scope="projects" />}
+      {!prose && <FilterBar />}
       <main className={cn("flex-1", ids.length && "pb-20")}>
         <Container className="py-8">
           <LoginWall pathname={pathname}>{children}</LoginWall>

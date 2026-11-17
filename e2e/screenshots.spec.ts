@@ -1,6 +1,8 @@
-import { expect, test } from "@playwright/test";
 import fs from "node:fs";
 import path from "node:path";
+import { expect, test } from "@playwright/test";
+
+const HAS_HISTORY = fs.existsSync(path.join(__dirname, "..", "data", "history", "_meta.json"));
 
 /** The static export is built with .env.local, so read the same file to know whether the form buttons should exist. */
 function envLocal(name: string): string | undefined {
@@ -42,7 +44,7 @@ const PAGES = [
   { path: "/sectors/?sectorDrawer=Wallets+%26+Custody", name: "sectors-modal-unmeasured" },
   { path: "/sectors/?project=morpho", name: "project-lending" },
   { path: "/sectors/?project=metamask", name: "project-unmeasured" },
-  { path: "/sectors/?project=arcus", name: "project-perps" },
+  { path: "/sectors/?project=veranta-formerly-avantis", name: "project-perps" },
   { path: "/sectors/?project=steakhouse-financial", name: "project-yield" },
   { path: "/security/", name: "security" },
   { path: "/explorer/?view=table", name: "explorer" },
@@ -51,22 +53,17 @@ const PAGES = [
   { path: "/?cr=all&ar=all&tm=fees&cm=fees", name: "overview-all-fees" },
   { path: "/?cr=7d&ar=7d&mr=7d", name: "overview-7d" },
   { path: "/traction/?mr=7d&mm=volume", name: "traction-7d-volume" },
-  { path: "/?project=fables&hr=90d", name: "overview-drawer-history" },
-  { path: "/traction/?nc=Robinhood+native", name: "traction-native-only" },
-  { path: "/stocks/", name: "stocks" },
-  { path: "/stocks/?chartTicker=NVDA&pr=7d&wr=7d", name: "stocks-nvda-7d" },
-  { path: "/stocks/?chartTicker=AAOI", name: "stocks-no-feed" },
-  { path: "/stocks/?ticker=NVDA", name: "stocks-drawer" },
-  { path: "/stocks/?sf=yes&sa=Stock", name: "stocks-filtered" },
+  { path: "/?project=aerodrome-finance&hr=90d", name: "overview-drawer-history" },
+  { path: "/traction/?nc=Base+native", name: "traction-native-only" },
   { path: "/investors/", name: "investors" },
   { path: "/investors/?investor=founders-fund", name: "investors-drawer" },
   { path: "/compare/", name: "compare-empty" },
-  { path: "/compare/?compare=uniswap,fables,ramses,the-standard-reserve&xr=90d&xm=volume", name: "compare-four" },
+  { path: "/compare/?compare=aerodrome-finance,uniswap,pancakeswap,curve&xr=90d&xm=volume", name: "compare-four" },
   { path: "/methodology/", name: "methodology" },
   { path: "/?expand=chain-over-time", name: "overview-expand" },
   { path: "/?sectorDrawer=DEXs+%26+Liquidity&sectorSub=Liquidity+management", name: "overview-subsector-drawer" },
   { path: "/?sector=Exchanges+%26+On%2FOff-Ramps", name: "overview-exchanges" },
-  { path: "/?project=pons", name: "overview-drawer-security" },
+  { path: "/?project=moonwell", name: "overview-drawer-security" },
   { path: "/compare/?compare=uniswap,morpho&align=days", name: "compare-cross-sector" },
 ];
 
@@ -104,14 +101,15 @@ for (const page of PAGES) {
 }
 
 test("filters round-trip through the URL", async ({ page }) => {
-  await page.goto("/explorer/?sector=Launchpads&chain=Robinhood+native");
+  await page.goto("/explorer/?sector=Launchpads&chain=Base+native");
   await page.waitForLoadState("networkidle");
-  await expect(page.getByText(/Showing\s+\d+\s+of 607 projects/)).toBeVisible();
-  const text = await page.getByText(/Showing\s+\d+\s+of 607 projects/).textContent();
-  expect(text).toMatch(/Showing\s+54\s+of 607/);
+  await expect(page.getByText(/Showing\s+\d+\s+of 1038 projects/)).toBeVisible();
+  const text = await page.getByText(/Showing\s+\d+\s+of 1038 projects/).textContent();
+  expect(text).toMatch(/Showing\s+15\s+of 1038/);
 });
 
 test("each card has its own range, written to its own URL key", async ({ page }) => {
+  test.skip(!HAS_HISTORY, "needs the daily history from Milestone 2");
   await page.goto("/");
   await page.waitForLoadState("networkidle");
   // No global range control in the filter bar.
@@ -129,7 +127,7 @@ test("each card has its own range, written to its own URL key", async ({ page })
   // The neighbouring card keeps its own choice, and the filters are untouched.
   await expect(page).not.toHaveURL(/ar=/);
   await expect(activity.getByRole("radiogroup", { name: "Chain activity date range" }).getByRole("radio", { name: "30d", exact: true })).toBeChecked();
-  await expect(page.getByText(/Showing\s+607\s+of 607 projects/)).toBeVisible();
+  await expect(page.getByText(/Showing\s+1038\s+of 1038 projects/)).toBeVisible();
   await chainRange.getByRole("radio", { name: "All", exact: true }).click();
   await expect(page).toHaveURL(/cr=all/);
   await expect(chain).toContainText("over all history");
@@ -140,21 +138,24 @@ test("each card has its own range, written to its own URL key", async ({ page })
 test("overview tiles keep their text short and the range line sits under its chart", async ({ page }, testInfo) => {
   await page.goto("/");
   await page.waitForLoadState("networkidle");
-  await expect(page.getByText(/^Tracked for \d+\/607 projects$/).first()).toBeVisible();
+  await expect(page.getByText(/^Tracked for \d+\/1038 projects$/).first()).toBeVisible();
   await expect(page.getByText(/double-counted excluded/)).toHaveCount(0);
-  await expect(page.getByText(/^Tracking \d+ coins?$/)).toBeVisible();
+  // Stablecoin supply arrives with the daily refresh (Milestone 2).
+  if (HAS_HISTORY) await expect(page.getByText(/^Tracking \d+ coins?$/)).toBeVisible();
   await expect(page.getByText(/^Native TVL share \d+%$/)).toBeVisible();
   // Low, high and change read as a caption under the chart, never as a second title line.
-  const stats = page.locator("#chain-over-time").getByTestId("range-stats").first();
-  await expect(stats).toHaveText(/^Low .+, high .+ over 30d$/);
-  const below = await stats.evaluate((el) => {
-    const svg = el.parentElement?.querySelector("svg.recharts-surface");
-    return svg ? el.getBoundingClientRect().top >= svg.getBoundingClientRect().bottom - 1 : false;
-  });
-  expect(below).toBe(true);
+  if (HAS_HISTORY) {
+    const stats = page.locator("#chain-over-time").getByTestId("range-stats").first();
+    await expect(stats).toHaveText(/^Low .+, high .+ over 30d$/);
+    const below = await stats.evaluate((el) => {
+      const svg = el.parentElement?.querySelector("svg.recharts-surface");
+      return svg ? el.getBoundingClientRect().top >= svg.getBoundingClientRect().bottom - 1 : false;
+    });
+    expect(below).toBe(true);
+  }
   if (testInfo.project.name.startsWith("desktop")) {
     // Reset and Copy link sit under the project count at the right edge of the filter bar.
-    const count = await page.getByText(/Showing\s+607\s+of 607 projects/).first().boundingBox();
+    const count = await page.getByText(/Showing\s+1038\s+of 1038 projects/).first().boundingBox();
     const copy = await page.getByRole("button", { name: "Copy link to this view" }).boundingBox();
     const reset = await page.getByRole("button", { name: "Reset", exact: true }).boundingBox();
     expect(copy!.y).toBeGreaterThanOrEqual(count!.y + count!.height - 1);
@@ -164,6 +165,7 @@ test("overview tiles keep their text short and the range line sits under its cha
 });
 
 test("a lending pop-up shows deposited, borrowed and TVL side by side, revenue as zero by design and no DEX volume", async ({ page }) => {
+  test.skip(!HAS_HISTORY, "needs the daily history from Milestone 2");
   await page.goto("/sectors/?project=morpho");
   await page.waitForLoadState("networkidle");
   const modal = page.getByTestId("project-modal");
@@ -191,9 +193,9 @@ test("a project in an unmeasured sector shows no Traction heading and a tier of 
   await expect(modal).toContainText("Not applicable");
   await expect(modal).not.toContainText("TBD");
   // Facts still show where the data has them.
-  await page.goto("/sectors/?project=chainlink");
+  await page.goto("/sectors/?project=base-app");
   await page.waitForLoadState("networkidle");
-  await expect(page.getByTestId("project-modal").locator("[data-metric=feedsLive]")).toHaveText(/^\d+/);
+  await expect(page.getByTestId("project-modal").locator("[data-metric=feesFact]")).toHaveText(/^\$[\d,]+/);
   // And unmeasured sectors stay off the traction leaderboard and the tier chart.
   await page.goto("/traction/?sector=Wallets+%26+Custody");
   await page.waitForLoadState("networkidle");
@@ -201,8 +203,9 @@ test("a project in an unmeasured sector shows no Traction heading and a tier of 
 });
 
 test("the newer sources reach the pop-ups and the Security page", async ({ page }) => {
+  test.skip(!HAS_HISTORY, "needs the daily history from Milestone 2");
   // Open interest is the perps headline, with its definition, and paid-only volume reads Not tracked.
-  await page.goto("/sectors/?project=arcus");
+  await page.goto("/sectors/?project=veranta-formerly-avantis");
   await page.waitForLoadState("networkidle");
   const modal = page.getByTestId("project-modal");
   await expect(modal.locator("[data-metric=openInterest][data-state=value]")).toHaveText(/^\$[\d,]+/);
@@ -221,6 +224,7 @@ test("the newer sources reach the pop-ups and the Security page", async ({ page 
 });
 
 test("sector leaders rank by the headline metric and show it on each row", async ({ page }) => {
+  test.skip(!HAS_HISTORY, "needs the daily history from Milestone 2");
   await page.goto("/sectors/");
   await page.waitForLoadState("networkidle");
   const lending = page.getByTestId("sector-card").filter({ hasText: "Lending & Credit" });
@@ -242,7 +246,7 @@ test("sector cards show two stats and three leaders with no blank band", async (
   await page.goto("/sectors/");
   await page.waitForLoadState("networkidle");
   const cards = page.getByTestId("sector-card");
-  await expect(cards).toHaveCount(19);
+  await expect(cards).toHaveCount(22);
   await expect(page.getByText("With traction")).toHaveCount(0);
   await expect(page.getByText(/Mostly offchain services/)).toHaveCount(0);
   const first = cards.first();
@@ -289,69 +293,12 @@ test("the explorer opens on the map, with the table one click away", async ({ pa
 });
 
 test("chart cards offer a table view", async ({ page }) => {
+  test.skip(!HAS_HISTORY, "needs the daily history from Milestone 2");
   await page.goto("/");
   await page.waitForLoadState("networkidle");
   const card = page.locator("#chain-over-time, [data-slot=card]").filter({ hasText: "Chain over time" }).first();
   await card.getByRole("tab", { name: "Table" }).click();
   await expect(card.getByRole("columnheader", { name: "DEX volume" })).toBeVisible();
-});
-
-test("premium by session shows three sessions on one axis for a fed ticker", async ({ page }) => {
-  await page.goto("/stocks/?chartTicker=NVDA&wr=all");
-  await page.waitForLoadState("networkidle");
-  const card = page.locator("#session-premium");
-  await expect(card.getByRole("heading", { name: "Premium by session" })).toBeVisible();
-  const rows = card.locator("[data-session]");
-  const empty = card.getByText(/No hourly DEX history/);
-  await expect(rows.first().or(empty)).toBeVisible();
-  if (await rows.count()) {
-    await expect(rows).toHaveCount(3);
-    await expect(card).toContainText("NYSE open");
-    await expect(card).toContainText("Weekends and holidays");
-    await expect(card).toContainText("Token cheaper");
-    await expect(card).toContainText("Token dearer");
-  }
-  // The hour-of-week grid is gone, here and in the ticker side bar.
-  await expect(page.getByText("Premium by hour of week")).toHaveCount(0);
-  await expect(page.locator("rect[data-cell]")).toHaveCount(0);
-  // A ticker with no feed says so instead of loading forever.
-  await page.goto("/stocks/?chartTicker=AAOI");
-  await expect(page.locator("#session-premium")).toContainText("No Chainlink feed for AAOI");
-});
-
-test("session volume reads against an even spread and a ticker row opens its side bar", async ({ page }) => {
-  await page.goto("/stocks/");
-  await page.waitForLoadState("networkidle");
-  const card = page.locator("#sessions");
-  await expect(card.getByTestId("session-hours")).toContainText("Share of hours");
-  await expect(card.getByTestId("session-all")).toContainText("All tickers");
-  // The summary sits in the expanded view only.
-  await expect(card.getByTestId("takeaway")).toHaveCount(0);
-  const first = card.locator("button[title*='Click to open']").first();
-  const before = await first.locator("span").first().innerText();
-  await card.getByRole("radiogroup", { name: "Sort tickers by" }).getByRole("radio", { name: "Weekend share" }).click();
-  await expect(card.locator("button[title*='Click to open']").first().locator("span").first()).not.toHaveText(before);
-  await card.locator("button[title*='Click to open']").first().click();
-  await expect(page).toHaveURL(/ticker=/);
-  await expect(page.getByTestId("ticker-drawer")).toContainText("Where it trades");
-});
-
-test("venue share ranks venues and never hides unrecorded volume", async ({ page }) => {
-  await page.goto("/stocks/");
-  await page.waitForLoadState("networkidle");
-  const card = page.locator("#venue-share");
-  const venues = card.locator("[data-venue]");
-  expect(await venues.count()).toBeGreaterThan(1);
-  await expect(venues.first()).toContainText(/Uniswap v\d/);
-  await expect(venues.first()).toContainText(/Main venue for \d+ of \d+ tickers/);
-  await expect(card.locator("[data-venue=other]")).toHaveCount(0);
-  await expect(card.locator("[data-venue=not-recorded]")).toContainText("Venue not recorded");
-  // Readable venue names everywhere, including the sentence under the title.
-  await expect(card).not.toContainText("uniswap-v4");
-  await card.getByRole("tab", { name: "Table" }).click();
-  await expect(card.getByRole("columnheader")).toHaveText(["Ticker", "Main venue", "Its share", "30d tracked volume", "Venues with volume", "Venue not recorded"]);
-  await card.getByRole("button", { name: "SPY", exact: true }).click();
-  await expect(page).toHaveURL(/ticker=SPY/);
 });
 
 test("project modal adds to compare and the tray persists across navigation", async ({ page }) => {
@@ -369,10 +316,10 @@ test("project modal adds to compare and the tray persists across navigation", as
 test("presets live on the compare page only and open at least two projects", async ({ page }) => {
   await page.goto("/traction/");
   await page.waitForLoadState("networkidle");
-  await expect(page.getByRole("button", { name: "Native DEXs" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "DEXs" })).toHaveCount(0);
   await page.goto("/compare/");
   await page.waitForLoadState("networkidle");
-  await page.getByRole("button", { name: "Native DEXs" }).first().click();
+  await page.getByRole("button", { name: "DEXs" }).first().click();
   await expect(page).toHaveURL(/\/compare\/\?compare=[^&]+,[^&]+/);
   await expect(page.getByText("Metrics, with rank and share in sector")).toBeVisible();
 });
@@ -430,6 +377,7 @@ test("long table text clamps and expands", async ({ page }, testInfo) => {
 });
 
 test("the expand dialog opens from the URL and Escape clears it", async ({ page }) => {
+  test.skip(!HAS_HISTORY, "needs the daily history from Milestone 2");
   await page.goto("/?expand=chain-over-time");
   await page.waitForLoadState("networkidle");
   const dialog = page.getByTestId("chart-expand");
@@ -460,7 +408,7 @@ test("the Expand button stores the chart in the URL", async ({ page }) => {
 });
 
 test("with a filter on, shares compare against the selection", async ({ page }) => {
-  await page.goto("/?chain=Robinhood+native");
+  await page.goto("/?chain=Base+native");
   await page.waitForLoadState("networkidle");
   const card = page.locator("#concentration");
   await expect(card.getByRole("heading", { name: "Share of selection TVL" })).toBeVisible();
@@ -470,7 +418,7 @@ test("with a filter on, shares compare against the selection", async ({ page }) 
 });
 
 test("the sector pop-up follows the filters", async ({ page }) => {
-  await page.goto("/sectors/?chain=Robinhood+native&sectorDrawer=DEXs+%26+Liquidity");
+  await page.goto("/sectors/?chain=Base+native&sectorDrawer=DEXs+%26+Liquidity");
   await page.waitForLoadState("networkidle");
   const modal = page.getByTestId("sector-modal");
   await expect(modal).toContainText(/Filtered, 1 filter active/);
@@ -510,6 +458,7 @@ test("the sector pop-up narrows to a subcategory and widens back", async ({ page
 });
 
 test("the Stablecoins pop-up shows each issuer's supply on the chain with its sources", async ({ page }) => {
+  test.skip(!HAS_HISTORY, "needs the daily history from Milestone 2");
   await page.goto("/sectors/?sectorDrawer=Stablecoins+%26+Payments");
   await page.waitForLoadState("networkidle");
   const modal = page.getByTestId("sector-modal");
@@ -520,6 +469,7 @@ test("the Stablecoins pop-up shows each issuer's supply on the chain with its so
 });
 
 test("Overview shows stablecoin supply as its own KPI", async ({ page }) => {
+  test.skip(!HAS_HISTORY, "needs the daily history from Milestone 2");
   await page.goto("/");
   await page.waitForLoadState("networkidle");
   const card = page.locator("[data-slot=card]").filter({ hasText: "Stablecoin supply" }).first();
@@ -531,7 +481,7 @@ test("a sector with no tracked volume reads Not tracked", async ({ page }) => {
   await page.waitForLoadState("networkidle");
   const card = page.locator("[data-slot=card]").filter({ hasText: "30d DEX volume" }).first();
   await expect(card).toContainText("Not tracked");
-  await expect(card).toContainText("Tracked for 0/13 projects");
+  await expect(card).toContainText("Tracked for 0/32 projects");
 });
 
 test("the timeline opens as a table and a row opens the event popup", async ({ page }) => {
@@ -540,39 +490,37 @@ test("the timeline opens as a table and a row opens the event popup", async ({ p
   const card = page.locator("#timeline");
   await expect(card.getByRole("tab", { name: "Table" })).toHaveAttribute("aria-selected", "true");
   await expect(card.getByRole("columnheader")).toHaveText(["Date", "Type", "Event", "Projects"]);
-  await card.getByRole("button", { name: "IXS migrates its token and liquidity to Base" }).click();
-  await expect(page).toHaveURL(/event=2026-10-27-/);
+  await card.getByRole("button", { name: "Moonwell MAMO market exploited through collateral price manipulation" }).click();
+  await expect(page).toHaveURL(/event=2026-08-27-/);
   const popup = page.getByTestId("event-dialog");
-  await expect(popup).toContainText("Vault TVL after migration");
-  await expect(popup).toContainText("$100,000,000");
-  await expect(popup.getByRole("link", { name: /newsletter\.ixs\.finance/ })).toHaveAttribute("href", /^https:\/\/newsletter\.ixs\.finance\/p\//);
+  await expect(popup).toContainText("$8,700,000");
+  await expect(popup.getByRole("link", { name: /theblock\.co/ })).toHaveAttribute("href", /^https:\/\/theblock\.co\/news\/defi\//);
   await page.keyboard.press("Escape");
   await expect(popup).toHaveCount(0);
   await expect(page).not.toHaveURL(/event=/);
 });
 
 test("every event popup offers a direct source, never a bare profile", async ({ page }) => {
-  await page.goto("/?event=2026-10-22-defi-tvl-reaches-1-14b");
+  await page.goto("/?event=2026-06-25-invalid-block-halts-base-for-116-minutes");
   const popup = page.getByTestId("event-dialog");
-  await expect(popup).toContainText("DeFi TVL reaches $1.14B");
-  await expect(popup).toContainText("$1,140,000,000");
+  await expect(popup).toContainText("Invalid block halts Base for 116 minutes");
   await expect(popup).not.toContainText("No direct source yet");
-  await expect(popup.getByRole("link", { name: /crypto\.news/ })).toHaveAttribute("href", /^https:\/\/crypto\.news\/robinhood-chain-1-14b-tvl/);
+  await expect(popup.getByRole("link", { name: /cointelegraph\.com/ })).toHaveAttribute("href", /^https:\/\/cointelegraph\.com\/news\//);
   await page.keyboard.press("Escape");
   // No link anywhere on the page points at a bare profile.
   await expect(page.locator('a[href="https://x.com/RobinHubHB"]')).toHaveCount(0);
   // An id that matches no event opens nothing.
-  await page.goto("/?event=2026-10-24-tvl-1-14b-and-1b-daily-dex-volume");
+  await page.goto("/?event=2026-06-25-no-such-event");
   await page.waitForLoadState("networkidle");
   await expect(page.getByTestId("event-dialog")).toHaveCount(0);
 });
 
-test("the timeline chart hides pre-mainnet events behind one marker", async ({ page }) => {
+test("the timeline chart hides events before 2025 behind one marker", async ({ page }) => {
   await page.goto("/");
   await page.waitForLoadState("networkidle");
   const card = page.locator("#timeline");
   await card.getByRole("tab", { name: "Chart" }).click();
-  await expect(card.getByText("Before mainnet").first()).toBeVisible();
+  await expect(card.getByText("Before 2025").first()).toBeVisible();
   await card.getByRole("button", { name: /Show earlier events/ }).click();
   await expect(card.getByRole("button", { name: "Hide earlier events" })).toBeVisible();
 });
@@ -602,11 +550,11 @@ test("the funding donut counts only disclosed projects and a type opens its moda
   await page.keyboard.press("Escape");
   await expect(page).not.toHaveURL(/fundingType=/);
   // Deep link, then the secondary button applies the old facet filter.
-  await page.goto("/funding/?fundingType=Bootstrapped");
+  await page.goto("/funding/?fundingType=Acquired");
   await page.waitForLoadState("networkidle");
   await expect(page.getByTestId("funding-type-modal")).toBeVisible();
   await page.getByRole("button", { name: "Filter the atlas to this type" }).click();
-  await expect(page).toHaveURL(/funding=Bootstrapped/);
+  await expect(page).toHaveURL(/funding=Acquired/);
   await expect(page).not.toHaveURL(/fundingType=/);
 });
 
@@ -615,9 +563,9 @@ test("the money flow filter shows counts, sorts newest first and has an empty st
   await page.waitForLoadState("networkidle");
   const filter = page.getByRole("radiogroup", { name: "Money flow type" });
   await expect(filter.getByRole("radio", { name: /^All \d+$/ })).toBeChecked();
-  await filter.getByRole("radio", { name: /^Award or investment \d+$/ }).click();
-  await expect(page).toHaveURL(/mf=Award/);
-  await expect(page.getByTestId("money-flow")).toContainText("Award or investment");
+  await filter.getByRole("radio", { name: /^Base Ecosystem Fund \d+$/ }).click();
+  await expect(page).toHaveURL(/mf=Base\+Ecosystem\+Fund/);
+  await expect(page.getByTestId("money-flow")).toContainText("Base Ecosystem Fund");
   // Chart and Table show disclosed funding by quarter in the same box, and the type filter steps aside.
   const mode = page.getByRole("tablist", { name: "Money flow view" });
   await mode.getByRole("tab", { name: "Chart" }).click();
@@ -641,25 +589,6 @@ test("a link with backers filters and no view opens on the backers table", async
   await expect(page.getByTestId("backers-table")).toBeVisible();
 });
 
-test("the ticker drawer opens from the URL with a company profile", async ({ page }) => {
-  await page.goto("/stocks/?ticker=NVDA");
-  await page.waitForLoadState("networkidle");
-  const drawer = page.getByTestId("ticker-drawer");
-  await expect(drawer).toBeVisible();
-  await expect(drawer).toContainText("Company profile");
-  await expect(drawer).toContainText("Where it trades");
-  expect(await drawer.getByTestId("tradingview-overview").count()).toBe(1);
-});
-
-test("stock filters live in the URL and scope the leaderboard", async ({ page }) => {
-  await page.goto("/stocks/?sf=yes");
-  await page.waitForLoadState("networkidle");
-  await expect(page.getByTestId("stock-filters")).toContainText("Showing 35 of 203 tokens");
-  await expect(page.getByTestId("ticker-leaderboard").getByRole("columnheader", { name: "Launch pairs" })).toHaveCount(0);
-  await page.getByRole("radiogroup", { name: "Morpho collateral" }).getByRole("radio", { name: "Yes" }).click();
-  await expect(page).toHaveURL(/sc=yes/);
-});
-
 test("the leaderboard shows five columns and a row opens the side bar", async ({ page }) => {
   await page.goto("/traction/");
   await page.waitForLoadState("networkidle");
@@ -676,13 +605,14 @@ test("the leaderboard shows five columns and a row opens the side bar", async ({
 });
 
 test("the business model chart can show one native-chain type", async ({ page }) => {
+  test.skip(!HAS_HISTORY, "needs the daily history from Milestone 2");
   await page.goto("/traction/");
   await page.waitForLoadState("networkidle");
   const card = page.locator("#business-model");
   await expect(card.locator("[data-chain]")).toHaveCount(4);
   await card.getByRole("combobox", { name: /Native chain/ }).click();
   await page.getByRole("option", { name: /Base native/ }).click();
-  await expect(page).toHaveURL(/nc=Robinhood/);
+  await expect(page).toHaveURL(/nc=Base/);
   await expect(card.locator("[data-chain]")).toHaveCount(1);
   await expect(card.locator("[data-chain]")).toHaveText("Base native");
 });
@@ -693,7 +623,7 @@ test("the backers table has no count in its title, one word for blanks, and its 
   await page.waitForLoadState("networkidle");
   const box = page.getByTestId("funding-box");
   const views = box.getByRole("tablist", { name: "Funding data" });
-  await expect(box.getByRole("heading", { name: "Ecosystem money flow", exact: true })).toBeVisible();
+  await expect(box.getByRole("heading", { name: "Base ecosystem money flow", exact: true })).toBeVisible();
   await views.getByRole("tab", { name: "Rounds" }).click();
   await expect(page).toHaveURL(/fv=rounds/);
   await expect(box.getByRole("heading", { name: "Funding rounds", exact: true })).toBeVisible();
@@ -734,7 +664,7 @@ test("research notes and the discovery source stay out of the public page", asyn
 test.describe("the export without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
   const DEFAULT_VIEWS = [
-    { path: "/", heading: "Chain over time", text: /Showing\s+607\s+of 607 projects/ },
+    { path: "/", heading: "Chain over time", text: /Showing\s+1038\s+of 1038 projects/ },
     { path: "/methodology/", heading: "Methodology", text: /Coverage terms/ },
   ];
   for (const view of DEFAULT_VIEWS) {
@@ -745,7 +675,7 @@ test.describe("the export without JavaScript", () => {
     });
   }
   // Login wall phase 2: a gated page's HTML holds placeholder shapes only, never its data.
-  for (const path of ["/stocks/", "/security/", "/explorer/", "/funding/"]) {
+  for (const path of ["/security/", "/explorer/", "/funding/"]) {
     test(`${path} carries placeholders, not data`, async ({ page }) => {
       await page.goto(path);
       await expect(page.getByTestId("page-placeholder")).toBeVisible();
@@ -757,7 +687,7 @@ test.describe("the export without JavaScript", () => {
 test("a link with a query string never paints the default view", async ({ page }) => {
   // Hold the scripts back so the page stays exactly as exported, which is what the first paint shows.
   await page.route("**/*.js", (route) => route.abort());
-  const count = page.getByText(/Showing\s+607\s+of 607 projects/);
+  const count = page.getByText(/Showing\s+1038\s+of 1038 projects/);
   await page.goto("/explorer/?q=zzzz-no-match");
   await expect(count).toHaveCount(1);
   await expect(count).toBeHidden();
@@ -765,12 +695,12 @@ test("a link with a query string never paints the default view", async ({ page }
   await expect(count).toBeVisible();
 });
 
-test("security, stocks and investors are hidden from the nav but still load by link", async ({ page }) => {
+test("security and investors are hidden from the nav but still load by link", async ({ page }) => {
   await page.goto("/");
   await page.waitForLoadState("networkidle");
   const nav = page.getByRole("banner").getByRole("navigation");
   await expect(nav.getByRole("link")).toHaveText(["Overview", "Sectors", "Traction", "Funding", "Explorer", "Compare"]);
-  await page.goto("/stocks/");
+  await page.goto("/investors/");
   await page.waitForLoadState("networkidle");
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
   await expect(page.getByRole("main")).toBeVisible();
