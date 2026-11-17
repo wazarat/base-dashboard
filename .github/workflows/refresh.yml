@@ -1,0 +1,80 @@
+name: Refresh data
+
+# Pulls the latest days from every free source into data/history, re-validates the
+# build, and commits the result. The push triggers the Vercel deploy.
+on:
+  schedule:
+    - cron: "37 4 * * *" # 04:37 UTC daily, an odd minute away from the Robinhood and NEAR refreshes
+  workflow_dispatch:
+    inputs:
+      backfill:
+        description: "Fetch full history (one-off)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    # The refresh stops optional work at 12 minutes (REFRESH_BUDGET_MIN); 90 is only a safety net for a slow day.
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # A missing secret skips its source inside the refresh and never fails the run.
+      - name: Refresh history
+        env:
+          BLOCKSCOUT_API_KEY: ${{ secrets.BLOCKSCOUT_API_KEY }}
+          COINGECKO_DEMO_KEY: ${{ secrets.COINGECKO_DEMO_KEY }}
+        run: |
+          if [ "${{ github.event.inputs.backfill }}" = "true" ]; then
+            npm run refresh -- --backfill
+          else
+            npm run refresh
+          fi
+
+      - name: Build data (reads the committed history)
+        run: npm run data
+
+      - name: Copy rules
+        run: npm run check:copy
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build (validates the data)
+        run: npm run build
+
+      - name: Commit data
+        env:
+          GIT_AUTHOR_EMAIL: ${{ vars.GIT_AUTHOR_EMAIL }}
+        run: |
+          if [ -z "$GIT_AUTHOR_EMAIL" ]; then
+            echo "::error::Set the GIT_AUTHOR_EMAIL repository variable so data commits carry the owner's identity."
+            exit 1
+          fi
+          git config user.name "Wazarat Hussain"
+          git config user.email "$GIT_AUTHOR_EMAIL"
+          git add data/history
+          if git diff --cached --quiet; then
+            echo "No data changes."
+            exit 0
+          fi
+          git commit -m "data: refresh $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push origin HEAD:main

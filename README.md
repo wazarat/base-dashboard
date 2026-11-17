@@ -45,6 +45,28 @@ docs/
 
 Until the daily history exists the KPIs sum the Nov 17 research snapshot, leaving out vault curators, capital allocators, liquid staking, token lockers, exchange wallets and payment volume, so nothing is counted twice. DefiLlama's chain figures replace this once the refresh runs.
 
+## History store and the daily refresh
+
+```
+data/history/
+  _meta.json             last run, per-source status, newly detected protocols
+  chain.json             DefiLlama chain series (TVL, double counted, volume, fees, revenue, active users)
+  growthepie.json        chain activity (active addresses, transactions, smart wallets over 7 days)
+  defillama/             per-protocol TVL, volume, fees, revenue series, flags (protocols.json), adapter checks
+  morpho/                markets (broken ones flagged) and vaults
+  stablecoins/, yields/, gecko/   sector inputs
+```
+
+The store is append-only by date. Each run re-fetches the trailing 7 days and overwrites them, so DefiLlama's revisions land, and a stable JSON writer means a rerun with no new data writes the same bytes.
+
+- `npm run refresh` fetches the latest days from every source. Flags are `--backfill` (full history), `--only a,b` (named sources), `--strict` (fail on any source error) and `--dry-run` (write nothing).
+- A source that fails keeps its last good data, records the error in `_meta.json`, and the run carries on. A missing secret skips its source.
+- `.github/workflows/refresh.yml` runs daily at 04:37 UTC and on demand (with a `backfill` input), then builds, tests and commits `data/history` as `data: refresh YYYY-MM-DD` under the owner's name and the `GIT_AUTHOR_EMAIL` repository variable.
+- To rerun a backfill, use Run workflow on the Actions tab with backfill ticked, or `npm run refresh -- --backfill` locally and commit `data/history`.
+- After changing a TVL flag rule in `src/lib/flags.ts`, `npx tsx scripts/reflag.ts` re-applies it to the stored protocol list without fetching.
+
+The build reconciles the counted projects against DefiLlama's chain totals for TVL, double-counted TVL, 30-day volume, fees and revenue, and fails on a gap above 1%, printing the top 10 contributors.
+
 ## Data sources and their free limits
 
 | Source | Used for | Limits |
