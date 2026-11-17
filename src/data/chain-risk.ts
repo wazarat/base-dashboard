@@ -1,8 +1,8 @@
 /**
- * Chain-level risk checklist, structured by hand from the findings memo
- * (data/robinhood-chain-traction-funding-security-*.md, "Security" section).
+ * Chain-level risk checklist for the Security page, from the Base project page on ETHBEAT
+ * (formerly L2BEAT, which now redirects there) and incident reports, each opened on Nov 17 2026.
  * Levels: red = material risk today, amber = partial mitigation or open question,
- * green = mitigated or positive.
+ * green = mitigated or positive. Status is plain text; colour only marks the status word.
  */
 export type RiskLevelMark = "red" | "amber" | "green";
 
@@ -15,82 +15,69 @@ export interface ChainRiskItem {
   sourceUrl: string;
 }
 
-const L2BEAT = "https://ethbeat.org/scaling/projects/robinhood";
-
 export const chainRisk: ChainRiskItem[] = [
   {
     id: "stage",
-    label: "L2BEAT stage",
-    level: "red",
-    detail: "Rated below Stage 0. The rollup does not yet meet the minimum decentralisation requirements.",
-    sourceLabel: "L2BEAT",
-    sourceUrl: L2BEAT,
+    label: "Stage 1 rollup on ETHBEAT",
+    level: "amber",
+    detail:
+      "ETHBEAT, formerly L2BEAT, rates Base Stage 1 with all Stage 1 requirements met but only 1 of 3 Stage 2 requirements, because upgrades unrelated to provable bugs give less than 30 days to exit and Security Council powers are not limited to provable bugs.",
+    sourceLabel: "ETHBEAT Base project page",
+    sourceUrl: "https://ethbeat.org/scaling/projects/base",
   },
   {
-    id: "challengers",
-    label: "Fraud-proof challengers",
-    level: "red",
-    detail: "Only 2 whitelisted challengers can dispute state roots. Anyone outside that list cannot.",
-    sourceLabel: "L2BEAT",
-    sourceUrl: L2BEAT,
+    id: "proofs",
+    label: "TEE and ZK multiproof system",
+    level: "amber",
+    detail:
+      "Since Azul, state proposals can be backed by an AWS Nitro TEE attestation and an SP1 ZK proof, and anyone with a valid ZK proof can challenge a TEE only proposal, but the Coinbase run Coordinator Multisig controls the TEE prover allowlist and ETHBEAT marks the program hashes as not verified.",
+    sourceLabel: "ETHBEAT Base project page",
+    sourceUrl: "https://ethbeat.org/scaling/projects/base",
   },
   {
     id: "upgrades",
-    label: "Upgrade control",
+    label: "Instant upgrades by a 2 of 2 multisig",
     level: "red",
-    detail: "Instant upgrades through a Robinhood 7-of-8 multisig. No Security Council.",
-    sourceLabel: "L2BEAT",
-    sourceUrl: L2BEAT,
+    detail:
+      "All contracts sit behind a ProxyAdmin controlled by a 2 of 2 Base Governance Multisig made up of the Base Coordinator Multisig at 3 of 6 and the Base Security Council at 8 of 11, and ETHBEAT states there is no delay on upgrades.",
+    sourceLabel: "ETHBEAT Base project page",
+    sourceUrl: "https://ethbeat.org/scaling/projects/base",
   },
   {
     id: "exit",
-    label: "Exit window",
-    level: "red",
-    detail: "No exit window. Users cannot withdraw ahead of a malicious or buggy upgrade.",
-    sourceLabel: "L2BEAT",
-    sourceUrl: L2BEAT,
+    label: "5 day withdrawals with no upgrade exit window",
+    level: "amber",
+    detail:
+      "Beryl cut single proof withdrawals from 7 days to 5 days and dual proof withdrawals can finalize in 1 day, but ETHBEAT lists no exit window before an unwanted upgrade and the Guardian multisig can pause withdrawals.",
+    sourceLabel: "ETHBEAT Base project page",
+    sourceUrl: "https://ethbeat.org/scaling/projects/base",
   },
   {
     id: "sequencer",
-    label: "Sequencer",
+    label: "Single sequencer with slow forced inclusion",
     level: "amber",
     detail:
-      "Centralised Robinhood sequencer with a transaction filter that can fail forced L1 transactions. Used after the Vlad Tenev account hack to freeze a related wallet.",
-    sourceLabel: "Decrypt, Jul 23 2026",
-    sourceUrl: "https://decrypt.co/374175/robinhood-ceo-vlad-tenevs-x-account-hacked-to-shill-fake-vladhood-token",
+      "Base runs a single sequencer whose address Base Multisig 1 can change, and users can force transactions through Ethereum if it fails with a delay of up to 12 hours.",
+    sourceLabel: "ETHBEAT Base project page",
+    sourceUrl: "https://ethbeat.org/scaling/projects/base",
   },
   {
     id: "liveness",
-    label: "Liveness record",
+    label: "Repeated halts and proposal stalls",
+    level: "red",
+    detail:
+      "Base halted for 116 minutes on June 25 2026 and 20 minutes on June 26 2026 after a sequencer bug, following a 33 minute halt in August 2025. Proposal stalls in May and October 2026 are on the timeline with their own sources.",
+    sourceLabel: "Cointelegraph on the Base post mortem",
+    sourceUrl:
+      "https://cointelegraph.com/news/base-post-mortem-reveals-sequencer-bug-behind-back-to-back-outages",
+  },
+  {
+    id: "governance",
+    label: "Own stack after leaving Superchain governance",
     level: "amber",
     detail:
-      "On Sep 4 2026, about 40 minutes of app disruption and a 14-minute gap in batches reaching Ethereum. On Oct 29 2026, a 54-minute gap in state updates. Blocks kept being produced.",
-    sourceLabel: "CryptoSlate, L2BEAT",
-    sourceUrl: "https://cryptoslate.com/robinhood-chain-kept-producing-blocks-through-a-roughly-40-minute-app-disruption/",
-  },
-  {
-    id: "stock-oracle",
-    label: "Stock-token pricing",
-    level: "amber",
-    detail:
-      "No confirmed pricing or weekend-gap liquidation incident so far. QuillAudits flags that oraclePaused() is advisory only.",
-    sourceLabel: "Findings memo",
-    sourceUrl: "https://defillama.com/chain/robinhood-chain",
-  },
-  {
-    id: "stack",
-    label: "Rollup stack",
-    level: "green",
-    detail: "Built on the Arbitrum (Nitro) stack, which has a long production track record on Arbitrum One.",
-    sourceLabel: "Arbitrum blog",
-    sourceUrl: "https://blog.arbitrum.io/robinhood-chain-testnet/",
-  },
-  {
-    id: "explorers",
-    label: "Monitoring coverage",
-    level: "green",
-    detail: "Blockscout, Etherscan, Arkham and L2BEAT all index the chain, so outages and anomalies are recorded publicly.",
-    sourceLabel: "L2BEAT",
-    sourceUrl: L2BEAT,
+      "Base left the shared Optimism Superchain setup on March 4 2026 and now runs its own SuperchainConfig and guardian, with no token or onchain vote and a Security Council charter that has no removal procedure or quorum loss fallback.",
+    sourceLabel: "ETHBEAT Base project page",
+    sourceUrl: "https://ethbeat.org/scaling/projects/base",
   },
 ];

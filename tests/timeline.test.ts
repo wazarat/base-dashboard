@@ -6,21 +6,27 @@ import { TIMELINE_DEFAULT_START } from "@/lib/site";
 import { eventTable, markerSize, monthTicks, splitEarlier, timelineSummary } from "@/lib/timeline";
 
 describe.skipIf(!HAS_EVENTS)("timeline", () => {
-  it("splits events before mainnet from the default view", () => {
+  it("splits events before 2025 from the default view", () => {
     const { shown, earlier } = splitEarlier(events, TIMELINE_DEFAULT_START);
-    expect(earlier).toHaveLength(3);
-    expect(shown).toHaveLength(events.length - 3);
+    const before = events.filter((e) => e.date < TIMELINE_DEFAULT_START).length;
+    expect(before).toBeGreaterThan(0);
+    expect(earlier).toHaveLength(before);
+    expect(shown).toHaveLength(events.length - before);
     expect(earlier.every((e) => e.date < TIMELINE_DEFAULT_START)).toBe(true);
   });
   it("writes the summary points from the data, with no dates", () => {
     const s = timelineSummary(events, TIMELINE_DEFAULT_START);
     expect(s.lead).toBeUndefined();
     expect(s.points[0]).toBe(`${events.length} events recorded.`);
-    expect(s.points).toContain("Incidents lead with 10.");
-    expect(s.points.at(-1)).toBe("3 happened before mainnet.");
+    const byType = new Map<string, number>();
+    for (const e of events) byType.set(e.type, (byType.get(e.type) ?? 0) + 1);
+    const [topType, topCount] = Array.from(byType.entries()).sort((a, b) => b[1] - a[1])[0];
+    expect(s.points.some((p) => p.endsWith(`lead with ${topCount}.`))).toBe(true);
+    expect(byType.get(topType)).toBe(topCount);
+    expect(s.points.at(-1)).toBe(`${splitEarlier(events, TIMELINE_DEFAULT_START).earlier.length} sit behind Show earlier events.`);
     expect(s.points.join(" ")).not.toMatch(/\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b|\b20\d\d\b/);
     expect(timelineSummary([], TIMELINE_DEFAULT_START)).toEqual({ points: ["No events recorded."] });
-    expect(timelineSummary(events.filter((e) => e.date >= TIMELINE_DEFAULT_START), TIMELINE_DEFAULT_START).points.join(" ")).not.toContain("before mainnet");
+    expect(timelineSummary(events.filter((e) => e.date >= TIMELINE_DEFAULT_START), TIMELINE_DEFAULT_START).points.join(" ")).not.toContain("Show earlier events");
   });
   it("shows four columns and keeps the amount, detail and source for the popup and the CSV", () => {
     const t = eventTable(events);

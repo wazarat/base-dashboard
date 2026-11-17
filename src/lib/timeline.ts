@@ -12,7 +12,7 @@ export function splitEarlier(events: EcosystemEvent[], defaultStart: string): { 
   return { shown: events.filter((e) => e.date >= defaultStart), earlier: events.filter((e) => e.date < defaultStart) };
 }
 
-/** Points like "29 events recorded.", "Incidents lead with 10.", "16 carry a USD amount.", "3 happened before mainnet." No dates. */
+/** Points like "29 events recorded.", "Incidents lead with 10.", "16 carry a USD amount.", "3 sit behind Show earlier events." No dates. */
 export function timelineSummary(events: EcosystemEvent[], defaultStart: string): Takeaway {
   if (events.length === 0) return { points: ["No events recorded."] };
   const counts = new Map<EventType, number>();
@@ -22,7 +22,7 @@ export function timelineSummary(events: EcosystemEvent[], defaultStart: string):
   const earlier = splitEarlier(events, defaultStart).earlier.length;
   const n = events.length;
   const points = [`${n} ${n === 1 ? "event" : "events"} recorded.`, `${lead}s lead with ${counts.get(lead)}.`, `${withAmount} carry a USD amount.`];
-  if (earlier > 0) points.push(`${earlier} happened before mainnet.`);
+  if (earlier > 0) points.push(`${earlier} sit behind Show earlier events.`);
   return { points };
 }
 

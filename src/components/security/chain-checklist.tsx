@@ -17,7 +17,7 @@ export function ChainChecklist({ className }: { className?: string }) {
       <CardHeader>
         <h3 className="type-card-title text-ink-50">Chain-level risk</h3>
         <FilteredNote scope="chain" className="block" />
-        <p className="text-sm text-ink-300">Base as a rollup, from L2BEAT and the findings memo.</p>
+        <p className="text-sm text-ink-300">Base as a rollup, from ETHBEAT (formerly L2BEAT) and incident reports.</p>
         <ul className="type-label mt-1 flex gap-3" aria-label="Status words">
           {(["red", "amber", "green"] as const).map((k) => (
             <li key={k} className={MARK[k].className}>
