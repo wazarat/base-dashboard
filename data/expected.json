@@ -1,0 +1,26 @@
+{
+  "static": {
+    "projects": 1038,
+    "sectors": 22,
+    "subcategories": 100,
+    "nativeChains": 4,
+    "tier1": 17,
+    "tier2": 84,
+    "tier3": 301,
+    "trackedNegligible": 49,
+    "notTracked": 587,
+    "rounds": 406,
+    "roundsBaseRelated": 89,
+    "defillamaSeedRows": 452
+  },
+  "snapshot": {
+    "tvl": 8615056231,
+    "volume": 31137263025,
+    "fees": 64321625,
+    "revenue": 19876722
+  },
+  "snapshotTolerance": 1,
+  "liveSanity": {
+    "maxDayOverDayRatio": 10
+  }
+}
