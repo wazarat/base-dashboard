@@ -88,7 +88,13 @@ These return HTTP 402 or need a paid plan and are not used.
 
 ## Deployment
 
-The Vercel project `base-dashboard` (team "Wazarat's projects") deploys `main` to production on every push. `NEXT_PUBLIC_SIBLING_ATLAS_URLS` is set there. `NEXT_PUBLIC_SITE_URL` stays unset until the domain is pointed, so canonical URLs fall back to the Vercel production host.
+The Vercel project `base-dashboard` (team "Wazarat's projects") deploys `main` to production on every push. `NEXT_PUBLIC_SIBLING_ATLAS_URLS` is set there. The Tally form links and the Clerk keys (`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY`, production only, from the same Clerk application as canhav.com) are set there too.
+
+## Login wall
+
+With the Clerk keys present the wall is on. Overview, Methodology and the footer pages are public. Sectors, Traction, Funding, Explorer and the hidden pages show a blurred preview with a "Log in for free access" pop-up, and Clerk opens in modal mode and returns the reader to the tab or action they clicked. Compare shows a comparison already in the URL, and Add to compare asks for a login. Gated data reaches the browser only from `/api/data/gated/` for a signed-in reader (401 otherwise, `Cache-Control: private`), and `scripts/check-public-bundle.mjs` fails the build if a gated investor name shows up in `.next/static` or the prerendered pages. Without keys the app builds and runs with the wall off and logs one warning.
+
+Clerk production keys only answer on the Clerk application's own domain, so sign-in works once `base.canhav.com` points at this project. On the `*.vercel.app` host the wall shows but sign-in cannot complete. `NEXT_PUBLIC_SITE_URL` stays unset until the domain is pointed, so canonical URLs fall back to the Vercel production host.
 
 ## Pointing base.canhav.com at the Vercel project
 
