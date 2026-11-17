@@ -1,0 +1,569 @@
+Project,DefiLlama slug,Notes
+0x,0x,seed 2116; category DEX Aggregator
+0x,matcha,seed 7555; category Trading App
+1inch,1inch-aqua,seed parent#1inch; category Dexs
+40 Acres,40-acres,seed 6061; category Lending
+722 Capital,722-capital,seed 8669; category Risk Curators
+8lends,8lends,seed 6524; category RWA
+Aave,aave-v3,seed parent#aave; category Lending
+Aave,aave-v4,seed parent#aave; category Lending
+Accountable,accountable,seed 7092; category Uncollateralized Lending
+Across Protocol,across,seed 1207; category Cross Chain Bridge
+ACryptoS,acryptos,seed 208; category Liquidity Manager
+aeon,aeon,seed 8236; category AI Agents
+Aera,aera-v2,seed parent#aera; category Onchain Capital Allocator
+Aera,aera-v3,seed parent#aera; category Onchain Capital Allocator
+Aerodrome Finance,aero-basic,seed parent#aero-protocol; category Dexs
+Aerodrome Finance,aero-slipstream,seed parent#aero-protocol; category Dexs
+Aerodrome Finance,aerodrome-ignition,seed parent#aero-protocol; category Dexs
+Aerodrome Finance,aerodrome-slipstream,seed parent#aero-protocol; category Dexs
+Aerodrome Finance,aerodrome-v1,seed parent#aero-protocol; category Dexs
+Aevo,aevo-perps,seed parent#aevo; category Derivatives
+Ajna,ajna-v2,seed parent#ajna; category Lending
+Alchemix,alchemix-v3,seed parent#alchemix; category Synthetics
+AlfaFrens,alfafrens,seed 5974; category SoFi
+Alien Base,alien-base-area51,seed parent#alien-base; category Dexs
+Alien Base,alien-base-stableswap,seed parent#alien-base; category Dexs
+Alien Base,alien-base-v2,seed parent#alien-base; category Dexs
+Alien Base,alien-base-v3,seed parent#alien-base; category Dexs
+Allbridge Core,allbridge-core,seed parent#allbridge; category Bridge
+Almanak,almanak,seed 6297; category Onchain Capital Allocator
+Alpha Launchpad,alpha-launchpad,seed 9330; category Launchpad
+alphagrowth (Euler curator),alphagrowth,seed 6804; category Risk Curators
+Alphix,alphix,seed 7436; category Dexs
+Amped Finance,amped-finance,seed 3833; category Derivatives
+Ample,ample,seed 7493; category Yield Lottery
+Anemoy Capital,anemoy-capital,seed 5481; category RWA
+Anthias Labs,anthias-labs,seed 7800; category Risk Curators
+Ape.Store,ape.store,seed 4584; category Launchpad
+ApeX Omni,apex-omni,seed parent#apex-protocol; category Derivatives
+Api3,api3,seed 1339; category Risk Curators
+Apostro,apostro,seed 6196; category Risk Curators
+Arcadia Finance,arcadia-v2,seed parent#arcadia-finance; category Liquidity Manager
+Architect,architect,seed 8549; category Risk Curators
+Archly Finance,archly-v1,seed parent#archly-finance; category Dexs
+Archly Finance,archly-v2,seed parent#archly-finance; category Dexs
+Arrakis,arrakis-modular,seed parent#arrakis-finance; category Liquidity Manager
+Arrakis,arrakis-v2,seed parent#arrakis-finance; category Liquidity Manager
+Astaria,astaria-v2,seed parent#astaria; category Lending
+Aster (ApolloX),apx-bridge,seed parent#astherus; category Bridge
+Avalon Finance,avalon-finance,seed parent#avalon-labs; category Lending
+Axelar,axelar,seed parent#axelar-network; category Bridge
+B.Protocol Curator,b.protocol-curator,seed 6197; category Risk Curators
+Backed (xStocks),backedfi,seed 3467; category RWA
+Backpack,backpack,CEX reserves only; seed 4266; category CEX
+Bagelswap,bagelswap,seed 3433; category Dexs
+BaiBai,baibai,seed 8934; category Dexs
+Balancer,balancer-cow-amm,seed parent#balancer; category Dexs
+Balancer,balancer-v2,seed parent#balancer; category Dexs
+Balancer,balancer-v3,seed parent#balancer; category Dexs
+Banana Gun,banana-gun,seed 3336; category Telegram Bot
+Bankr,bankr,seed 7340; category Interface
+Base App,base-app,seed 5587; category Wallets
+Base Dollar,base-dollar,seed 8470; category CDP
+Baseline Protocol,baseline-protocol,seed 4234; category Liquidity Manager
+Basenames,basenames,seed 7974; category Domains
+BasePaint,basepaint,seed 3519; category Services
+BaseStonk,basestonk,seed 8621; category Launchpad
+BaseSwap,baseswap-v2,seed parent#baseswap; category Dexs
+BaseSwap,basex,seed parent#baseswap; category Dexs
+BaseVol,basevol,seed 7347; category Options
+Bedrock,bedrock-unibtc,seed parent#bedrock; category Anchor BTC
+Beefy,beefy,seed 326; category Yield Aggregator
+Beezie,beezie,seed 6075; category Physical TCG
+Belief Market,belief-market,seed 6668; category Prediction Market
+BetSwirl,betswirl,seed 1911; category Prediction Market
+BIM,bim-yield,seed parent#bim; category Yield Aggregator
+Binance,binance-cex,CEX reserves only; seed 2269; category CEX
+Binance Alpha,binance-alpha,seed 6599; category Launchpad
+Bio Protocol,bio-protocol,seed 6881; category Launchpad
+Birch Hill,birch-hill,seed 8168; category Risk Curators
+Biswap V3,biswap-v3,seed parent#biswap; category Dexs
+Bitbond Token Tool,bitbond-lockers,seed parent#token-tool; category Token Locker
+Bitbond Token Tool,bitbond-sales,seed parent#token-tool; category Token Locker
+BitFi,bitfi-basis,seed parent#bitfi; category Anchor BTC
+BitFi,bitfi-btc,seed parent#bitfi; category Anchor BTC
+Bitget,bitget,CEX reserves only; seed 2352; category CEX
+Bitkub,bitkub,CEX reserves only; seed 5517; category CEX
+Bitty Vaults,bitty-vaults,seed parent#bitty; category Onchain Capital Allocator
+Bitvavo,bitvavo,CEX reserves only; seed 7576; category CEX
+Block Analitica,block-analitica,seed 6198; category Risk Curators
+BloFin,blofin,CEX reserves only; seed 5045; category CEX
+BMX,bmx-classic-amm,seed parent#bmx; category Derivatives
+BMX,bmx-classic-perps,seed parent#bmx; category Derivatives
+BMX,bmx-freestyle,seed parent#bmx; category Derivatives
+BMX,deli-swap,seed parent#bmx; category Derivatives
+Brickken,brickken,seed 4058; category RWA
+Brownfi,brownfi-v2,seed parent#brownfi; category Dexs
+BSX,bsx-exchange,seed 4458; category Derivatives
+Bungee,bungee-bridge-aggregator,seed parent#bungee; category Bridge Aggregator
+Bunni,bunni-v2,seed parent#bunni; category Dexs
+Burve Protocol,burve-protocol,seed 4393; category Dexs
+Bybit,bybit,CEX reserves only; seed 2286; category CEX
+CallPut,callput,seed 7562; category Options
+Central City,central-city,seed 9146; category AI Agents
+Centrifuge,centrifuge-protocol,seed parent#centrifuge; category RWA
+Chainlink,ccip,seed parent#chainlink; category Bridge
+Circle CCTP,circle-cctp,seed parent#circle; category Bridge
+Circle CCTP,circle-gateway,seed parent#circle; category Bridge
+Clanker,clanker,split from parent#farcaster at Milestone 2 review; Clanker listing
+Clearpool,clearpool-lending,seed parent#clearpool; category Uncollateralized Lending
+Clearstar,clearstar,seed 6199; category Risk Curators
+Clipper,clipper,seed 622; category Dexs
+Clober,clober-liquidity-vault,seed parent#clober; category Dexs
+Clober,clober-v2,seed parent#clober; category Dexs
+Coinbase,coinbase-bridge,seed 5810; category Bridge
+Coinbase Commerce,coinbase-commerce,seed 4737; category Payments
+Collector Crypt,collector-crypt,seed 6675; category Physical TCG
+Compound,compound-v3,seed parent#compound-finance; category Lending
+Contango,contango-v2,seed parent#contango; category Derivatives
+CoW Swap,cowswap,seed 2643; category DEX Aggregator
+CreateMyToken,createmytoken,seed 5713; category Launchpad
+Creator.bid,creator-bid,seed 5600; category AI Agents
+Credit Coop,credit-coop,seed 6903; category Uncollateralized Lending
+Crescentswap,crescentswap,seed 3315; category Dexs
+Curve,curve-dex,seed parent#curve-finance; category Dexs
+Cybro,cybro,seed 5139; category Yield Aggregator
+D2 Finance,d2-finance,seed 4846; category Onchain Capital Allocator
+D8X,d8x,seed 3924; category Derivatives
+Dackieswap,dackieswap-v2,seed parent#dackieswap; category Dexs
+Dackieswap,dackieswap-v3,seed parent#dackieswap; category Dexs
+deBridge,debridge,seed 1462; category Bridge
+DeFi Saver,defi-saver-asset-management,seed parent#defi-saver; category CDP Manager
+Definitive,definitive,seed 4257; category DEX Aggregator
+Defx,defx,seed 5273; category Derivatives
+Deltaswap (GammaSwap),deltaswap,seed parent#gammaswaplabs; category Dexs
+Deltaswap (GammaSwap),gammaswap-open-interest,seed parent#gammaswaplabs; category Dexs
+Deltaswap (GammaSwap),gammaswap-yield-tokens,seed parent#gammaswaplabs; category Dexs
+DeltaUSD,deltausd,seed 9420; category Basis Trading
+Deri Protocol,deri-v4,seed parent#deri; category Options
+Derive,derive-v2,seed parent#lyra; category Derivatives
+DeTrade,detrade,seed 8761; category Risk Curators
+DEX Screener,dex-screener,seed 4990; category Coins Tracker
+Dexalot,dexalot-dex,seed parent#dexalot; category Dexs
+Dexalot,dexalot-omnivaults,seed parent#dexalot; category Dexs
+Dexalot,dexalot-portfolio,seed parent#dexalot; category Dexs
+DexFinance,dexfi-aggregator,seed parent#dexfinance; category Yield Aggregator
+DexFinance,dexfinance-etf,seed parent#dexfinance; category Yield Aggregator
+DexFinance,dexvaults,seed parent#dexfinance; category Yield Aggregator
+DEXTools,dextools,seed 5006; category Coins Tracker
+dHEDGE,chamber-vaults,seed parent#dhedge; category Indexes
+dHEDGE,flat-money-v1,seed parent#dhedge; category Indexes
+dHEDGE,toros,seed parent#dhedge; category Indexes
+Diamondswap,diamondswap,seed 5546; category Dexs
+DIEM Relay,diem-relay,seed 7896; category Liquid Staking
+Dinari,dinari,seed 4196; category RWA
+DLMM KING (SectorOne),dlmm-king-pools,seed parent#sectorone; category Dexs
+DLMM KING (SectorOne),dlmm-king-vaults,seed parent#sectorone; category Dexs
+DODO,dodo-amm,seed parent#dodo; category Dexs
+DxSale,dxsale,seed 1901; category Launchpad
+DYLI,dyli,seed 8053; category Physical TCG
+Dyson Money,dyson,seed parent#sphere; category Liquidity Manager
+Dyson Money,preon-finance,seed parent#sphere; category Liquidity Manager
+Echo / Sonar,echo.xyz,seed 6091; category Private Investment Platform
+Element Market,element-nft-marketplace,seed 6872; category NFT Marketplace
+ELFi,elfi-protocol,seed 5160; category Derivatives
+ElfomoFi,elfomofi,seed 7260; category Dexs
+ElkFinance,elk,seed 420; category Dexs
+Ember,ember,seed 6741; category RWA
+Empire Builder,empire-builder,seed 8294; category DAO Service Provider
+Equalizer,scale,seed 3575; category Dexs
+ether.fi,ether.fi-stake,seed parent#ether-fi; category Liquid Staking
+Ethos,ethos-markets,seed parent#ethos; category SoFi
+Ethos,ethos-network,seed parent#ethos; category SoFi
+Euler,euler-v2,seed parent#euler; category Lending
+Everclear,connext,seed parent#everclear; category Bridge
+Everclear,everclear,seed parent#everclear; category Bridge
+Exactly,exactly,seed 2385; category Lending
+Extra Finance,extra-finance-leverage-farming,seed parent#extra-finance; category Leveraged Farming
+Extra Finance,extra-finance-vaults,seed parent#extra-finance; category Leveraged Farming
+Extra Finance,extra-finance-xlend,seed parent#extra-finance; category Leveraged Farming
+EZManager,ezmanager,seed 7498; category Liquidity Manager
+Farcaster,farcaster-sofi,split from parent#farcaster at Milestone 2 review; Farcaster SoFi listing
+Flaunch,flaunch,seed 5715; category Launchpad
+FLock.io,flock.io,seed 7319; category Decentralized AI
+FlokiFi Locker,flokifi-locker,seed 2405; category Token Locker
+Florence Finance,florence-finance,seed 3197; category RWA
+Fluid,fluid-dex,seed parent#fluid; category Dexs
+Fluid,fluid-lending,seed parent#fluid; category Dexs
+fly.trade,fly.trade,seed 4457; category Cross Chain Bridge
+Folks Finance,folks-finance-xchain,seed parent#folks-finance; category Lending
+Fomo,fomo-wallet,seed parent#fomo; category Trading App
+Frenpet,fren-pets,seed 4410; category Gaming
+Frgmnt,frgmnt,seed 8060; category Yield Aggregator
+Friend.tech,friend.tech-v1,seed parent#friend-tech; category SoFi
+FWB,fwb,seed 8069; category Yield
+FXDX,fxdx,seed 3036; category Derivatives
+g8keep,g8keep,seed 5318; category Launchpad
+Galaxy Curation,galaxy-curation,seed 7904; category Risk Curators
+Gami Labs,gami-labs,seed 7954; category Risk Curators
+Gamma Strategies,gamma,seed 355; category Liquidity Manager
+Garden,garden,seed 4086; category Cross Chain Bridge
+Gate,gate,CEX reserves only; seed 2314; category CEX
+Gauntlet,gauntlet,seed 6202; category Risk Curators
+GeckoTerminal,geckoterminal,seed 6724; category Interface
+GILDer,gilder,seed 8424; category Yield
+Giza,giza,seed 6821; category AI Agents
+GLIF,glif,seed 2858; category Liquid Staking
+GMGN,gmgn,seed 5408; category Trading App
+GoPlus Locker,goplus-locker-v2,seed parent#goplus-security; category Token Locker
+GoPlus Locker,goplus-locker-v3,seed parent#goplus-security; category Token Locker
+Gridex,gridex,seed 2856; category Dexs
+Grove Finance,grove-finance,seed 7583; category Onchain Capital Allocator
+gTrade,gains-network,seed 1018; category Derivatives
+Hanji Protocol,hanji-protocol,seed 5919; category Dexs
+Harmonix,harmonix-finance,seed 4856; category Yield
+Harvest Finance,harvest-finance,seed 112; category Yield Aggregator
+Hashport,hashport,seed 5771; category Bridge
+Hedgey,hedgey,seed 5846; category Payments
+Heroes of Mavia,heroes-of-mavia,seed 5850; category Gaming
+Hinkal,hinkal,seed 4487; category Privacy
+Hop Protocol,hop-protocol,seed 435; category Cross Chain Bridge
+HorizonDEX,horizondex,seed 3255; category Dexs
+Human Passport,human-id,seed parent#human-protocol; category Identity & Reputation
+Human Passport,human-passport,seed parent#human-protocol; category Identity & Reputation
+Hydrex,hydrex-integral,seed parent#hydrex; category Dexs
+Hydrex,hydrex-omni,seed parent#hydrex; category Dexs
+Hyperdrive (DELV),hyperdrive,seed parent#delv; category Yield
+Hyperlane,hyperlane,seed 7468; category Cross Chain Bridge
+iAero Protocol,iaero-protocol,seed 7039; category Liquid Staking
+IceCream Swap,icecreamswap-v2,seed parent#icecreamswap; category Dexs
+ICHI,ichi,seed 874; category Liquidity Manager
+Index Coop,index-coop,seed 172; category Indexes
+Indodax,indodax,CEX reserves only; seed 6443; category CEX
+infiniFi,infinifi,seed 6245; category Yield
+Infinite Trading Protocol,infinite-trading-protocol,seed 5202; category AI Agents
+Infinity Pools,infinitypools,seed 5662; category Derivatives
+Infusion,infusion,seed 4294; category Dexs
+IntentX,intentx,seed 3747; category Derivatives
+Interface,interface-social,seed 6744; category Interface
+Interport Finance,interport-finance,seed 2839; category Cross Chain Bridge
+IPOR,ipor-derivatives,seed parent#ipor; category Onchain Capital Allocator
+IPOR,ipor-fusion,seed parent#ipor; category Onchain Capital Allocator
+iZiSwap,iziswap,seed parent#izumi-finance; category Dexs
+JavSphere,javsphere,seed 4366; category Derivatives
+JOJO Exchange,jojo,seed 2320; category Derivatives
+Jumper Exchange,jumper-bridge-aggregator,seed parent#jumper-exchange; category DEX Aggregator
+Jumper Exchange,jumper-dex-aggregator,seed parent#jumper-exchange; category DEX Aggregator
+Kaito,kaito-capital-launchpad,seed parent#kaito; category Launchpad
+Kaito,kaito-stake,seed parent#kaito; category Launchpad
+Karta Card,karta-card,seed 8180; category Crypto Card Issuer
+Kasu,kasu,seed 7100; category Uncollateralized Lending
+Keeta Bridge,keeta-bridge,seed 7371; category Canonical Bridge
+KiloEx,kiloex,seed 3329; category Derivatives
+Kim Exchange,kim-exchange-v2,seed parent#kim-exchange; category Dexs
+Kim Exchange,kim-exchange-v3,seed parent#kim-exchange; category Dexs
+Kinetix,kinetix-amm-v2,seed parent#kinetix; category Dexs
+Kinetix,kinetix-amm-v3,seed parent#kinetix; category Dexs
+Kipseli,kipseli,seed 7984; category Dexs
+kpk,kpk,seed 4146; category Risk Curators
+Krav Trade,krav,seed 3358; category Derivatives
+Krystal vaults,krystal-auto-farm-vault,seed parent#krystal; category AI Agents
+Krystal vaults,krystal-community-vault,seed parent#krystal; category AI Agents
+KuCoin,kucoin,CEX reserves only; seed 2274; category CEX
+KyberSwap,kyberswap-aggregator,seed parent#kyberswap; category Dexs
+KyberSwap,kyberswap-elastic,seed parent#kyberswap; category Dexs
+Lagoon,lagoon,seed 5547; category Onchain Capital Allocator
+Layer3,layer3,seed 7611; category Foundation
+LayerZero,layerzero-v1,seed parent#layerzero; category Bridge
+LayerZero,layerzero-v2,seed parent#layerzero; category Bridge
+Ledgity Yield,ledgity-yield,seed 7734; category Yield
+Leetswap,leetswap,seed 2745; category Dexs
+Levva,levva,seed 5426; category Liquidity Manager
+LI.FI,li.fi-bridge-aggregator,seed parent#li.fi; category Bridge Aggregator
+LI.FI,li.fi-dex-aggregator,seed parent#li.fi; category Bridge Aggregator
+Limitless,limitless-exchange,seed 5181; category Prediction Market
+Liquid Protocol,liquid-protocol-launchpad,seed parent#liquid-protocol; category Launchpad
+Liquid Protocol,wstdiem,seed parent#liquid-protocol; category Launchpad
+LlamaPay,llamapay,seed 1664; category Payments
+LogX,logx-v2,seed parent#logx; category Derivatives
+Lombard,lombard-vaults,seed parent#lombard-finance; category Onchain Capital Allocator
+Lunarbase,lunarbase,seed 7601; category Dexs
+Maestro,maestro,seed 3019; category Telegram Bot
+Magic Eden,magic-eden,seed 6029; category NFT Marketplace
+Makina,makina,seed 6964; category Onchain Capital Allocator
+Mamo,mamo,seed 8862; category Yield Aggregator
+Maverick Protocol,maverick-v1,seed parent#maverick-protocol; category Dexs
+Maverick Protocol,maverick-v2,seed parent#maverick-protocol; category Dexs
+Maxshot,maxshot,seed parent#dforce; category Lending
+Maxshot,unitus,seed parent#dforce; category Lending
+Mayan,mayan-bridge,seed parent#mayan-finance; category DEX Aggregator
+Mayan,mayan-dex-aggregator,seed parent#mayan-finance; category DEX Aggregator
+Mellow,mellow,seed 3653; category SoFi
+Mellow Protocol,mellow-yield,seed parent#mellow-protocol; category Yield Aggregator
+Meson,meson,seed 4536; category Cross Chain Bridge
+MetaMask,metamask-wallet,seed parent#metamask; category Wallets
+Metric,metric-v0,seed parent#metric; category Dexs
+Metric,metric-v1,seed parent#metric; category Dexs
+Metronome,metronome-synth,seed parent#metronome; category Synthetics
+MEV Capital,mev-capital,seed 6208; category Risk Curators
+MEV-X Homelander,mev-x-homelander,seed 8849; category Liquidity Automation
+MEXC,mexc,CEX reserves only; seed 3075; category CEX
+Midas,midas-rwa,seed 4873; category RWA
+MineBean (nu11dotfun),minebean,seed parent#nu11dotfun; category Gamified Mining
+Mint Club,mint-club-v2,seed parent#mint-club; category Launchpad
+Mitosis,mitosis,seed 4596; category Onchain Capital Allocator
+Monstro.fun,monstro,seed 5594; category Yield
+Moonwell,moonwell-lending,seed parent#moonwell; category Onchain Capital Allocator
+Moonwell,moonwell-vaults,seed parent#moonwell; category Onchain Capital Allocator
+Morpheus AI,morpheusai,seed 4553; category AI Agents
+Morpho,morpho-blue,seed parent#morpho; category Lending
+Morpho,morpho-midnight,seed parent#morpho; category Lending
+MortgageFi,mortgagefi,seed 5395; category Lending
+Mountain Protocol,mountain-protocol,seed 3598; category RWA
+Mummy Finance,mummy-finance,seed 2361; category Derivatives
+Muscadine,muscadine,seed 7085; category Risk Curators
+Nabla Finance,nabla-finance,seed 5309; category Dexs
+Nami,nami,seed 9154; category Dexs
+Napier,napier,seed 4834; category Yield
+Native Lend,native-credit-pool,seed parent#native; category Lending
+Native Lend,native-swap,seed parent#native; category Lending
+NEAR Intents,near-bridge,seed parent#near-protocol; category Bridge
+NEAR Intents,near-intents,seed parent#near-protocol; category Bridge
+NetherFi,nether.fi,seed 3509; category Derivatives
+NewThrone,newthrone,seed 3593; category Gaming
+Nexo Card,nexo-card,seed 7522; category Crypto Card Issuer
+Nullmask,nullmask,seed 8884; category Privacy
+o1.exchange,o1-launchpad,seed parent#o1-exchange; category Yield
+o1.exchange,o1.exchange-trading-terminal,seed parent#o1-exchange; category Yield
+o1.exchange,wsto-vault,seed parent#o1-exchange; category Yield
+Odos,odos,seed 3951; category DEX Aggregator
+Odyssey Finance,odyssey-finance,seed 6529; category Yield Aggregator
+OKX,okx,CEX reserves only; seed 2272; category CEX
+OKX DEX,okx-swap,seed parent#okx-dex; category DEX Aggregator
+Omni Exchange,omni-exchange-flux,seed parent#omni-exchange; category Dexs
+Omni Exchange,omni-exchange-v2,seed parent#omni-exchange; category Dexs
+Omni Exchange,omni-exchange-v3,seed parent#omni-exchange; category Dexs
+OmniHub,omnihub,seed 7187; category NFT Marketplace
+OpenEden,openeden-usdo,seed parent#openeden; category RWA
+OpenSea,opensea-seaport,seed parent#opensea; category NFT Marketplace
+Optimism Collective,optimism-bridge,seed parent#optimism-foundation; category Services
+Optimism Collective,superchain,seed parent#optimism-foundation; category Services
+Orderly Network,orderly-bridge,seed parent#orderly-network; category Bridge
+Overtime,overtime,seed 534; category Prediction Market
+P2P.me,p2p.me,seed 6947; category Payments
+PancakeSwap,pancakeswap-amm,seed parent#pancakeswap; category Dexs
+PancakeSwap,pancakeswap-amm-v3,seed parent#pancakeswap; category Dexs
+PancakeSwap,pancakeswap-infinity,seed parent#pancakeswap; category Dexs
+PancakeSwap,pancakeswap-x,seed parent#pancakeswap; category Dexs
+Pangolins,pangolins,seed 8566; category Risk Curators
+parallel protocol,parallel-protocol-v3,seed parent#parallel-protocol; category CDP
+Peapods Finance,peapods-finance,seed 4063; category Yield
+Pendle,pendle-loop,seed parent#pendle; category Yield
+Pendle,pendle-v2,seed parent#pendle; category Yield
+Phantom,phantom-wallet,seed parent#phantom; category Wallets
+Pheasant Network,pheasant-network,seed 8915; category Cross Chain Bridge
+Pike,pike-v1,seed parent#pike; category Lending
+Pike,pike-v2,seed parent#pike; category Lending
+Pinto,pinto,seed 5458; category Algo-Stables
+Pocket Universe,pocket-universe-extension,seed parent#pocket-universe; category Security Extension
+PoolTogether,pooltogether-v5,seed parent#pooltogether; category Yield Lottery
+Portal,portal,seed 1541; category Bridge
+Precog,precog-markets,seed 7192; category Prediction Market
+PRED,pred,seed 7902; category Prediction Market
+Predictex,predictex,seed 8530; category Prediction Market
+Prediction Arena,prediction-arena,seed 9332; category Prediction Market
+PredMart,predmart,seed 7417; category Prediction Market
+Privacy Boost,privacy-boost,seed 8599; category Privacy
+Privacy Pools,privacy-pools-v2,seed parent#privacy-pools; category Privacy
+PumpBase,pumpbase,seed 6915; category Launchpad
+PumpBTC,pumpbtc,seed 4922; category Bridge
+Pyth Network,pyth-core,seed parent#pyth; category Oracle
+Pyth Network,pyth-entropy,seed parent#pyth; category Oracle
+QiDao Protocol,qidao,seed 449; category CDP
+Quantillon,quantillon-protocol,seed 8801; category Synthetics
+Quickswap,quickperps,seed parent#quickswap; category Dexs
+Quickswap,quickswap-dex,seed parent#quickswap; category Dexs
+Quickswap,quickswap-v4,seed parent#quickswap; category Dexs
+Rabby Wallet,rabby-wallet,seed parent#rabby; category Wallets
+Rainbow Wallet,rainbow-token-launchpad,seed parent#rainbow; category Wallets
+Rainbow Wallet,rainbow-wallet,seed parent#rainbow; category Wallets
+Raindex,raindex,seed 5221; category Dexs
+Rango,rango,seed 6382; category Bridge Aggregator
+Re,re,seed 7182; category RWA
+Re7 Labs,re7-labs,seed 6210; category Risk Curators
+RealtyX,realtyx,seed 6287; category RWA
+RedotPay Card,redotpay-card,seed 7519; category Crypto Card Issuer
+Relay,relay,seed 8916; category Cross Chain Bridge
+Renzo,renzo,seed 3933; category Liquid Restaking
+Reserve Protocol,reserve-protocol,seed 626; category Indexes
+Reservoir,reservoir-protocol,seed 5343; category CDP
+Revert,revert-lend,seed parent#revert; category Lending
+Ring Protocol,ring-few,seed parent#ring-protocol; category Bridge
+Ring Protocol,ring-swap,seed parent#ring-protocol; category Bridge
+Ripe Finance,ripe-protocol,seed 7342; category Lending
+River (Omni-CDP),river-omni-cdp,seed parent#river-inc; category CeDeFi
+Robots.Farm,robots.farm,seed 6108; category Gaming
+RockawayX,rockawayx,seed 7588; category Risk Curators
+RocketSwap,rocketswap-base,seed 3314; category Dexs
+RollX,rollx,seed 5973; category Derivatives
+Royco,royco-v1,seed parent#royco-protocol; category Yield
+Royco,royco-v2,seed parent#royco-protocol; category Yield
+Rubicon,rubicon,seed 799; category Dexs
+RubyScore,rubyscore,seed 7001; category Services
+Ryze Protocol,ryze-protocol,seed 7945; category Dexs
+Sablier,sablier-flow,seed parent#sablier-finance; category Payments
+Sablier,sablier-legacy,seed parent#sablier-finance; category Payments
+Sablier,sablier-lockup,seed parent#sablier-finance; category Payments
+Safe Wallet,safe,seed 3320; category Services
+Sapien,sapien-vault,seed 8465; category Yield
+Satori,satori-perp,seed parent#satori-finance; category Derivatives
+Satori,satori-spots,seed parent#satori-finance; category Derivatives
+Seamless Protocol,seamless-v1,seed parent#seamless-protocol; category Lending
+Seamless Protocol,seamless-v2,seed parent#seamless-protocol; category Lending
+Seamless Protocol,seamless-vaults,seed parent#seamless-protocol; category Lending
+SharkSwap DEX,sharkswap-dex,seed 3714; category Dexs
+Sherpa Earn,sherpa,seed 7065; category Onchain Capital Allocator
+Silo V2,silo-v1,seed parent#silo-finance; category Lending
+Smardex,smardex-amm,seed parent#smardex-ecosystem; category Dexs
+Smardex,smardex-p2p-lending,seed parent#smardex-ecosystem; category Dexs
+Snowbl Capital,snowbl-capital,seed 6786; category Onchain Capital Allocator
+Snuggle,snuggle,seed 7392; category Liquidity Manager
+Solidly V3,solidly-v3,seed parent#solidly-labs; category Dexs
+Solv Protocol,solvbtc,seed parent#solv-protocol; category Bridge
+Sonne Finance,sonne-finance,seed 2142; category Lending
+SoSoValue (SSI),sodex-bridge,seed parent#sosovalue; category Basis Trading
+SoSoValue (SSI),sosovalue-basis,seed parent#sosovalue; category Basis Trading
+SoSoValue (SSI),sosovalue-indexes,seed parent#sosovalue; category Basis Trading
+Spark,spark-liquidity-layer,seed parent#spark; category Onchain Capital Allocator
+Spark,spark-savings,seed parent#spark; category Onchain Capital Allocator
+Spectra,spectra-metavaults,seed parent#spectra; category Yield
+Spectra,spectra-metavaults-outside-v2,seed parent#spectra; category Yield
+Spectra,spectra-v2,seed parent#spectra; category Yield
+Spiko,spiko,seed 4980; category RWA
+Sport.fun,sport.fun,seed 6625; category Prediction Market
+Sprinter,sprinter,seed 6507; category Yield
+Spritz Finance,spritz-card,seed 7523; category Crypto Card Issuer
+SquadSwap,squadswap-thanos,seed parent#squadswap; category Dexs
+SquadSwap,squadswap-v2,seed parent#squadswap; category Dexs
+SquadSwap,squadswap-v3,seed parent#squadswap; category Dexs
+Stabil Finance,stabil-finance,seed 6534; category Yield Aggregator
+Stabull,stabull-finance,seed 7077; category Dexs
+Stake DAO,stake-dao-yield,seed parent#stake-dao; category Yield
+Stargate Finance,stargate-v1,seed parent#stargate-finance; category Cross Chain Bridge
+Stargate Finance,stargate-v2,seed parent#stargate-finance; category Cross Chain Bridge
+Steakhouse Financial,steakhouse-financial,seed 6212; category Risk Curators
+Steer Protocol,steer-protocol,seed 3043; category Liquidity Manager
+StratEx,stratex,seed 6874; category Yield Aggregator
+Strato Bridge,strato-bridge,seed 8626; category Bridge
+Sumer,sumer.money,seed 3814; category Lending
+Summer.fi (Lazy Summer),lazy-summer-protocol,seed parent#summer.fi; category CDP Manager
+Summer.fi (Lazy Summer),summer.fi-pro,seed parent#summer.fi; category CDP Manager
+Super OETH,origin-ether,seed parent#origin-defi; category Liquid Staking
+Superfluid,superfluid,seed 693; category Payments
+Superform,superform,seed 4448; category Yield Aggregator
+SuperFund,superfund,seed parent#superlend-xyz; category Onchain Capital Allocator
+Surf Protocol,surf-protocol,seed 3954; category Derivatives
+SushiSwap,sushiswap,seed parent#sushi; category Dexs
+SushiSwap,sushiswap-agg,seed parent#sushi; category Dexs
+SushiSwap,sushiswap-v3,seed parent#sushi; category Dexs
+SushiSwap,sushiswap-v4,seed parent#sushi; category Dexs
+Swaap,swaap-maker-v2,seed parent#swaap; category Dexs
+SwapBased,swapbased-amm,seed parent#swapbased; category Dexs
+SwapBased,swapbased-concentrated-liquidity,seed parent#swapbased; category Dexs
+SwapBased,swapbased-perp,seed parent#swapbased; category Dexs
+Sweep n' Flip,sweep-n-flip,seed 3370; category NFT Marketplace
+Symbiosis,symbiosis,seed 1594; category Cross Chain Bridge
+Symmio,symmio,seed 6783; category Derivatives
+Synapse Protocol,synapse-cross-chain-bridge,seed parent#synapse; category Cross Chain Bridge
+SynFutures,synfutures-v3,seed parent#synfutures; category Derivatives
+Syntetika,syntetika,seed 8457; category Risk Curators
+Synthswap,synthswap-perps,seed parent#synthswap; category Dexs
+Synthswap,synthswap-v2,seed parent#synthswap; category Dexs
+Synthswap,synthswap-v3,seed parent#synthswap; category Dexs
+t3rn,t3rn-bridge,seed 6577; category Bridge
+Tangible,tangible-rwa,seed parent#tangible; category RWA
+Tarot,tarot,seed 434; category Lending
+TAU Labs,tau-labs,seed 7149; category Risk Curators
+Team Finance,team-finance,seed 1864; category Token Locker
+Teller,teller,seed 2736; category Lending
+Templ.fun,templ.fun,seed 7929; category SoFi
+Term Finance,termfinance-lend,seed parent#termfinance; category Lending
+Term Finance,termfinance-vaults,seed parent#termfinance; category Lending
+TermiX,termix,seed 8539; category AI Agents
+Textile FX,textile-fx,seed 8322; category Dexs
+TheDeep,thedeep,seed 6453; category Liquidity Manager
+Theo Network,theo-network-thbill,seed parent#theo; category RWA
+Theo Network,theo-straddle-vaults,seed parent#theo; category RWA
+Thetanuts Finance,thetanuts-finance,seed 1085; category Options
+THORChain DEX,thorchain-dex,seed 412; category Dexs
+Timeswap,timeswap-v2,seed parent#timeswap; category Lending
+Tizi,tizi,seed 7787; category Yield Aggregator
+Tokemak (Autopilot),autofinance,seed 438; category Yield
+Top.Market,top.market,seed 9153; category Physical TCG
+Topaz,topaz-amm,seed parent#topaz; category Dexs
+Topaz,topaz-cl,seed parent#topaz; category Dexs
+Townsquare,townsquare-loop-vaults,seed parent#townsquare; category Leveraged Farming
+Treble,treble-perps,seed parent#treble; category Dexs
+Treble,treble-spot,seed parent#treble; category Dexs
+Treble,treble-v2,seed parent#treble; category Dexs
+Tree News,tree-news,seed 6515; category SoFi
+Trueo,trueo,seed 5251; category Prediction Market
+Trust Wallet,trust-wallet-wallet,seed parent#trust-wallet; category Wallets
+Tulipa Capital,tulipa-capital,seed 6213; category Risk Curators
+Tuyo Card,tuyo-card,seed 8179; category Crypto Card Issuer
+UltraYield,ultrayield-curator,seed parent#ultrayield; category Risk Curators
+Umia,umia,seed 8513; category Launchpad
+UNCX (Unicrypt),uncx-network-v2,seed parent#uncx-network; category Token Locker
+UNCX (Unicrypt),uncx-network-v3,seed parent#uncx-network; category Token Locker
+UNCX (Unicrypt),uncx-network-v4,seed parent#uncx-network; category Token Locker
+UNCX (Unicrypt),unicrypt-vesting-v2,seed parent#uncx-network; category Token Locker
+Union Finance,union-protocol,seed 1850; category Uncollateralized Lending
+Uniswap,uniswap-auctions,seed parent#uniswap; category Dexs
+Uniswap,uniswap-v2,seed parent#uniswap; category Dexs
+Uniswap,uniswap-v3,seed parent#uniswap; category Dexs
+Uniswap,uniswap-v4,seed parent#uniswap; category Dexs
+Unit,unit,seed 5788; category Bridge
+Unitas (XGLD),xgld,seed parent#unitas; category Stablecoin Wrapper
+UniVoucher,univoucher,seed 6775; category Payments
+Unlock Protocol,unlock-protocol,seed 6945; category Payments
+Upshift,upshift,seed 5460; category Onchain Capital Allocator
+URM (Ultra Round Money),rage-protocol,seed parent#urm-ecosystem; category Onchain Capital Allocator
+URM (Ultra Round Money),urm,seed parent#urm-ecosystem; category Onchain Capital Allocator
+Vaultedge,vaultedge,seed 6949; category CDP
+Veda,veda,seed 5825; category Onchain Capital Allocator
+Vela Exchange,vela-exchange,seed 2548; category Derivatives
+Velocimeter,graphene-by-velocimeter,seed parent#velocimeter; category Dexs
+Velocimeter,velocimeter-v2,seed parent#velocimeter; category Dexs
+Velora,velora,seed 894; category DEX Aggregator
+Velvet,velvet-capital-staking,seed parent#velvet.capital; category Yield
+Velvet,velvet-v3,seed parent#velvet.capital; category Yield
+Venice,venice,seed 7891; category Farm
+Venus,venus-core-pool,seed parent#venus-finance; category Lending
+Veranta (formerly Avantis),veranta,seed 4108; category Derivatives
+Vertex,vertex-amm,seed parent#Edge; category Derivatives
+Vertex,vertex-perps,seed parent#Edge; category Derivatives
+Vesper,vesper-v1,seed parent#vesper; category Yield Aggregator
+vfat,vfat-swap,seed parent#vfat; category Yield Aggregator
+vfat,vfat.io,seed parent#vfat; category Yield Aggregator
+Virtuals Protocol,virtuals-protocol,seed 5575; category AI Agents
+VMEX Finance,vmex-finance,seed 3514; category Lending
+Voodoo Trade,voodoo-trade-base,seed parent#voodoo-trade; category Derivatives
+Wan Bridge,wan-bridge,seed 2081; category Bridge
+Wasabi,wasabi-perps,seed parent#wasabi; category Derivatives
+Wasabi,wasabi-prop-amm,seed parent#wasabi; category Derivatives
+Wind Swap,wind-swap,seed 7185; category Dexs
+WLTH,common-wealth,seed 4839; category Launchpad
+Wombat Exchange,wombat-exchange,seed 1700; category Dexs
+WOOFi,woofi-earn,seed parent#woofi; category Dexs
+WOOFi,woofi-swap,seed parent#woofi; category Dexs
+x402,x402,seed 7767; category Payments
+Xena Finance,xena-finance,seed 3620; category Derivatives
+XO Market,xo-bridge,seed parent#xo-protocol; category Bridge
+XSY,xsy,seed 6737; category Basis Trading
+Yearn,yearn-curating,seed parent#yearn; category Yield Aggregator
+Yearn,yearn-finance,seed parent#yearn; category Yield Aggregator
+YFX V4,yfx-v4,seed 4674; category Derivatives
+Yield Seeker,yieldseeker,seed 7610; category Yield Aggregator
+Yield Yak,yield-yak-aggregator,seed parent#yield-yak; category Yield Aggregator
+YieldFi,yieldfi,seed 5588; category Yield Aggregator
+YO Protocol,yo-protocol,seed 5915; category Yield Aggregator
+ZebraDAO,zebradao,seed 3967; category Lending
+Zerion,zerion-wallet,seed parent#zerion; category Wallets
+ZEROBASE CeDeFi,zerobase-cedefi,seed 6265; category Basis Trading
+ZeroLend,zerolend-lending,seed parent#zerolend; category Lending
+Zircuit Finance,zircuit-finance,seed 7463; category Yield
+ZKP2P,peer,seed 6390; category Payments
+Zoomex,zoomex,CEX reserves only; seed 6234; category CEX
+Zora,zora-coins,seed parent#zora; category Launchpad
+Zyfai,zyfai,seed 6088; category AI Agents

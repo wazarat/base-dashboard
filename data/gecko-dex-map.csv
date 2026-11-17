@@ -1,0 +1,120 @@
+Project,Dex id,Dex name,Kind
+,9mm-v2-base,9mm V2 (Base),
+,9mm-v3-base,9mm V3 (Base),
+Aerodrome Finance,aero-slipstream-base,Aero Slipstream (Base),dex
+Aerodrome Finance,aero-stable-base,Aero Stable (Base),dex
+Aerodrome Finance,aero-volatile-base,Aero Volatile (Base),dex
+Aerodrome Finance,aerodrome-base,Aerodrome (Base),dex
+Aerodrome Finance,aerodrome-slipstream,Aerodrome SlipStream,dex
+Aerodrome Finance,aerodrome-slipstream-2,Aerodrome Slipstream 2,dex
+Aerodrome Finance,aerodrome-slipstream-3,Aerodrome Slipstream 3,dex
+Alien Base,alien-base,Alien Base,dex
+Alien Base,alien-base-v3,Alien Base V3,dex
+,archly-base,Archly (Base),
+Alien Base,area-51-alien-base,Area 51 (Alien Base),dex
+BaiBai,baibai,Baibai,dex
+,bakeryswap-base,BakerySwap (Base),
+Balancer,balancer-v2-base,Balancer V2 (Base),dex
+Balancer,balancer-v3-base,Balancer V3 (Base),dex
+Bankr,bankr,Bankr,agent
+,bankr-index-base,Bankr Index,
+Baseline Protocol,baseline-base,Baseline (Base),dex
+BaseSwap,baseswap,BaseSwap,dex
+BaseSwap,baseswap-v3,BaseSwap V3,dex
+,basex,BaseX,
+,baso-finance,Baso Finance,
+,bluedex,Bluedex,
+,bunnyswap,BunnySwap,
+,candyswap,CandySwap,
+,cbswap,CBSwap,
+,citadelswap,CitadelSwap,
+,cloudbase,CloudBase,
+Crescentswap,crescentswap-base,CrescentSwap (Base),dex
+Curve,curve-base,Curve (Base),dex
+Dackieswap,dackieswap-v2-base,DackieSwap V2 (Base),dex
+Dackieswap,dackieswap-v3-base,DackieSwap V3 (Base),dex
+,degenbrains-base,DegenBrains (Base),
+,dejungle,deJungle,
+,deli-swap,Deli Swap,
+Deltaswap (GammaSwap),deltaswap-base,Deltaswap (Base),dex
+,derpdex-base,DerpDEX (Base),
+,dex-on-crypto-base,Dex on Crypto (Base),
+Diamondswap,diamondswap,DiamondSwap,dex
+,ensurer,Ensurer,
+Equalizer,equalizer-base,Equalizer (Base),dex
+,ethervista-base,EtherVista (Base),
+,fluid-base,Fluid (Base),
+,fwx-base,FWX (Base),
+,hello-dex-base,Hello DEX (Base),
+,henjin,HenjinDEX (Base),
+HorizonDEX,horizondex-base,HorizonDEX (Base),dex
+Hydrex,hydrex-classic,Hydrex Classic,dex
+Hydrex,hydrex-integral,Hydrex Integral,dex
+,icecreamswap-base,Icecreamswap (Base),
+Infusion,infusion,Infusion,dex
+iZiSwap,iziswap-base,iZiSwap (Base),dex
+,kewlswap-base,KEWLSwap (Base),
+Kim Exchange,kim-v2-base,Kim V2 (Base),dex
+Kim Exchange,kim-v4-base,Kim V4 (Base),dex
+,kokonutswap-base,KokonutSwap (Base),
+,kyberswap-elastic-base,Kyberswap Elastic (Base),
+Leetswap,leetswap-base,Leetswap (Base),dex
+,lfgswap-base,LFGSwap (Base),
+,marswap-base,MarSwap (Base),
+,maverick-v2-base,Maverick V2 (Base),
+,memebox-base,Memebox (Base),
+Mint Club,mint-club-base,Mint Club (Base),launchpad
+,moonbase,MoonBase,
+Nami,nami,Nami,dex
+o1.exchange,o1-launchpad,o1 Launchpad,launchpad
+,oasisswap-base,OasisSwap (Base),
+Omni Exchange,omni-exchange-v2-base,Omni Exchange V2 (Base),dex
+Omni Exchange,omni-exchange-v3-base,Omni Exchange V3 (Base),dex
+Omni Exchange,omni-exchange-v4-base,Omni Exchange V4 (Base),dex
+PancakeSwap,pancakeswap-infinity-clmm-base,Pancakeswap Infinity (CLMM) (Base),dex
+PancakeSwap,pancakeswap-infinity-lbamm-base,Pancakeswap Infinity LBAMM (Base),dex
+PancakeSwap,pancakeswap-v2-base,Pancakeswap V2 (Base),dex
+PancakeSwap,pancakeswap-v3-base,Pancakeswap V3 (Base),dex
+,pixelswap-base,PixelSwap (Base),
+,plantbaseswap,PlantBaseSwap,
+Quickswap,quickswap-v2-base,Quickswap V2 (Base),dex
+Quickswap,quickswap-v4-base,Quickswap V4 (Base),dex
+,robots-farm-base,Robots.Farm (Base),
+RocketSwap,rocketswap,Rocketswap,dex
+Rubicon,rubicon-base,Rubicon (Base),dex
+Rubicon,rubicon-clmm-base,Rubicon CLMM (Base),dex
+Ryze Protocol,ryze,Ryze,dex
+,satori-base,Satori (Base),
+DLMM KING (SectorOne),sectorone-base,DLMM King V2.2 (Base),dex
+DLMM KING (SectorOne),sectorone-v2.0-base,DLMM King V2.0 (Base),dex
+SharkSwap DEX,sharkswap-base,SharkSwap (Base),dex
+Smardex,smardex-base,SmarDex (Base),dex
+,sobal-base,Sobal (Base),
+Solidly V3,solidly-v3-base,Solidly V3 (Base),dex
+,soswap,Soswap,
+SquadSwap,squadswap-base,SquadSwap (Base),dex
+SquadSwap,squadswap-v3-base,SquadSwap V3 (Base),dex
+SushiSwap,sushiswap-v2-base,SushiSwap V2 (Base),dex
+SushiSwap,sushiswap-v3-base,Sushiswap V3 (Base),dex
+SwapBased,swapbased,SwapBased,dex
+SwapBased,swapbased-v3,SwapBased V3,dex
+,swapline-base,Swapline (Base),
+Synthswap,synthswap,Synthswap,dex
+Synthswap,synthswap-v3,Synthswap V3,dex
+,thirdfy,Thirdfy,
+,throne-v2-base,Throne V2 (Base),
+,throne-v3-base,Throne V3 (Base),
+,torus,Torus,
+Treble,treble-v2,Treble V2,dex
+Treble,treble-v4,Treble V4,dex
+Treble,treble-v4-limit,Treble V4 (Limit),dex
+,umbrae-damm,Umbrae DAMM,
+,umbrae-dlmm,Umbrae DLMM,
+Uniswap,uniswap-v2-base,Uniswap V2 (Base),dex
+Uniswap,uniswap-v3-base,Uniswap V3 (Base),dex
+Uniswap,uniswap-v4-base,Uniswap V4 (Base),dex
+Velocimeter,velocimeter-base,Velocimeter (Base),dex
+Virtuals Protocol,virtuals-base,Virtuals (Base),agent
+Virtuals Protocol,virtuals-unicorn-base,Virtuals Unicorn (Base),agent
+,x7-finance-base,Xchange (Base),
+,yum-yum-swap,Yum Yum Swap,
