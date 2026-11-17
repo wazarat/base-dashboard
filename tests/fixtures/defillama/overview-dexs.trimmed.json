@@ -1,109 +1,99 @@
 {
- "chain": "Robinhood Chain",
- "total24h": 301891018.65,
+ "chain": "Base",
  "totalDataChart": [
   [
-   1793750400,
-   866692506.59
+   1794528000,
+   1421448423.5700002
   ],
   [
-   1793836800,
-   979400705.7300001
+   1794614400,
+   1511421621.17
   ],
   [
-   1793923200,
-   715063320.34
+   1794700800,
+   1189303999.09
   ],
   [
-   1794009600,
-   301891018.65
+   1794787200,
+   1068809653.77
   ],
   [
-   1794096000,
-   268879743.02
+   1794873600,
+   1056129142.6
   ]
  ],
  "totalDataChartBreakdown": [
   [
-   1793750400,
+   1794528000,
    {
-    "Uniswap V3": 337860929,
-    "Uniswap V4": 295134392,
-    "up v3": 6583020
+    "Uniswap V3": 286239776,
+    "Aerodrome Slipstream": 100043850,
+    "Uniswap V4": 29142171
    }
   ],
   [
-   1793836800,
+   1794614400,
    {
-    "Uniswap V3": 353615887,
-    "Uniswap V4": 384384848,
-    "up v3": 5949914
+    "Uniswap V3": 363984639,
+    "Aerodrome Slipstream": 109542805,
+    "Uniswap V4": 30593775
    }
   ],
   [
-   1793923200,
+   1794700800,
    {
-    "Uniswap V3": 193794304,
-    "Uniswap V4": 259699201,
-    "up v3": 5082813
+    "Uniswap V3": 265205792,
+    "Aerodrome Slipstream": 121072888,
+    "Uniswap V4": 23850291
    }
   ],
   [
-   1794009600,
+   1794787200,
    {
-    "Uniswap V3": 50494199,
-    "Uniswap V4": 176587026,
-    "up v3": 2730681
+    "Uniswap V3": 196370146,
+    "Aerodrome Slipstream": 98783352,
+    "Uniswap V4": 20310752
    }
   ],
   [
-   1794096000,
+   1794873600,
    {
-    "Uniswap V3": 46668088,
-    "Uniswap V4": 151154388,
-    "up v3": 3262720
+    "Uniswap V3": 274646646,
+    "Aerodrome Slipstream": 69641925,
+    "Uniswap V4": 17047852
    }
   ]
  ],
  "protocols": [
   {
    "name": "Uniswap V3",
+   "displayName": "Uniswap V3",
    "defillamaId": "2198",
    "module": "uniswap-v3",
    "parentProtocol": "parent#uniswap",
    "category": "Dexs",
    "slug": "uniswap-v3",
-   "total24h": 46668088,
-   "total30d": 7221735464
+   "total30d": 5905659257
+  },
+  {
+   "name": "Aerodrome Slipstream",
+   "displayName": "Aerodrome Slipstream",
+   "defillamaId": "4524",
+   "module": "aerodrome-slipstream",
+   "parentProtocol": "parent#aero-protocol",
+   "category": "Dexs",
+   "slug": "aerodrome-slipstream",
+   "total30d": 5419836506
   },
   {
    "name": "Uniswap V4",
+   "displayName": "Uniswap V4",
    "defillamaId": "5690",
    "module": "uniswap-v4",
    "parentProtocol": "parent#uniswap",
    "category": "Dexs",
    "slug": "uniswap-v4",
-   "total24h": 151154388,
-   "total30d": 9996666844
-  },
-  {
-   "name": "up v3",
-   "defillamaId": "8242",
-   "module": "up-v3",
-   "parentProtocol": "parent#up",
-   "category": "Dexs",
-   "slug": "up-v3",
-   "total24h": 3262720,
-   "total30d": 188225411
-  },
-  {
-   "name": "Fables",
-   "defillamaId": "8481",
-   "module": "fables",
-   "category": "Dexs",
-   "slug": "fables",
-   "total24h": 6795757,
-   "total30d": 1203548178
+   "total30d": 1208393462
   }
  ]
 }

@@ -1,5 +1,5 @@
 /**
- * Seeds data/gecko-dex-map.csv: one row per GeckoTerminal DEX id on network robinhood, mapped to an Atlas
+ * Seeds data/gecko-dex-map.csv: one row per GeckoTerminal DEX id on network base, mapped to an Atlas
  * project where the names match. Existing rows are kept (hand edits win); new ids are appended. A row with
  * an empty Project means reviewed and left out, the same convention as data/defillama-map.csv.
  *
@@ -15,20 +15,24 @@ import { createClient } from "./fetch/http";
 import { findFile, readCsv, readCsvOrEmpty, writeCsv } from "./lib/csv";
 import { DATA } from "./lib/paths";
 
-const BASE = "https://api.geckoterminal.com/api/v2/networks/robinhood";
+const BASE = "https://api.geckoterminal.com/api/v2/networks/base";
 
 /** GeckoTerminal venue name (normalized) -> Atlas project name, for names that do not match on their own. */
 const ALIASES: Record<string, string> = {
   virtuals: "Virtuals Protocol",
-  "pons dot family": "Pons",
-  "uniswap pools trade": "pools.trade (Uniswap Labs)",
-  "dlmm king": "DLMM KING",
-  giga: "GigaDex",
-  aero: "Aero (Aerodrome)",
-  "long xyz": "Long",
-  "frontier fun": "Frontier",
-  "clank trade": "Clank.trade",
-  up: "up.",
+  "virtuals unicorn": "Virtuals Protocol",
+  aerodrome: "Aerodrome Finance",
+  "aerodrome slipstream": "Aerodrome Finance",
+  "aerodrome slipstream 2": "Aerodrome Finance",
+  "aerodrome slipstream 3": "Aerodrome Finance",
+  "aero slipstream": "Aerodrome Finance",
+  "aero volatile": "Aerodrome Finance",
+  "aero stable": "Aerodrome Finance",
+  "o1 launchpad": "o1.exchange",
+  "kim v2": "Kim Exchange",
+  "kim v4": "Kim Exchange",
+  "sectorone": "DLMM KING (SectorOne)",
+  "sectorone v2 0": "DLMM KING (SectorOne)",
 };
 
 const KIND_BY_SECTOR: Record<string, VenueKind> = { Launchpads: "launchpad", "AI Agents": "agent", "DEXs & Liquidity": "dex" };

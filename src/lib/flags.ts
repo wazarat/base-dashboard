@@ -19,17 +19,25 @@ export type InChainTotal = Record<FlagMetric, boolean>;
 export const DOUBLECOUNTED_CATEGORIES = new Set(["Yield", "Yield Aggregator", "Onchain Capital Allocator", "Risk Curators", "Liquid Staking", "Liquid Restaking"]);
 export const CEX_CATEGORY = "CEX";
 export const LOCKER_CATEGORY = "Token Locker";
+/**
+ * Bridge deposits sit on the source chain, so DefiLlama's chain TVL for Base leaves them out. Found at the first Base
+ * reconciliation (Nov 17 2026): counting these three categories put the Atlas 3.7% above DefiLlama, leaving them out
+ * brought it within 0.4%.
+ */
+export const BRIDGE_CATEGORIES = new Set(["Bridge", "Cross Chain Bridge", "Canonical Bridge"]);
 /** The chain's own sequencer income is not an app. */
 export const CHAIN_INCOME_CATEGORIES = new Set(["Chain", "Foundation"]);
-export const CHAIN_INCOME_SLUGS = new Set(["arbitrum-nitro"]);
+/** Base's own row in the fees overview (name "Base", slug "base", category Chain): sequencer income. */
+export const CHAIN_INCOME_SLUGS = new Set(["base"]);
 
 /** Why a protocol's TVL sits outside the Atlas total. */
-export type TvlExclusion = "doublecounted" | "cex" | "locker" | "chain-income";
+export type TvlExclusion = "doublecounted" | "cex" | "locker" | "bridge" | "chain-income";
 
 export const EXCLUSION_LABEL: Record<TvlExclusion | "outside-breakdown", string> = {
   doublecounted: "Double counted by DefiLlama",
   cex: "Exchange deposits",
   locker: "Token lockers",
+  bridge: "Bridge deposits",
   "chain-income": "Chain income",
   "outside-breakdown": "Outside DefiLlama's chain breakdown",
 };
@@ -49,6 +57,7 @@ export function tvlExclusion(p: Pick<LlamaProtocolSnap, "slug" | "category">, ad
   if (p.category === CEX_CATEGORY) return "cex";
   if (inDoublecountedBucket(p.category, adapterDoublecounted)) return "doublecounted";
   if (p.category === LOCKER_CATEGORY) return "locker";
+  if (BRIDGE_CATEGORIES.has(p.category)) return "bridge";
   return null;
 }
 

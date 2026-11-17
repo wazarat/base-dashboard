@@ -87,7 +87,8 @@ export function reconcileFlow(metric: Exclude<FlagMetric, "tvl">, protocols: Lla
 export function reconcileTvl(protocols: LlamaProtocolSnap[], chainTvl: Series, doublecounted: Series, end: DateStr): { checks: ReconcileCheck[]; atlas: number; excluded: Exclusion[] } {
   const withTvl = protocols.filter((p) => p.tvlPrevDay && p.tvlPrevDay[0] === end && p.tvlPrevDay[1] > 0);
   const val = (p: LlamaProtocolSnap) => p.tvlPrevDay?.[1] ?? 0;
-  const counted = withTvl.filter((p) => !p.doublecounted && p.tvlExclusion !== "cex");
+  // DefiLlama keeps token lockers in chain TVL but leaves out exchanges and bridge deposits.
+  const counted = withTvl.filter((p) => !p.doublecounted && p.tvlExclusion !== "cex" && p.tvlExclusion !== "bridge");
   const dc = withTvl.filter((p) => p.doublecounted);
   const sum = (ps: LlamaProtocolSnap[]) => ps.reduce((a, p) => a + val(p), 0);
   const toC = (ps: LlamaProtocolSnap[]) => ps.map((p) => ({ name: p.name, value: val(p) })).sort(desc);
@@ -104,7 +105,7 @@ export function reconcileTvl(protocols: LlamaProtocolSnap[], chainTvl: Series, d
     .sort(desc);
   return {
     checks: [
-      check("tvl", "TVL counted by DefiLlama", countedSum, chainV, chainV !== null && countedSum > chainV ? toC(counted) : toC(withTvl.filter((p) => p.doublecounted || p.tvlExclusion === "cex"))),
+      check("tvl", "TVL counted by DefiLlama", countedSum, chainV, chainV !== null && countedSum > chainV ? toC(counted) : toC(withTvl.filter((p) => p.doublecounted || p.tvlExclusion === "cex" || p.tvlExclusion === "bridge"))),
       check("tvl-doublecounted", "TVL double counted", dcSum, dcV, dcV !== null && dcSum > dcV ? toC(dc) : toC(counted)),
     ],
     atlas: sum(atlasPs),

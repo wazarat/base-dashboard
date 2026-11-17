@@ -14,13 +14,14 @@ import { readCsvOrEmpty } from "../lib/csv";
 import { log } from "../lib/log";
 import { DATA, HISTORY } from "../lib/paths";
 import { appendDated, readJson, upsertSeries, writeJsonStable } from "../lib/store";
+import { CHAIN } from "../../src/lib/chain";
 import type { Ctx, RunResult } from "./context";
 import { readChain, writeChain } from "./defillama";
 import { createClient, HttpError, type HttpClient } from "./http";
-import { readDaily, readIndex, writeDaily } from "./robinhood";
 
-const STATS = "https://robinhoodchain.blockscout.com/stats-service/api/v1";
-const KEYED = "https://api.blockscout.com/4663/api/v2";
+/** Base publishes no Blockscout stats service (probed Nov 17 2026), so chain lines come from growthepie and DefiLlama instead. */
+const STATS: string | null = null;
+const KEYED = CHAIN.blockscoutGateway;
 /** Contracts above this many transactions are not backfilled page by page. */
 export const BACKFILL_MAX_TXNS = 50_000;
 
@@ -139,6 +140,7 @@ export function foldDays(rows: TxPage["rows"], into: Map<string, { txns: number;
 }
 
 export async function runLines(ctx: Ctx): Promise<RunResult> {
+  if (!STATS) return { rows: 0, calls: 0, notes: ["skipped: Blockscout publishes no stats service for Base; chain activity comes from growthepie"] };
   const client = createClient({ name: "blockscout", minIntervalMs: 500 });
   const notes: string[] = [];
   const chain = readChain();
@@ -217,8 +219,6 @@ export async function runKeyed(ctx: Ctx): Promise<RunResult> {
   const key = ctx.env.BLOCKSCOUT_API_KEY?.trim();
   if (!key) return { rows: 0, calls: 0, notes: ["skipped: BLOCKSCOUT_API_KEY not set"] };
   const contracts = parseContracts(readCsvOrEmpty(path.join(DATA, "contracts.csv")));
-  const index = readIndex();
-  const stockByAddr = new Map(Object.values(index.tokens).map((t) => [t.address, t.symbol]));
   const client = keyedClient(key);
   const notes: string[] = [];
   const dir = path.join(HISTORY, "contracts");
@@ -243,18 +243,6 @@ export async function runKeyed(ctx: Ctx): Promise<RunResult> {
         const ti = parseTokenInfo(await keyedGet<Record<string, unknown>>(client, key, `/tokens/${c.address}`));
         tokens[c.address] = appendDated(tokens[c.address] ?? [], [ctx.today, ti.holders, ti.totalSupply, ti.circulatingMarketCap, ti.exchangeRate]);
       }
-    } catch (e) {
-      bail(e);
-    }
-  }
-
-  // 2. Stock tokens: holders / supply / market cap straight from the token endpoint.
-  const stockAddrs = Array.from(stockByAddr.keys()).filter((a) => !contracts.some((c) => c.address === a));
-  for (const addr of stockAddrs) {
-    try {
-      const ti = parseTokenInfo(await keyedGet<Record<string, unknown>>(client, key, `/tokens/${addr}`));
-      tokens[addr] = appendDated(tokens[addr] ?? [], [ctx.today, ti.holders, ti.totalSupply, ti.circulatingMarketCap, ti.exchangeRate]);
-      rows += 1;
     } catch (e) {
       bail(e);
     }
@@ -320,17 +308,10 @@ export async function runKeyed(ctx: Ctx): Promise<RunResult> {
     writeJsonStable(path.join(dir, "counters.json"), counters);
     writeJsonStable(path.join(dir, "tokens.json"), tokens);
     writeJsonStable(path.join(dir, "activity.json"), activity);
-    for (const [addr, symbol] of stockByAddr) {
-      const t = tokens[addr]?.at(-1);
-      if (!t || t[0] !== ctx.today) continue;
-      const daily = readDaily(symbol);
-      daily.onchain = appendDated(daily.onchain, [ctx.today, t[1], t[2], t[3]]);
-      writeDaily(daily);
-    }
   }
   if (failed) notes.push(`${failed} keyed requests failed`);
   const done = Object.values(activity).filter((a) => a.done && !a.skippedLarge).length;
   const large = Object.values(activity).filter((a) => a.skippedLarge).length;
-  notes.push(`${contracts.length} contracts, ${stockAddrs.length} stock tokens snapshotted; tx backfill: ${pagesUsed} pages, ${done} contracts complete, ${large} skipped as large`);
+  notes.push(`${contracts.length} contracts snapshotted; tx backfill: ${pagesUsed} pages, ${done} contracts complete, ${large} skipped as large`);
   return { rows, calls: client.stats().calls, notes };
 }

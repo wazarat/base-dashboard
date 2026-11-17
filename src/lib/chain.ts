@@ -7,8 +7,7 @@ export const CHAIN = {
   name: "Base",
   /** Lowercase path segment for DefiLlama overview endpoints. */
   llamaOverview: "base",
-  /** DefiLlama's name for the chain-level fees row (sequencer income, never an app). */
-  llamaChainRow: "Base Chain",
+  llamaChainRow: "base",
   chainId: 8453,
   geckoNetwork: "base",
   morphoChainId: 8453,

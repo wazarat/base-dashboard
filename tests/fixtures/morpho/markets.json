@@ -3,65 +3,74 @@
   "markets": {
    "items": [
     {
-     "marketId": "0xff762c8aee3849902b33d8ec6432668f19f88b755bf3dbf186f66a2cac7750ca",
-     "lltv": "625000000000000000",
+     "marketId": "0xffd35206a772174c04f599e4034a2f132fc3f7a462ca732affcea92136716573",
+     "lltv": "945000000000000000",
      "loanAsset": {
-      "symbol": "USDG",
-      "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+      "symbol": "msETH",
+      "address": "0x7Ba6F01772924a82D9626c126347A28299E98c98"
      },
      "collateralAsset": {
-      "symbol": "AMZN",
-      "address": "0x12f190a9F9d7D37a250758b26824B97CE941bF54"
+      "symbol": "wstETH",
+      "address": "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452"
      },
      "state": {
-      "supplyAssetsUsd": 0,
-      "borrowAssetsUsd": 0,
-      "collateralAssetsUsd": 0
+      "supplyAssetsUsd": 100.57971580968179,
+      "borrowAssetsUsd": 88.86844957734712,
+      "collateralAssetsUsd": 119.69493266165114,
+      "utilization": 0.883562345170125,
+      "supplyApy": 0.024176028719955608
      }
     },
     {
-     "marketId": "0xff2063ef18bc5f71867c56d6d3290b61f3da1d010c8a0552bdb7995cfad8cacc",
-     "lltv": "625000000000000000",
+     "marketId": "0xfef5641f70e19a87e369304daa9ba823754f3db1e6481d757fcae0442cffe479",
+     "lltv": "770000000000000000",
      "loanAsset": {
-      "symbol": "USDG",
-      "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+      "symbol": "USDC",
+      "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
      },
      "collateralAsset": {
-      "symbol": "TSLAon",
-      "address": "0xB197F36C25BA9b66960688882A4dC595C6b04309"
+      "symbol": "NVDAc",
+      "address": "0xb20000000000000000000078ee7ce2fE4908108C"
      },
      "state": {
-      "supplyAssetsUsd": 149.99824455,
-      "borrowAssetsUsd": 0,
-      "collateralAssetsUsd": 0
+      "supplyAssetsUsd": 0.500054969,
+      "borrowAssetsUsd": 0.15012496900000002,
+      "collateralAssetsUsd": 0.25902259383868115,
+      "utilization": 0.3002169327508472,
+      "supplyApy": 0.00015017397559068048
      }
     },
     {
-     "marketId": "0xfe1d7da2fbde85b1fee120c88df3e6b55164a2442dab97486d3d4f719a5ff1fb",
+     "marketId": "0xe1986e80099257c65dd18091ec7e34752ae2336870a5649f20c450c9c4931fb8",
      "lltv": "980000000000000000",
      "loanAsset": {
-      "symbol": "UNKNOWN",
-      "address": "0x0000000000000000000000000000000000000000"
-     },
-     "collateralAsset": null,
-     "state": null
-    },
-    {
-     "marketId": "0xf6f3dbe0a19e948147e79e66502c6b05709d8dfde977fec7db1528fc8f0ebdfa",
-     "lltv": "860000000000000000",
-     "loanAsset": {
-      "symbol": "USDG",
-      "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+      "symbol": "USDC",
+      "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
      },
      "collateralAsset": {
-      "symbol": "SGOV",
-      "address": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5"
+      "symbol": "HERMES",
+      "address": "0x4bcaf180df5b13c0441FE41A66e9638A2a410C6D"
      },
      "state": {
-      "supplyAssetsUsd": 10.979789502019646,
-      "borrowAssetsUsd": 0.03999953188,
-      "collateralAssetsUsd": 0.20098000000000002
+      "supplyAssetsUsd": 563208294.5927252,
+      "borrowAssetsUsd": 563208294.5927252,
+      "collateralAssetsUsd": null,
+      "utilization": 1,
+      "supplyApy": 2979.9579868427436
      }
+    },
+    {
+     "marketId": "0xfff517c4ca7bb55befaacc7a17633d1e95dc748df37b92304fdeb019a17214ba",
+     "lltv": "980000000000000000",
+     "loanAsset": {
+      "symbol": "cbBTC",
+      "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf"
+     },
+     "collateralAsset": {
+      "symbol": "GMORPHO",
+      "address": "0xDa1C2c3C8FaD503662e41E324FC644Dc2c5e0CCD"
+     },
+     "state": null
     }
    ]
   }

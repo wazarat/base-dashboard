@@ -8,8 +8,7 @@
  *   npm run refresh -- --only defillama,blockscout --verbose --dry-run
  *
  * Sources run in lanes: sources inside a lane run in order, lanes run at the same time. A lane holds sources
- * that touch the same files (the stock index and per-ticker files) or the same host, so nothing is written by
- * two sources at once. GeckoTerminal and the Blockscout key also share one rate limiter across lanes (http.ts).
+ * that touch the same files or the same host, so nothing is written by two sources at once. GeckoTerminal and the Blockscout key also share one rate limiter across lanes (http.ts).
  * REFRESH_BUDGET_MIN (default 12) sets when optional work stops (ctx.deadlineMs), so the daily run, with its
  * build and tests, stays under 20 minutes; cursors carry what is left to the next run.
  */
@@ -21,11 +20,10 @@ import { log, setVerbose } from "./lib/log";
 import { HISTORY } from "./lib/paths";
 import { readJson, writeJsonStable } from "./lib/store";
 import type { Ctx, Source } from "./fetch/context";
-import * as robinhood from "./fetch/robinhood";
 import * as defillama from "./fetch/defillama";
 import * as blockscout from "./fetch/blockscout";
 import * as morpho from "./fetch/morpho";
-import * as geckoterminal from "./fetch/geckoterminal";
+import * as growthepie from "./fetch/growthepie";
 import * as stablecoins from "./fetch/stablecoins";
 import * as blockscoutTokens from "./fetch/blockscout-tokens";
 import * as blockscoutNfts from "./fetch/blockscout-nfts";
@@ -41,15 +39,12 @@ import * as geckoVenues from "./fetch/geckoterminal-venues";
 
 /** Lanes run in parallel; sources inside a lane run in this order. */
 const LANES: Source[][] = [
-  // Stocks: every source here reads or writes the stock index and per-ticker files, so they never overlap.
+  // Morpho and the keyed Blockscout gateway, plus growthepie's chain activity.
   [
-    // GeckoTerminal right after the two it depends on (the index, then the Chainlink feeds), since its rate limit
-    // makes it the longest source; the Blockscout and Morpho steps follow.
-    { id: "robinhood", run: robinhood.run },
-    { id: "geckoterminal", run: geckoterminal.run },
     { id: "morpho", run: morpho.run },
     { id: "blockscout", run: blockscout.runLines },
     { id: "blockscout-keyed", run: blockscout.runKeyed },
+    { id: "growthepie", run: growthepie.run },
   ],
   // GeckoTerminal project tokens and venues: own files, the shared GeckoTerminal limiter keeps the host within its limit.
   [
@@ -124,7 +119,6 @@ async function main() {
     const disk: HistoryMeta = { ...emptyMeta(), ...readJson<Partial<HistoryMeta>>(metaFile, {}) };
     for (const id of SOURCE_IDS) disk.perSource[id] = { ...emptySourceStatus(), ...(disk.perSource[id] ?? {}) };
     for (const id of ran) disk.perSource[id] = meta.perSource[id];
-    if (ran.has("geckoterminal")) disk.cursors.geckoHourly = meta.cursors.geckoHourly;
     if (ran.has("blockscout-keyed")) disk.cursors.blockscoutTx = meta.cursors.blockscoutTx;
     if (ran.has("defillama")) {
       disk.cursors.llamaMissing = meta.cursors.llamaMissing;

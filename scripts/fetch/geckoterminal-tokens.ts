@@ -1,5 +1,5 @@
 /**
- * GeckoTerminal, network "robinhood" only: 30-day DEX volume and liquidity for each mapped
+ * GeckoTerminal, network "base" only: 30-day DEX volume and liquidity for each mapped
  * project token (project-token role in data/contracts.csv), summed over its pools on this chain.
  * Global market cap or volume from CoinGecko or Blockscout covers every chain and is never used.
  */
@@ -17,7 +17,7 @@ import { hasTime, type Ctx, type RunResult } from "./context";
 import { parseOhlcvDay, parsePools, parseTokens } from "./geckoterminal";
 import { geckoClient } from "./gecko-client";
 
-const BASE = "https://api.geckoterminal.com/api/v2/networks/robinhood";
+const BASE = "https://api.geckoterminal.com/api/v2/networks/base";
 const DEX_FILE = path.join(TOKENS_DIR, "dex.json");
 
 export function readTokenDex(): Record<string, TokenDexRecord> {
@@ -60,7 +60,7 @@ export async function run(ctx: Ctx): Promise<RunResult> {
   let rows = 0;
   let candleTokens = 0;
 
-  // 1. Batched snapshot: top pools, liquidity and 24h volume per token, on network robinhood only.
+  // 1. Batched snapshot: top pools, liquidity and 24h volume per token, on network base only.
   const pools: Pool[] = [];
   let snapped = 0;
   for (let i = 0; i < tokens.length; i += 30) {

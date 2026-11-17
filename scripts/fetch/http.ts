@@ -3,7 +3,7 @@
  * 429/5xx (honouring Retry-After), in-run GET cache, descriptive User-Agent.
  * No personal data is ever sent.
  */
-export const UA = "rh-chain-atlas/2.0 (+https://robinhood.canhav.com)";
+export const UA = "base-atlas/1.0 (+https://base.canhav.com)";
 
 export class HttpError extends Error {
   constructor(

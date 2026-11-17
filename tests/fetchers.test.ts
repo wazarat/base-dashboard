@@ -5,48 +5,43 @@ import { HAS_HISTORY } from "./helpers";
 import { parseAddressCounters, parseContracts, parseCounters, parseLine, parseTokenInfo } from "../scripts/fetch/blockscout";
 import { parseBreakdown, parseChainTvl, parseOverviewProtocols, parseProtocolTvl, parseProtocols, parseSummaryBreakdown, parseTotalChart } from "../scripts/fetch/defillama";
 import { parseOhlcvDay, parseOhlcvHour, parsePools, parseTokens } from "../scripts/fetch/geckoterminal";
-import { attachToStocks, MARKETS_PAGE, marketsQuery, morphoTotals, parseMarkets } from "../scripts/fetch/morpho";
+import { isBrokenMarket, MARKETS_PAGE, marketsQuery, morphoTotals, parseMarkets } from "../scripts/fetch/morpho";
 import { parseMethodology, parseProtocolExtras } from "../scripts/fetch/llama-extras";
-import { parseAssets, parsePrices, stockTokensCsvRows } from "../scripts/fetch/robinhood";
 
 const fx = (f: string) => JSON.parse(fs.readFileSync(path.join(__dirname, "fixtures", f), "utf8"));
 
 describe("defillama parsers", () => {
-  it.skipIf(!HAS_HISTORY)("keeps only Base protocols and strips the chain prefix from addresses", () => {
+  it("keeps only Base protocols and reads a Base address only from a base: prefix", () => {
     const p = parseProtocols(fx("defillama/protocols.trimmed.json"));
-    expect(p.map((x) => x.slug)).toContain("fables");
-    expect(p.some((x) => x.slug === "uniswap-v3")).toBe(true);
-    const raw = fx("defillama/protocols.trimmed.json") as Array<{ slug: string; chains: string[] }>;
-    expect(p.length).toBe(raw.filter((x) => x.chains.includes("Base")).length);
-    expect(p.some((x) => !raw.find((r) => r.slug === x.slug)!.chains.includes("Base"))).toBe(false);
-    const fables = p.find((x) => x.slug === "fables")!;
-    expect(fables.address).toBe("0xb63d07cef74be747231d601bb2faa6b252c68106");
-    expect(fables.tvl).toBeGreaterThan(1e6);
+    expect(p.map((x) => x.slug).sort()).toEqual(["aero-slipstream", "morpho-blue", "uniswap-v3"]);
+    const aero = p.find((x) => x.slug === "aero-slipstream")!;
+    expect(aero.address).toBe("0x3f5bf3edac59d650d8fdf9657a71f2f904a3a4ee");
+    expect(aero.tvl).toBeGreaterThan(1e6);
+    // A bare 0x address is the token on Ethereum, never a Base contract.
     expect(p.find((x) => x.slug === "uniswap-v3")!.address).toBeNull();
   });
-  it.skipIf(!HAS_HISTORY)("reads per-protocol TVL for the chain only", () => {
+  it("reads per-protocol TVL for Base only", () => {
     const s = parseProtocolTvl(fx("defillama/protocol-uniswap-v3.trimmed.json"));
-    // the live point shares a date with the last midnight point, so 10 raw points dedupe to 9 days
+    // The live point shares a date with the last midnight point, so 10 raw points dedupe to 9 days.
     expect(s.length).toBe(9);
     expect(s[0][0] < s[8][0]).toBe(true);
-    expect(s.at(-1)![1]).toBe(78476617);
+    expect(s.at(-1)![1]).toBe(277441028);
   });
   it("turns the chain breakdown into one series per protocol name", () => {
     const m = parseBreakdown(fx("defillama/overview-dexs.trimmed.json"));
-    // Fables is absent from the chain breakdown (covered by the per-protocol summary fallback instead)
-    expect(Object.keys(m).sort()).toEqual(["Uniswap V3", "Uniswap V4", "up v3"]);
+    expect(Object.keys(m).sort()).toEqual(["Aerodrome Slipstream", "Uniswap V3", "Uniswap V4"]);
     expect(m["Uniswap V4"].length).toBe(5);
-    expect(m["Uniswap V4"].at(-1)![1]).toBe(151154388);
+    expect(m["Uniswap V4"].at(-1)![1]).toBe(17047852);
     expect(parseTotalChart(fx("defillama/overview-dexs.trimmed.json")).length).toBe(5);
-    expect(parseOverviewProtocols(fx("defillama/overview-dexs.trimmed.json")).map((p) => p.name)).toContain("Fables");
+    expect(parseOverviewProtocols(fx("defillama/overview-dexs.trimmed.json")).map((p) => p.name)).toContain("Aerodrome Slipstream");
   });
   it("sums children of this chain in a per-protocol summary", () => {
     const s = parseSummaryBreakdown({ totalDataChartBreakdown: [[1794096000, { Ethereum: { "Uniswap V3": 5 }, "Base": { "Uniswap V3": 2, "Uniswap V4": 3 } }], [1794009600, { Ethereum: { "Uniswap V3": 1 } }]] });
     expect(s).toEqual([["2026-11-08", 5]]);
   });
   it("parses chain tvl and active users", () => {
-    expect(parseChainTvl(fx("defillama/historicalChainTvl.json")).at(-1)![1]).toBe(1075753352);
-    expect(parseTotalChart(fx("defillama/active-users.json")).at(-1)![1]).toBe(68045);
+    expect(parseChainTvl(fx("defillama/historicalChainTvl.json")).at(-1)![1]).toBe(5197090375);
+    expect(parseTotalChart(fx("defillama/active-users.json")).at(-1)![1]).toBe(69985);
   });
 });
 
@@ -75,16 +70,17 @@ describe("geckoterminal parsers", () => {
   it("parses pools with dex and token sides", () => {
     const p = parsePools(fx("geckoterminal/pools.json"));
     expect(p.length).toBe(5);
-    expect(p[0].dex).toBe("long-xyz");
-    expect(p[0].quote).toBe("0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec");
-    expect(p[0].reserveUsd).toBeGreaterThan(1e6);
+    expect(p[0].dex).toBe("virtuals-base");
+    // The network prefix is stripped, so the address matches data/contracts.csv.
+    expect(p[0].quote).toBe("0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b");
+    expect(p[0].reserveUsd).toBeGreaterThan(1000);
   });
   it("parses a token with its top pools", () => {
     const { tokens, pools } = parseTokens(fx("geckoterminal/token.json"));
-    expect(tokens[0].address).toBe("0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec");
-    expect(tokens[0].priceUsd).toBeCloseTo(187.26, 1);
-    expect(tokens[0].topPoolIds.length).toBe(3);
-    expect(pools.length).toBeLessThanOrEqual(3);
+    expect(tokens[0].address).toBe("0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b");
+    expect(tokens[0].priceUsd).toBeCloseTo(0.4266, 3);
+    expect(tokens[0].topPoolIds.length).toBe(1);
+    expect(pools.length).toBe(1);
   });
   it("orders candles oldest first and maps to UTC days", () => {
     const c = parseOhlcvDay(fx("geckoterminal/ohlcv-day.json"));
@@ -98,32 +94,18 @@ describe("geckoterminal parsers", () => {
 });
 
 describe("morpho", () => {
-  it("handles null state and attaches collateral by address only", () => {
+  it("handles null state and leaves broken markets out of the totals", () => {
     const m = parseMarkets(fx("morpho/markets.json"));
-    expect(m.length).toBeGreaterThanOrEqual(3);
-    const amzn = m.find((x) => x.collateral?.symbol === "AMZN")!;
-    expect(amzn.collateral!.address).toBe("0x12f190a9f9d7d37a250758b26824b97ce941bf54");
-    const { perSymbol, lookAlikes } = attachToStocks(m, new Map([[amzn.collateral!.address, "AMZN"]]), new Set(["AMZN", "TSLA"]));
-    expect(perSymbol.has("AMZN")).toBe(true);
-    expect(lookAlikes.some((l) => l.collateral?.symbol === "TSLAon")).toBe(true);
-  });
-});
-
-describe("robinhood", () => {
-  it("parses assets on chain 4663 with lowercase addresses and numeric multipliers", () => {
-    const t = parseAssets(fx("robinhood/assets.trimmed.json"));
-    expect(t.map((x) => x.symbol)).toEqual(["CRM", "NVDA", "TSLA"]);
-    const nvda = t.find((x) => x.symbol === "NVDA")!;
-    expect(nvda.address).toBe("0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec");
-    expect(nvda.multiplier).toBeGreaterThan(0.9);
-    expect(nvda.tradingCapabilities.market).toBe(true);
-    const rows = stockTokensCsvRows({ fetchedAt: "", tokens: Object.fromEntries(t.map((x) => [x.symbol, x])) });
-    expect(rows[0].Ticker).toBe("CRM");
-    expect(rows[0].Verified).toBe("Yes");
-  });
-  it("parses quotes and returns null for empty", () => {
-    expect(parsePrices(fx("robinhood/prices-nvda.json"))!.tokenBid).toBeCloseTo(188.85, 1);
-    expect(parsePrices(fx("robinhood/prices-empty.json"))).toBeNull();
+    expect(m).toHaveLength(4);
+    expect(m.find((x) => x.supplyUsd === null)).toBeDefined();
+    const hermes = m.find((x) => x.collateral?.symbol === "HERMES")!;
+    expect(isBrokenMarket(hermes)).toBe(true);
+    expect(m.filter((x) => isBrokenMarket(x))).toHaveLength(1);
+    const totals = morphoTotals(m.filter((x) => !isBrokenMarket(x)));
+    expect(totals.supplyUsd).toBeLessThan(1000);
+    expect(morphoTotals(m).supplyUsd).toBeGreaterThan(5e8);
+    expect(isBrokenMarket({ supplyUsd: 2e6, collateralUsd: null, supplyApy: 0.04 })).toBe(true);
+    expect(isBrokenMarket({ supplyUsd: 2e6, collateralUsd: 3e6, supplyApy: 0.04 })).toBe(false);
   });
 });
 

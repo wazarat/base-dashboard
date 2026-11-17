@@ -1,5 +1,5 @@
 /**
- * Trading venues on GeckoTerminal (DEX ids on network robinhood) for launchpads, agent platforms and DEXes
+ * Trading venues on GeckoTerminal (DEX ids on network base) for launchpads, agent platforms and DEXes
  * (docs/SECTOR-METRICS.md, section 2). GeckoTerminal has no per-venue total, so each day this reads a venue's
  * most traded pools and sums their 24-hour volume and liquidity, and reads the network's newest pools to
  * count what each venue launched. The 30-day figures build up from these daily readings.
@@ -18,7 +18,7 @@ import { readJson, writeJsonStable } from "../lib/store";
 import { hasTime, type Ctx, type RunResult } from "./context";
 import { geckoClient } from "./gecko-client";
 
-const BASE = "https://api.geckoterminal.com/api/v2/networks/robinhood";
+const BASE = "https://api.geckoterminal.com/api/v2/networks/base";
 export const VENUES_FILE = path.join(HISTORY, "gecko", "venues.json");
 /**
  * Pages of 20 pools read per venue, most traded first. One page for every venue: the 20 most traded pools

@@ -17,6 +17,8 @@ import { createClient, HttpError, type HttpClient } from "./http";
 const BASE = "https://api.llama.fi";
 export const CHAIN = "Base";
 const CHAIN_Q = encodeURIComponent(CHAIN);
+/** Lowercase chain segment the overview endpoints were probed with (Nov 17 2026). */
+const CHAIN_OV = "base";
 const DIR = path.join(HISTORY, "defillama");
 
 export const FEE_TYPES = {
@@ -46,7 +48,7 @@ export function parseProtocols(json: RawProtocol[]): LlamaProtocolSnap[] {
     .filter((p) => (p.chains ?? []).includes(CHAIN) || (p.chainTvls && CHAIN in p.chainTvls))
     .map((p) => {
       const addr = (p.address ?? "").toLowerCase();
-      const m = addr.match(/^robinhood:(0x[0-9a-f]{40})$/);
+      const m = addr.match(/^base:(0x[0-9a-f]{40})$/);
       return {
         slug: p.slug,
         name: p.name,
@@ -103,7 +105,7 @@ type OverviewJson = { totalDataChart?: Array<[number, number]>; totalDataChartBr
 
 export async function fetchOverview(client: HttpClient, kind: "dexs" | "fees", dataType?: string): Promise<OverviewJson> {
   const q = dataType ? `?dataType=${dataType}` : "";
-  return client.getJson<OverviewJson>(`${BASE}/overview/${kind}/${CHAIN_Q}${q}`);
+  return client.getJson<OverviewJson>(`${BASE}/overview/${kind}/${CHAIN_OV}${q}`);
 }
 
 /** The combined protocol snapshot (TVL listing + DEX + fees overviews) used for mapping. */
@@ -325,7 +327,7 @@ export async function run(ctx: Ctx): Promise<RunResult> {
   for (const [file, dataType] of Object.entries(FEE_TYPES) as Array<[keyof typeof FEE_TYPES, string]>) {
     try {
       const json = await client.getJson<{ totalDataChart?: Array<[number, number]>; totalDataChartBreakdown?: Breakdown; protocols?: Array<Record<string, unknown>> }>(
-        `${BASE}/overview/fees/${CHAIN_Q}?dataType=${dataType}`,
+        `${BASE}/overview/fees/${CHAIN_OV}?dataType=${dataType}`,
       );
       const bd = parseBreakdown(json);
       if (file === "fees" || file === "revenue") breakdownNames[file] = namesInWindow(bd, winStart, winEnd);
@@ -414,7 +416,7 @@ export async function run(ctx: Ctx): Promise<RunResult> {
   });
   if (!ctx.dryRun) writeJsonStable(path.join(DIR, "protocols.json"), flagged);
   try {
-    const users = await client.getJson<{ totalDataChart?: Array<[number, number]> }>(`${BASE}/overview/active-users/${CHAIN_Q}`);
+    const users = await client.getJson<{ totalDataChart?: Array<[number, number]> }>(`${BASE}/overview/active-users/${CHAIN_OV}`);
     chain.defillama.activeUsers = upsertSeries(chain.defillama.activeUsers, parseTotalChart(users), { today: ctx.today });
   } catch (e) {
     notes.push(`active-users failed: ${(e as Error).message}`);
@@ -435,7 +437,8 @@ export async function run(ctx: Ctx): Promise<RunResult> {
     const needFull = ctx.mode === "backfill" || existing.length < 7;
     {
       try {
-        const json = await client.getJson<Parameters<typeof parseProtocolTvl>[0]>(`${BASE}/protocol/${encodeURIComponent(slug)}`);
+        // Each response is read once and can run to megabytes, so it never enters the in-run cache.
+        const json = await client.getJson<Parameters<typeof parseProtocolTvl>[0]>(`${BASE}/protocol/${encodeURIComponent(slug)}`, { noCache: true });
         const series = parseProtocolTvl(json);
         tvl[slug] = upsertSeries(existing, series, { today: ctx.today, allowToday: true, revisionDays: needFull ? 10_000 : 7 });
         for (const [key, s] of Object.entries(parseProtocolExtras(json, CHAIN)) as Array<[(typeof EXTRA_TVL_KEYS)[number], Series]>) {

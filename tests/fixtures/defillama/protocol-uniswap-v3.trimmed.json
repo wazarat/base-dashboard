@@ -1,59 +1,63 @@
 {
  "name": "Uniswap V3",
  "chainTvls": {
-  "Robinhood Chain": {
+  "Base": {
    "tvl": [
     {
-     "date": 1793404800,
-     "totalLiquidityUSD": 85951050
+     "date": 1794182400,
+     "totalLiquidityUSD": 287729387
     },
     {
-     "date": 1793491200,
-     "totalLiquidityUSD": 85313400
+     "date": 1794268800,
+     "totalLiquidityUSD": 274944434
     },
     {
-     "date": 1793577600,
-     "totalLiquidityUSD": 84964689
+     "date": 1794355200,
+     "totalLiquidityUSD": 263046121
     },
     {
-     "date": 1793664000,
-     "totalLiquidityUSD": 82925932
+     "date": 1794441600,
+     "totalLiquidityUSD": 318956673
     },
     {
-     "date": 1793750400,
-     "totalLiquidityUSD": 82251476
+     "date": 1794528000,
+     "totalLiquidityUSD": 312956165
     },
     {
-     "date": 1793836800,
-     "totalLiquidityUSD": 85739366
+     "date": 1794614400,
+     "totalLiquidityUSD": 299419435
     },
     {
-     "date": 1793923200,
-     "totalLiquidityUSD": 78265341
+     "date": 1794700800,
+     "totalLiquidityUSD": 253069943
     },
     {
-     "date": 1794009600,
-     "totalLiquidityUSD": 79847010
+     "date": 1794787200,
+     "totalLiquidityUSD": 259159539
     },
     {
-     "date": 1794096000,
-     "totalLiquidityUSD": 78625287
+     "date": 1794873600,
+     "totalLiquidityUSD": 276993635
     },
     {
-     "date": 1794145931,
-     "totalLiquidityUSD": 78476617
+     "date": 1794929711,
+     "totalLiquidityUSD": 277441028
     }
    ]
   },
   "Ethereum": {
    "tvl": [
     {
-     "date": 1794096000,
-     "totalLiquidityUSD": 831084845
+     "date": 1794787200,
+     "totalLiquidityUSD": 701361519
     },
     {
-     "date": 1794145931,
-     "totalLiquidityUSD": 828423538
+     "date": 1794873600,
+     "totalLiquidityUSD": 702581782
+    },
+    {
+     "date": 1794929711,
+     "totalLiquidityUSD": 700540914
     }
    ]
   }

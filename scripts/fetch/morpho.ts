@@ -1,16 +1,16 @@
-/** Morpho's free GraphQL API; markets on chain 4663 where stock tokens are collateral. */
+/** Morpho's free GraphQL API: markets on Base (chain 8453), with broken markets logged and never summed. */
 import path from "node:path";
 import type { MorphoMarketRecord, MorphoTotalsRow } from "../../src/lib/history-types";
 import { HISTORY } from "../lib/paths";
 import { appendDated, readJson, writeJsonStable } from "../lib/store";
 import type { Ctx, RunResult } from "./context";
 import { createClient } from "./http";
-import { readDaily, readIndex, writeDaily } from "./robinhood";
+import { CHAIN } from "../../src/lib/chain";
 
 export const MORPHO_URL = "https://api.morpho.org/graphql";
 export const MARKETS_PAGE = 500;
-/** One page of markets on chain 4663. The chain has more than one page of them, so the fetcher pages until a short page. */
-export const marketsQuery = (skip = 0) => `{ markets(first: ${MARKETS_PAGE}, skip: ${skip}, where: { chainId_in: [4663] }) { items { marketId lltv loanAsset { symbol address } collateralAsset { symbol address } state { supplyAssetsUsd borrowAssetsUsd collateralAssetsUsd } } } }`;
+/** One page of markets on Base. The chain has more than one page of them, so the fetcher pages until a short page. */
+export const marketsQuery = (skip = 0) => `{ markets(first: ${MARKETS_PAGE}, skip: ${skip}, where: { chainId_in: [${CHAIN.morphoChainId}] }) { items { marketId lltv loanAsset { symbol address } collateralAsset { symbol address } state { supplyAssetsUsd borrowAssetsUsd collateralAssetsUsd supplyApy } } } }`;
 export const MARKETS_QUERY = marketsQuery(0);
 
 /** Lending supply, borrowed and collateral posted across every market, the three figures the lending pop-up shows side by side. */
@@ -27,6 +27,7 @@ export interface MorphoMarket {
   supplyUsd: number | null;
   borrowUsd: number | null;
   collateralUsd: number | null;
+  supplyApy?: number | null;
 }
 
 export function parseMarkets(json: { data?: { markets?: { items?: Array<Record<string, unknown>> } }; errors?: unknown[] }): MorphoMarket[] {
@@ -46,8 +47,22 @@ export function parseMarkets(json: { data?: { markets?: { items?: Array<Record<s
       supplyUsd: state ? num(state.supplyAssetsUsd) : null,
       borrowUsd: state ? num(state.borrowAssetsUsd) : null,
       collateralUsd: state ? num(state.collateralAssetsUsd) : null,
+      supplyApy: state ? num(state.supplyApy) : null,
     };
   });
+}
+
+/** Supply APY above this (a fraction, so 500%) only happens in a broken or abandoned market. */
+export const MAX_SANE_SUPPLY_APY = 5;
+
+/**
+ * Markets whose numbers cannot be real: an absurd supply APY, or lending supply above $1M against collateral the API
+ * cannot price. On Base on Nov 17 2026, 63 such markets (mostly USDC against HERMES or eUSD) reported about $3.1B of
+ * supply at 100% utilization. They are stored for the record but never summed.
+ */
+export function isBrokenMarket(m: Pick<MorphoMarket, "supplyUsd" | "collateralUsd" | "supplyApy">): boolean {
+  if ((m.supplyApy ?? 0) > MAX_SANE_SUPPLY_APY) return true;
+  return m.collateralUsd === null && (m.supplyUsd ?? 0) > 1_000_000;
 }
 
 /** Collateral attaches to a stock token by address only; same-symbol other addresses are look-alikes. */
@@ -77,32 +92,29 @@ export async function run(ctx: Ctx): Promise<RunResult> {
     markets.push(...batch);
     if (batch.length < MARKETS_PAGE) break;
   }
-  const index = readIndex();
-  const byAddr = new Map(Object.values(index.tokens).map((t) => [t.address, t.symbol]));
-  const { perSymbol, lookAlikes } = attachToStocks(markets, byAddr, new Set(Object.keys(index.tokens)));
+  // The API can return the same market on two pages; keep one reading per id.
+  const unique = Array.from(new Map(markets.map((m) => [m.marketId, m])).values());
+  const broken = unique.filter(isBrokenMarket);
+  const brokenIds = new Set(broken.map((m) => m.marketId));
   const file = path.join(HISTORY, "morpho", "markets.json");
   const store = readJson<Record<string, MorphoMarketRecord>>(file, {});
-  const lookAlikeIds = new Set(lookAlikes.map((m) => m.marketId));
-  for (const m of markets) {
+  for (const m of unique) {
     const rec = store[m.marketId] ?? { marketId: m.marketId, lltv: m.lltv, loan: m.loan, collateral: m.collateral, lookAlike: false, series: [] };
     rec.lltv = m.lltv;
     rec.loan = m.loan;
     rec.collateral = m.collateral;
-    rec.lookAlike = lookAlikeIds.has(m.marketId);
+    // Broken markets carry the same flag as look-alike collateral, so the build never sums them.
+    rec.lookAlike = brokenIds.has(m.marketId);
     rec.series = appendDated(rec.series, [ctx.today, m.supplyUsd, m.borrowUsd, m.collateralUsd]);
     store[m.marketId] = rec;
   }
-  const totals = morphoTotals(markets);
+  const totals = morphoTotals(unique.filter((m) => !brokenIds.has(m.marketId)));
   const totalsFile = path.join(HISTORY, "morpho", "totals.json");
   if (!ctx.dryRun) {
     writeJsonStable(totalsFile, appendDated(readJson<MorphoTotalsRow[]>(totalsFile, []), [ctx.today, totals.supplyUsd, totals.borrowUsd, totals.collateralUsd]));
     writeJsonStable(file, store);
-    for (const [sym, v] of perSymbol) {
-      const daily = readDaily(sym);
-      daily.morpho = appendDated(daily.morpho, [ctx.today, Math.round(v.collateralUsd), Math.round(v.borrowUsd)]);
-      writeDaily(daily);
-    }
   }
-  const notes = [`${markets.length} markets on 4663, ${perSymbol.size} stock tokens used as collateral, ${lookAlikes.length} look-alike collateral markets flagged`];
-  return { rows: markets.length, calls: client.stats().calls, notes };
+  const brokenSupply = broken.reduce((t, m) => t + (m.supplyUsd ?? 0), 0);
+  const notes = [`${unique.length} markets on Base, ${broken.length} broken markets left out of totals ($${(brokenSupply / 1e9).toFixed(2)}B of reported supply)`];
+  return { rows: unique.length, calls: client.stats().calls, notes };
 }
