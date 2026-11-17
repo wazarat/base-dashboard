@@ -1,0 +1,40 @@
+Sector,Rank,Project,Why it leads,Evidence source
+Infrastructure & Dev Tools,1,Coinbase Developer Platform (CDP),"Base lists Coinbase Developer Platform first among its Builder Stack partners for node, paymaster, onramp, wallet and onchain data APIs.",https://docs.base.org/get-started/builder-stack
+Infrastructure & Dev Tools,2,Etherscan,"Base docs name Basescan, the Etherscan explorer for Base, as the block explorer for Base Mainnet.",https://docs.base.org/get-started/connect-to-base
+Infrastructure & Dev Tools,3,Chainlink,Base launched its bridge to Solana in December 2025 secured by Chainlink CCIP.,https://cointelegraph.com/news/coinbase-base-solana-connect-together-using-chainlink
+Infrastructure & Dev Tools,4,Alchemy,Base lists Alchemy as a Builder Stack partner for RPC infrastructure and developer tooling.,https://docs.base.org/get-started/builder-stack
+Infrastructure & Dev Tools,5,QuickNode,Base lists QuickNode as a Builder Stack partner for blockchain node and data tools.,https://docs.base.org/get-started/builder-stack
+Data & Analytics,1,Dune,"Base lists Dune in its Builder Stack for blockchain queries, visualization and dashboards.",https://docs.base.org/get-started/builder-stack
+Data & Analytics,2,TokenTerminal,Base lists Token Terminal in its Builder Stack for financial and protocol analytics.,https://docs.base.org/get-started/builder-stack
+Data & Analytics,3,Birdeye.so,"Base lists Birdeye Data Services in its Builder Stack for token, wallet and trade data.",https://docs.base.org/get-started/builder-stack
+Data & Analytics,4,Zapper,"Base lists Zapper in its Builder Stack as a data API for portfolio, token price, NFT and transaction data.",https://docs.base.org/get-started/builder-stack
+Data & Analytics,5,GeckoTerminal,"Its parent CoinGecko is listed in the Base Builder Stack for market, onchain and wallet data.",https://docs.base.org/get-started/builder-stack
+Wallets & Custody,1,Base App,"Base docs describe Base App as the consumer app for Base, now renamed Coinbase Wallet.",https://docs.base.org/sdks/migrated-products
+Wallets & Custody,2,Base Account,"Base docs describe the Base Account SDK as connecting apps to smart wallet accounts for sign-in, payments and gas sponsorship.",https://docs.base.org/sdks/migrated-products
+Wallets & Custody,3,Safe Wallet,"Base's governance, coordinator and Security Council multisigs on Ethereum are Safe contracts.",https://ethbeat.org/scaling/projects/base
+Wallets & Custody,4,Privy,Base lists Privy in its Builder Stack for user onboarding and wallet infrastructure.,https://docs.base.org/get-started/builder-stack
+Wallets & Custody,5,Dynamic,"Base lists Dynamic in its Builder Stack for authentication, smart wallets and key management.",https://docs.base.org/get-started/builder-stack
+"Security, Risk & Compliance",1,Cantina,Coinbase runs a $5M bug bounty for deployed Base smart contracts on Cantina.,https://docs.base.org/specifications/security/report-a-vulnerability
+"Security, Risk & Compliance",2,Chainalysis,"Coinbase made Hexagate threat monitoring free for all Base builders, covering up to 10 contracts each.",https://www.chainalysis.com/blog/hexagate-enhances-developer-security-on-base-building-secure-developer-applications-for-onchain-builders/
+"Security, Risk & Compliance",3,Immunefi,Base ran a public Immunefi audit competition for its Azul upgrade.,https://docs.base.org/specifications/security/reliability-and-liveness
+"Security, Risk & Compliance",4,Hypernative,Base lists Hypernative in its Builder Stack for real-time threat prevention.,https://docs.base.org/get-started/builder-stack
+"Security, Risk & Compliance",5,Hexens Cybersecurity,"Base lists Hexens in its Builder Stack for smart contract, pentest and social engineering audits.",https://docs.base.org/get-started/builder-stack
+Exchanges & On/Off-Ramps,1,Coinbase,Base docs name a Coinbase account withdrawal of ETH or USDC on Base as the way to fund a Base Mainnet address.,https://docs.base.org/get-started/get-funds
+Exchanges & On/Off-Ramps,2,Coinbase Onramp,Base lists the Coinbase Developer Platform onramp in its Builder Stack for apps on Base.,https://docs.base.org/get-started/builder-stack
+Exchanges & On/Off-Ramps,3,Binance,"DefiLlama tracks $859.9M in Binance wallets on Base, the most of any exchange in this sector.",https://api.llama.fi/protocol/binance-cex
+Exchanges & On/Off-Ramps,4,Bybit,DefiLlama tracks $75.8M in Bybit wallets on Base.,https://api.llama.fi/protocol/bybit
+Exchanges & On/Off-Ramps,5,Gate,DefiLlama tracks $68.4M in Gate wallets on Base.,https://api.llama.fi/protocol/gate-io
+"DAOs, Governance & Public Goods",1,Nouns Builder,"Builder DAO, which stewards Nouns Builder, voted in February 2024 to move its governance to Base.",https://paragraph.com/@builder/buzz-30
+"DAOs, Governance & Public Goods",2,Prophouse,Base sponsored a DAOs on Base Prop House round open to all Nouns Builder DAOs on Base.,https://paragraph.com/@builder/buzz-38
+"DAOs, Governance & Public Goods",3,Endaoment,"Endaoment launched on Base in 2023 as its first layer 2, adding more than 7,000 nonprofit donation endpoints.",https://blog.endaoment.org/blog/endaoment-launches-base-first-layer
+"DAOs, Governance & Public Goods",4,Aragon Project,Aragon launched its no-code App and OSx protocol on Base in August 2023.,https://blog.aragon.org/aragon-launches-on-base/
+"DAOs, Governance & Public Goods",5,Based Nouns,Based Nouns was one of five winners of the DAOs on Base Prop House round in 2024.,https://paragraph.com/@builder/buzz-39
+"Ecosystem, Funding & Education",1,Base Ecosystem Fund,"It is Base's investment arm, backing pre-seed and seed teams building on Base.",https://docs.base.org/get-started/base-ecosystem-fund
+"Ecosystem, Funding & Education",2,Base Batches,"It is Base's accelerator, run by the Base Ecosystem Fund with a $100,000 investment and an investor demo day.",https://docs.base.org/get-started/base-batches
+"Ecosystem, Funding & Education",3,Coinbase Ventures,Base runs the Base Ecosystem Fund in partnership with Coinbase Ventures.,https://docs.base.org/get-started/base-ecosystem-fund
+"Ecosystem, Funding & Education",4,Optimism Collective,Base was the largest chain in the OP Stack Superchain before announcing a move to its own stack in February 2026.,https://www.theblock.co/post/390380/coinbase-incubated-base-network-to-ditch-optimism-for-unified-solution
+Other,1,rovify,rovify built fraud resistant NFT event ticketing on Base at Base Batch Africa.,https://devfolio.co/projects/rovify-8fe6
+Other,2,KiSMATI,KiSMATI was named a Base Batches 001 regional winner in Africa.,https://devfolio.co/blog/base-batches-2025-recap/
+Other,3,SandWorm,SandWorm was named a Base Batches 001 regional winner in Africa.,https://devfolio.co/blog/base-batches-2025-recap/
+Other,4,Suite,Suite was named a Base Batches 001 regional winner in APAC.,https://devfolio.co/blog/base-batches-2025-recap/
+Other,5,Crew,Crew was named a Base Batches 001 regional winner in APAC.,https://devfolio.co/blog/base-batches-2025-recap/
