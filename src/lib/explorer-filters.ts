@@ -117,7 +117,7 @@ export function describeMoreFilters(f: MoreFilters, investors: Investor[]): stri
   if (f.xtok) parts.push(f.xtok === "yes" ? "Live token" : "No live token");
   if (f.xfund) parts.push(f.xfund === "yes" ? "Disclosed funding" : "No disclosed funding");
   if (f.xinv) parts.push(`Investor ${investors.find((i) => i.id === f.xinv)?.name ?? f.xinv}`);
-  if (f.xrh) parts.push("Has a Base related round");
+  if (f.xrh) parts.push("Has a Base-related round");
   if (f.xonc) parts.push(ONCHAIN_FILTER_LABEL);
   return parts.length ? `Filtered by ${parts.join(", ")}` : null;
 }

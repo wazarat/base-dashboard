@@ -12,9 +12,11 @@ import { isFungibleRole, isNftRole } from "../src/lib/contract-roles";
 import { legacyLive, REASON_LABEL, tractionReasons } from "../src/lib/traction";
 import type { Project } from "../src/lib/types";
 import { readCsvOrEmpty } from "./lib/csv";
-import { DATA, OUT } from "./lib/paths";
+import { DATA, GATED, OUT } from "./lib/paths";
 
-const projects = JSON.parse(fs.readFileSync(path.join(OUT, "projects.json"), "utf8")) as Project[];
+// The public file leaves out gated fields (token, contracts, onchain metrics); the gated set fills them back in.
+const gated = JSON.parse(fs.readFileSync(path.join(GATED, "gated.json"), "utf8")) as { projects: Record<string, Partial<Project>> };
+const projects = (JSON.parse(fs.readFileSync(path.join(OUT, "projects.json"), "utf8")) as Project[]).map((p) => ({ ...p, ...(gated.projects[p.id] ?? {}) }) as Project);
 const stableProjects = new Set(readCsvOrEmpty(path.join(DATA, "stablecoin-map.csv")).map((r) => (r["Project"] ?? "").trim()));
 
 const bySector = new Map<string, Project[]>();

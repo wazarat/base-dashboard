@@ -307,6 +307,8 @@ export interface Meta {
   /** Counts from the funding and security research; the per-project facts are gated. */
   research: { fundingChecked: number; securityResearched: number; redFlagged: number };
   discoveredVia: string[];
+  /** The four Perps, Options & Derivatives projects with the most open interest, for the Perps compare preset. Names only. */
+  perpsPreset: string[];
 }
 
 export type RoundConfidence = "Sourced" | "Prior knowledge (re-verify)";

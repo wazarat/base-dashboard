@@ -42,7 +42,7 @@ export function ChainActivity() {
   const takeaway =
     total === 0
       ? points("No chain activity history is loaded in this build.")
-      : activityTakeaway({ activeChange: { 7: ac?.d7 ?? null, 30: ac?.d30 ?? null, 90: ac?.d90 ?? null }, active: chainData.activity?.activeAddresses ?? [], txns: chainData.activity?.txns ?? [], smartWallets: chainData.activity?.smartWallets7d ?? [] });
+      : activityTakeaway({ activeChange: { 7: ac?.d7 ?? null, 30: ac?.d30 ?? null, 90: ac?.d90 ?? null }, active: chainData.activity?.activeAddresses ?? [], txns: chainData.activity?.txns ?? [], smartWallets: chainData.activity?.smartWallets7d ?? [], lastDay: chainData.latest.asOf });
   const label = levelLabel(n, total);
 
   return (

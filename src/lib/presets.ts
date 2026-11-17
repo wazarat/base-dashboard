@@ -1,4 +1,4 @@
-import { projects } from "./data";
+import { meta, projects } from "./data";
 
 /** Named comparison sets from the brief; resolved by project name, missing names skipped. */
 export const COMPARE_PRESETS: Array<{ name: string; projects: string[] }> = [
@@ -6,6 +6,8 @@ export const COMPARE_PRESETS: Array<{ name: string; projects: string[] }> = [
   { name: "Lending", projects: ["Morpho", "Aave", "Spark", "Moonwell"] },
   { name: "Launchpads", projects: ["Clanker", "Zora", "Flaunch", "Virtuals Protocol"] },
   { name: "Prediction markets", projects: ["Limitless", "Sport.fun", "Trueo"] },
+  // The four perps venues with the most open interest on the last refresh (scripts/build-data.ts).
+  { name: "Perps", projects: meta.perpsPreset ?? [] },
 ];
 
 const byName = new Map(projects.map((p) => [p.name.toLowerCase(), p.id]));

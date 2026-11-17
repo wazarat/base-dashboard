@@ -34,6 +34,9 @@ describe("card takeaways", () => {
       ["-5.1%", "-20.7%", "-44.5%"],
     ]);
     expect(points("A.", false, null, "B.")).toEqual({ points: ["A.", "B."] });
+    const withDay = activityTakeaway({ activeChange: { 7: null, 30: null, 90: null }, active: days(30, () => 400_000), txns: days(30, () => 8e6), smartWallets: [], lastDay: "2026-11-16" });
+    expect(withDay.points[0]).toMatch(/^On Nov 16, the last full day, 400\.0K addresses were active and 8\.0M transactions landed\.$/);
+    expect(withDay.points[1]).toBe("Over the last 30 days that averaged 400.0K active addresses and 8.0M transactions a day.");
   });
 });
 

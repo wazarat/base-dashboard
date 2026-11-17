@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { HAS_HISTORY } from "./helpers";
 import { parseAddressCounters, parseContracts, parseCounters, parseLine, parseTokenInfo } from "../scripts/fetch/blockscout";
 import { parseBreakdown, parseChainTvl, parseOverviewProtocols, parseProtocolTvl, parseProtocols, parseSummaryBreakdown, parseTotalChart } from "../scripts/fetch/defillama";
 import { parseOhlcvDay, parseOhlcvHour, parsePools, parseTokens } from "../scripts/fetch/geckoterminal";

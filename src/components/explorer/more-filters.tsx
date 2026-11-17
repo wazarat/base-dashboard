@@ -65,8 +65,8 @@ function Fields({ sectors }: { sectors: string[] }) {
         {/* One investor at a time: picking another replaces the first. */}
         <MultiSelect label="Investor" options={investorOptions} selected={f.xinv ? [f.xinv] : []} onChange={(v) => void setF({ xinv: v.find((x) => x !== f.xinv) ?? null })} className="w-full" />
       </Row>
-      <Row label="Base money">
-        <Segmented ariaLabel="Base money" size="sm" value={f.xrh ?? ANY} onChange={(v) => void setF({ xrh: v === ANY ? null : "yes" })} options={[{ value: ANY, label: "Any" }, { value: "yes", label: "Has a Base related round" }]} className="flex-wrap" />
+      <Row label="Base rounds">
+        <Segmented ariaLabel="Base rounds" size="sm" value={f.xrh ?? ANY} onChange={(v) => void setF({ xrh: v === ANY ? null : "yes" })} options={[{ value: ANY, label: "Any" }, { value: "yes", label: "Has a Base-related round" }]} className="flex-wrap" />
       </Row>
     </div>
   );

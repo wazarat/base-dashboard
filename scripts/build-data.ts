@@ -456,6 +456,11 @@ function main() {
       redFlagged: projects.filter((p) => redFlagTypes(p).length > 0).length,
     },
     discoveredVia: uniqueSorted(projects.map((p) => p.discoveredVia)),
+    perpsPreset: projects
+      .filter((p) => p.sector === "Perps, Options & Derivatives" && (p.sectorMetrics?.openInterest?.v ?? 0) > 0)
+      .sort((a, b) => (b.sectorMetrics?.openInterest?.v ?? 0) - (a.sectorMetrics?.openInterest?.v ?? 0))
+      .slice(0, 4)
+      .map((p) => p.name),
   };
 
   // Accuracy rule 3: a headline figure two sources disagree on by more than 10% stops the build.

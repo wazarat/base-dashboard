@@ -3,7 +3,7 @@
  * (owner request, 2026-11-10): time-based cards give a table of each metric over 7, 30 and
  * 90 days, other cards give short points. Every number is computed; no point carries a date.
  */
-import { fmtCompact, fmtPctSigned, fmtUsd } from "./format";
+import { fmtCompact, fmtDateShort, fmtPctSigned, fmtUsd } from "./format";
 import { rangeStats } from "./level-axis";
 
 export const SUMMARY_WINDOWS = [7, 30, 90] as const;
@@ -59,10 +59,17 @@ export function chainTakeaway(s: { tvl: Array<number | null>; volume: Array<numb
 }
 
 /** Chain activity: active-account change, daily averages of new accounts and transactions, and the smart-wallet change. */
-export function activityTakeaway(s: { activeChange: Record<7 | 30 | 90, number | null>; active: Array<number | null>; txns: Array<number | null>; smartWallets: Array<number | null> }): Takeaway {
+export function activityTakeaway(s: { activeChange: Record<7 | 30 | 90, number | null>; active: Array<number | null>; txns: Array<number | null>; smartWallets: Array<number | null>; lastDay?: string | null }): Takeaway {
   const w = SUMMARY_WINDOWS;
+  const lastActive = [...s.active].reverse().find((v) => v !== null) ?? null;
+  const lastTxns = [...s.txns].reverse().find((v) => v !== null) ?? null;
+  const avgActive = dailyAverage(s.active, 30);
+  const avgTxns = dailyAverage(s.txns, 30);
+  const points: string[] = [];
+  if (s.lastDay && lastActive !== null && lastTxns !== null) points.push(`On ${fmtDateShort(s.lastDay)}, the last full day, ${count(lastActive)} addresses were active and ${count(lastTxns)} transactions landed.`);
+  if (avgActive !== null && avgTxns !== null) points.push(`Over the last 30 days that averaged ${count(avgActive)} active addresses and ${count(avgTxns)} transactions a day.`);
   return {
-    points: [],
+    points,
     table: {
       columns: SUMMARY_LABELS,
       rows: [
