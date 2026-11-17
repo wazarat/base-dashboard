@@ -139,7 +139,6 @@ test("overview tiles keep their text short and the range line sits under its cha
   await page.goto("/");
   await page.waitForLoadState("networkidle");
   await expect(page.getByText(/^Tracked for \d+ of 1038 projects, double-counted excluded$/).first()).toBeVisible();
-  await expect(page.getByText(/double-counted excluded/)).toHaveCount(0);
   // Stablecoin supply arrives with the daily refresh (Milestone 2).
   if (HAS_HISTORY) await expect(page.getByText(/^Tracking \d+ coins?$/)).toBeVisible();
   await expect(page.getByText(/^Native TVL share \d+%$/)).toBeVisible();
@@ -218,7 +217,7 @@ test("the newer sources reach the pop-ups and the Security page", async ({ page 
   await page.goto("/security/");
   await page.waitForLoadState("networkidle");
   await expect(page.locator("#chain-incidents")).toContainText("Incidents recorded for the chain");
-  await page.goto("/sectors/?project=uncx-network");
+  await page.goto("/sectors/?project=uncx-unicrypt");
   await page.waitForLoadState("networkidle");
   await expect(page.getByTestId("project-modal")).not.toContainText("Incidents recorded for the chain");
 });
@@ -464,7 +463,7 @@ test("the Stablecoins pop-up shows each issuer's supply on the chain with its so
   const modal = page.getByTestId("sector-modal");
   await expect(modal).toContainText("with traction");
   const line = modal.getByTestId("onchain-lines").first();
-  await expect(line).toContainText(/USDG on the chain \$\d/);
+  await expect(line).toContainText(/USDC on the chain \$\d/);
   await expect(line.getByRole("link", { name: "DefiLlama" })).toBeVisible();
 });
 
@@ -477,11 +476,11 @@ test("Overview shows stablecoin supply as its own KPI", async ({ page }) => {
 });
 
 test("a sector with no tracked volume reads Not tracked", async ({ page }) => {
-  await page.goto("/?sector=Exchanges+%26+On%2FOff-Ramps");
+  await page.goto("/?sector=Security%252C+Risk+%26+Compliance");
   await page.waitForLoadState("networkidle");
   const card = page.locator("[data-slot=card]").filter({ hasText: "30d DEX volume" }).first();
   await expect(card).toContainText("Not tracked");
-  await expect(card).toContainText("Tracked for 0 of 32 projects, double-counted excluded");
+  await expect(card).toContainText("Tracked for 0 of 28 projects, double-counted excluded");
 });
 
 test("the timeline opens as a table and a row opens the event popup", async ({ page }) => {
