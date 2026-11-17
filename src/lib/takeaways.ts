@@ -59,17 +59,17 @@ export function chainTakeaway(s: { tvl: Array<number | null>; volume: Array<numb
 }
 
 /** Chain activity: active-account change, daily averages of new accounts and transactions, and the smart-wallet change. */
-export function activityTakeaway(s: { activeChange: Record<7 | 30 | 90, number | null>; newAccounts: Array<number | null>; txns: Array<number | null>; userOps: Array<number | null> }): Takeaway {
+export function activityTakeaway(s: { activeChange: Record<7 | 30 | 90, number | null>; active: Array<number | null>; txns: Array<number | null>; smartWallets: Array<number | null> }): Takeaway {
   const w = SUMMARY_WINDOWS;
   return {
     points: [],
     table: {
       columns: SUMMARY_LABELS,
       rows: [
-        { label: "Active accounts change", values: w.map((n) => pct(s.activeChange[n])) },
-        { label: "New accounts a day, average", values: w.map((n) => count(dailyAverage(s.newAccounts, n))) },
+        { label: "Active addresses change", values: w.map((n) => pct(s.activeChange[n])) },
+        { label: "Active addresses a day, average", values: w.map((n) => count(dailyAverage(s.active, n))) },
         { label: "Transactions a day, average", values: w.map((n) => count(dailyAverage(s.txns, n))) },
-        { label: "Smart-wallet user operations change", values: w.map((n) => pct(levelChange(s.userOps, n))) },
+        { label: "Smart wallets active in 7 days, change", values: w.map((n) => pct(levelChange(s.smartWallets, n))) },
       ],
     },
   };

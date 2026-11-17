@@ -138,7 +138,7 @@ test("each card has its own range, written to its own URL key", async ({ page })
 test("overview tiles keep their text short and the range line sits under its chart", async ({ page }, testInfo) => {
   await page.goto("/");
   await page.waitForLoadState("networkidle");
-  await expect(page.getByText(/^Tracked for \d+\/1038 projects$/).first()).toBeVisible();
+  await expect(page.getByText(/^Tracked for \d+ of 1038 projects, double-counted excluded$/).first()).toBeVisible();
   await expect(page.getByText(/double-counted excluded/)).toHaveCount(0);
   // Stablecoin supply arrives with the daily refresh (Milestone 2).
   if (HAS_HISTORY) await expect(page.getByText(/^Tracking \d+ coins?$/)).toBeVisible();
@@ -481,7 +481,7 @@ test("a sector with no tracked volume reads Not tracked", async ({ page }) => {
   await page.waitForLoadState("networkidle");
   const card = page.locator("[data-slot=card]").filter({ hasText: "30d DEX volume" }).first();
   await expect(card).toContainText("Not tracked");
-  await expect(card).toContainText("Tracked for 0/32 projects");
+  await expect(card).toContainText("Tracked for 0 of 32 projects, double-counted excluded");
 });
 
 test("the timeline opens as a table and a row opens the event popup", async ({ page }) => {

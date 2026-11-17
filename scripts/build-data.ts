@@ -23,6 +23,7 @@ import { CHAIN_SERIES, TIERS, type ChainData, type ContractInfo, type Meta, type
 import { validate, type Expected } from "../src/lib/validate";
 import { dateFromName, findFile, findFileOrNull, readCsv, readCsvOrEmpty } from "./lib/csv";
 import { DATA, GATED, HISTORY, OUT } from "./lib/paths";
+import { CHAIN as CHAIN_CONFIG } from "../src/lib/chain";
 import { readJson } from "./lib/store";
 import { reversedDrops } from "../src/lib/series-gaps";
 import { computeOnchain, onchainSupply, parseStablecoinMap, stablecoinSummary, type OnchainStore } from "../src/lib/onchain";
@@ -104,6 +105,7 @@ function loadHistory(): { meta: HistoryMeta; store: HistoryStore; chain: ChainHi
     blockscoutLines: {},
     counters: [],
   });
+  chain.growthepie = readJson<Record<string, Series>>(path.join(HISTORY, "growthepie.json"), {});
   // Sector metric inputs (docs/SECTOR-METRICS.md): series DefiLlama reports beside TVL, its methodology text and Morpho's own totals.
   const sector: SectorInputStore = {
     extras: Object.fromEntries(EXTRA_TVL_KEYS.map((k) => [k, dl(`tvl-${k}`)])) as Record<ExtraTvlKey, SeriesMap>,
@@ -143,21 +145,26 @@ function loadSources(end: DateStr): SourceStore {
 }
 
 function buildChain(chain: ChainHistory, end: DateStr): ChainData {
-  const all: Series[] = [...CHAIN_SERIES.map((k) => chain.defillama[k]), ...Object.values(chain.blockscoutLines)];
+  const gtp = chain.growthepie ?? {};
+  const all: Series[] = [...CHAIN_SERIES.map((k) => chain.defillama[k]), ...Object.values(chain.blockscoutLines), ...Object.values(gtp)];
   const firsts = all.filter((s) => s.length).map((s) => s[0][0]);
-  const start = firsts.length ? firsts.sort()[0] : end;
+  // DefiLlama's chain series start before mainnet; the charts start at launch.
+  const start = firsts.length ? [firsts.sort()[0], CHAIN_CONFIG.mainnet].sort().at(-1)! : end;
   const dates = dateRange(start, end);
   const defillama = {} as ChainData["defillama"];
   for (const k of CHAIN_SERIES) defillama[k] = alignSeries(chain.defillama[k], dates, k === "tvl" ? "stock" : "flow");
   const blockscout: Record<string, Array<number | null>> = {};
   for (const [k, s] of Object.entries(chain.blockscoutLines)) blockscout[k] = alignSeries(s, dates, "flow");
-  const lines = chain.blockscoutLines;
-  const txns = lines.newTxns ?? [];
-  const active = lines.activeAccounts ?? [];
+  const activity: Record<string, Array<number | null>> = {};
+  for (const [k, s] of Object.entries(gtp)) activity[k] = alignSeries(s, dates, "flow");
+  // Base has no Blockscout stats service; growthepie's daily active addresses and transactions stand in.
+  const txns = gtp.txns ?? chain.blockscoutLines.newTxns ?? [];
+  const active = gtp.activeAddresses ?? chain.blockscoutLines.activeAccounts ?? [];
   return {
     dates,
     defillama,
     blockscout,
+    activity,
     counters: chain.counters.at(-1)?.[1] ?? {},
     latest: {
       asOf: end,
@@ -495,7 +502,7 @@ function main() {
           tvl: dayOverDay(history.chain.defillama.tvl),
           volume: dayOverDay(history.chain.defillama.volume),
           fees: dayOverDay(history.chain.defillama.fees),
-          activeAccounts: dayOverDay(history.chain.blockscoutLines.activeAccounts ?? []),
+          activeAccounts: dayOverDay(history.chain.growthepie?.activeAddresses ?? []),
         }
       : {},
     sourceErrors: history ? Object.entries(history.meta.perSource).filter(([, s]) => s.error).map(([id, s]) => `${id}: ${s.error}`) : [],
@@ -589,6 +596,7 @@ function main() {
       dates: [],
       defillama: Object.fromEntries(CHAIN_SERIES.map((k) => [k, []])),
       blockscout: {},
+      activity: {},
       counters: {},
       latest: { asOf: asOf, tvl: null, volume30d: null, fees30d: null, revenue30d: null, activeUsers: null, activeAccounts: null, txns: null, change: {} },
     },

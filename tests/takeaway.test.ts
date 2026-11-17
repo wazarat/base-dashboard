@@ -26,7 +26,7 @@ describe("card takeaways", () => {
   });
 
   it("gives chain activity the same three windows", () => {
-    const t = activityTakeaway({ activeChange: { 7: 0.05, 30: -0.26, 90: null }, newAccounts: days(90, () => 50_000), txns: days(90, () => 7e6), userOps: days(90, (i) => 100 - i * 0.5) });
+    const t = activityTakeaway({ activeChange: { 7: 0.05, 30: -0.26, 90: null }, active: days(90, () => 50_000), txns: days(90, () => 7e6), smartWallets: days(90, (i) => 100 - i * 0.5) });
     expect(t.table?.rows.map((r) => r.values)).toEqual([
       ["+5.0%", "-26.0%", "none"],
       ["50.0K", "50.0K", "50.0K"],

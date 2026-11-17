@@ -36,28 +36,25 @@ describe("paired fees and revenue", () => {
 });
 
 /**
- * DefiLlama /summary/fees/{slug}?dataType=dailyFees and dailyRevenue, Base only,
- * summed Oct 10 to Nov 8, 2026, fetched on Nov 9. Only the listings DefiLlama counts in the
- * chain total for both metrics: Uniswap V3 (V2 and V4 report no revenue), Pons V2 (V1 sits
- * outside the chain breakdown), Relay and The Standard Reserve.
+ * DefiLlama /summary/fees/{slug}?dataType=dailyFees and dailyRevenue, Base only, summed Oct 18 to Nov 16 2026,
+ * fetched on Nov 17. Listings DefiLlama counts in the chain total for both metrics.
  */
 const DEFILLAMA = {
-  Uniswap: { names: ["Uniswap V3"], fees: 4_386_942, revenue: 1_412_533 },
-  Pons: { names: ["Pons V2"], fees: 10_041_908, revenue: 1_489_573 },
-  Relay: { names: ["Relay"], fees: 7_117_168, revenue: 96_540 },
-  "The Standard Reserve": { names: ["The Standard Reserve"], fees: 3_367_228, revenue: 3_161_532 },
+  "Aero Slipstream": { names: ["Aero Slipstream"], fees: 5_514_967, revenue: 5_012_241 },
+  "Uniswap V3": { names: ["Uniswap V3"], fees: 10_032_596, revenue: 1_902_756 },
+  "Curve DEX": { names: ["Curve DEX"], fees: 1_749_613, revenue: 874_806 },
+  Venice: { names: ["Venice"], fees: 1_139_469, revenue: 1_139_469 },
 };
 
-// Robinhood figures until Milestone 2 replaces them with Base values from the first refresh.
-describe.skipIf(!HAS_HISTORY)("capture against DefiLlama, Oct 10 to Nov 8", () => {
+describe.skipIf(!HAS_HISTORY)("capture against DefiLlama, Oct 18 to Nov 16", () => {
   const dir = path.join(__dirname, "..", "data", "history", "defillama");
   const read = (f: string) => (HAS_HISTORY ? (JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")) as SeriesMap) : {});
   const fees = read("fees.json");
   const revenue = read("revenue.json");
   for (const [project, d] of Object.entries(DEFILLAMA)) {
     it(`${project} keeps ${((d.revenue / d.fees) * 100).toFixed(1)}% of fees`, () => {
-      const p = pairedSums(d.names, fees, revenue, "2026-11-08", 30);
-      // Days inside DefiLlama's 7-day revision window may still move a little until Nov 15.
+      const p = pairedSums(d.names, fees, revenue, "2026-11-16", 30);
+      // Days inside DefiLlama's 7-day revision window may still move a little until Nov 23.
       expect(p!.fees / d.fees).toBeCloseTo(1, 2);
       expect(p!.revenue / d.revenue).toBeCloseTo(1, 2);
       expect(capture(p)!).toBeCloseTo(d.revenue / d.fees, 2);

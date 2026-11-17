@@ -104,7 +104,7 @@ describe("KPI cards match the chain charts", () => {
     expect(kpiValue(projects, "fees", true, chainData.latest)).toBe(chainTotal(chainData.latest, "fees") ?? sumCounted(projects, "fees"));
     const one = projects.filter((p) => p.counted?.values.fees);
     expect(kpiValue(one.slice(0, 1), "fees", false, chainData.latest)).toBe(one[0]?.counted?.values.fees ?? null);
-    expect(fmtCountedTracked(3, 1038)).toBe("Tracked for 3/1038 projects");
+    expect(fmtCountedTracked(3, 1038)).toBe("Tracked for 3 of 1038 projects, double-counted excluded");
   });
 
   it("filtered sums of every project stay within DefiLlama's chain totals", () => {

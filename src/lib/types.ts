@@ -120,7 +120,7 @@ export interface Project {
 }
 
 /** Why a figure is kept out of the chain totals. */
-export type MetricFlag = "doublecounted" | "cex" | "locker" | "chain-income" | "outside-total" | "routed";
+export type MetricFlag = "doublecounted" | "cex" | "locker" | "bridge" | "chain-income" | "outside-total" | "routed";
 
 export interface SectorMetricValue {
   v: number;
@@ -213,6 +213,8 @@ export interface ChainData {
   dates: string[];
   defillama: Record<ChainSeriesKey, Array<number | null>>;
   blockscout: Record<string, Array<number | null>>;
+  /** Chain activity from growthepie, aligned to `dates`: activeAddresses, txns, smartWallets7d. */
+  activity: Record<string, Array<number | null>>;
   counters: Record<string, number>;
   latest: {
     asOf: string;

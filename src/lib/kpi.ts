@@ -27,21 +27,22 @@ export function trackedCount(projects: Project[], metric: NumericMetricKey): num
   return projects.filter((p) => countedValue(p, metric) !== null).length;
 }
 
-/** Short on purpose (owner request, 2026-11-10): what is left out and why lives in the card's InfoTip (`kpiInfo`). */
+/** The wording the Base prompt sets for money KPIs (Milestone 2); what is left out and why lives in the card's InfoTip (`kpiInfo`). */
 export function fmtCountedTracked(tracked: number, total: number): string {
-  return `Tracked for ${tracked}/${total} ${total === 1 ? "project" : "projects"}`;
+  return `Tracked for ${tracked} of ${total} ${total === 1 ? "project" : "projects"}, double-counted excluded`;
 }
 
 const WHY: Record<string, string> = {
   doublecounted: "their deposits already sit in another app DefiLlama counts",
   cex: "they are exchange balances, not onchain apps",
   locker: "locked tokens are not working capital, though DefiLlama's chain TVL keeps them",
+  bridge: "bridged deposits sit on the source chain, so DefiLlama does not count them as Base TVL",
   "chain-income": "it is the chain's own sequencer income, not an app",
   "outside-breakdown": "DefiLlama does not count them in its chain total",
 };
 
 /** Exclusions DefiLlama's own chain total also leaves out; lockers are the Atlas's choice only. */
-const IN_CHAIN_TOTAL_TOO = new Set(["doublecounted", "cex", "chain-income", "outside-breakdown"]);
+const IN_CHAIN_TOTAL_TOO = new Set(["doublecounted", "cex", "bridge", "chain-income", "outside-breakdown"]);
 
 function list(names: string[]): string {
   if (names.length <= 1) return names.join("");
