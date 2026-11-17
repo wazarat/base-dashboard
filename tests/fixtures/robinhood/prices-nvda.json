@@ -1,0 +1,21 @@
+{
+ "quotes": [
+  {
+   "tokenSymbol": "NVDA",
+   "deployments": [
+    {
+     "contractAddress": "0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC",
+     "chainId": 4663
+    }
+   ],
+   "bid": "188.7",
+   "ask": "193.23",
+   "currency": "USD",
+   "dailyTradingVolume": "180212285",
+   "isTradingHalt": false,
+   "generatedAt": "2026-11-08T15:22:22Z",
+   "tokenBid": "188.846272534365793277",
+   "tokenAsk": "193.379784005381569872"
+  }
+ ]
+}

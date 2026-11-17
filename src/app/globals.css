@@ -1,0 +1,455 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+@custom-variant light (&:is(.light *));
+
+/*
+ * CanHav Research Atlas tokens (docs/ATLAS-UI.md, section 1). Dark is the default and
+ * what the server renders; next-themes writes `class="light"` on <html> for the
+ * light canvas. The ink scale inverts: ink-950 is always the page, ink-50 the
+ * strongest text. Plain hex everywhere, because Tailwind v4 derives the
+ * `/60` opacity variants with color-mix and needs no rgb triplets.
+ */
+:root,
+.dark {
+  color-scheme: dark;
+  --ink-950: #05060a;
+  --ink-900: #0a0c14;
+  --ink-850: #10131d;
+  --ink-800: #161a26;
+  --ink-700: #1f2433;
+  --ink-600: #2c3242;
+  --ink-500: #3a4255;
+  --ink-400: #5b6377;
+  --ink-300: #7c8499;
+  --ink-200: #a8aebf;
+  --ink-100: #d4d8e4;
+  --ink-50: #eef0f7;
+  --electric-200: #bdd2ff;
+  --electric-300: #8fb3ff;
+  --electric-400: #5c92ff;
+  --electric-500: #3d7bff;
+  --electric-600: #2563eb;
+  --electric-700: #1d4ed8;
+  --neon-200: #ddd6fe;
+  --neon-300: #c4b5fd;
+  --neon-400: #a78bfa;
+  --neon-500: #8b5cf6;
+  --neon-600: #7c3aed;
+  --signal-400: #22d3ee;
+  --signal-500: #06b6d4;
+  --rose-400: #fb7185;
+  --on-electric: #ffffff;
+}
+
+.light {
+  color-scheme: light;
+  --ink-950: #f5f5f7;
+  --ink-900: #ffffff;
+  --ink-850: #fafafb;
+  --ink-800: #e8eae6;
+  --ink-700: #caccc7;
+  --ink-600: #b6b9b3;
+  --ink-500: #6b7164;
+  --ink-400: #5a6052;
+  --ink-300: #3d4433;
+  --ink-200: #2a3120;
+  --ink-100: #1a2210;
+  --ink-50: #0c1500;
+  --electric-200: #1d4ed8;
+  --electric-300: #2563eb;
+  --electric-400: #3d7bff;
+  --electric-500: #2563eb;
+  --electric-600: #1d4ed8;
+  --electric-700: #1e40af;
+  --neon-200: #5b21b6;
+  --neon-300: #6d28d9;
+  --neon-400: #7c3aed;
+  --neon-500: #6d28d9;
+  --neon-600: #5b21b6;
+  --signal-400: #0e7490;
+  --signal-500: #155e75;
+  --rose-400: #e11d48;
+  --on-electric: #ffffff;
+}
+
+/* shadcn semantic variables, declared once; they flip because the ink scale flips. */
+:root {
+  --background: var(--ink-950);
+  --foreground: var(--ink-100);
+  --card: var(--ink-900);
+  --card-foreground: var(--ink-100);
+  --popover: var(--ink-900);
+  --popover-foreground: var(--ink-100);
+  --primary: var(--electric-500);
+  --primary-foreground: var(--on-electric);
+  --secondary: var(--ink-800);
+  --secondary-foreground: var(--ink-50);
+  --muted: var(--ink-850);
+  --muted-foreground: var(--ink-300);
+  --accent: var(--ink-800);
+  --accent-foreground: var(--ink-50);
+  --destructive: var(--rose-400);
+  --border: color-mix(in oklab, var(--ink-700) 60%, transparent);
+  --input: color-mix(in oklab, var(--ink-700) 60%, transparent);
+  --ring: var(--electric-500);
+  --chart-1: var(--cat-1);
+  --chart-2: var(--cat-2);
+  --chart-3: var(--cat-3);
+  --chart-4: var(--cat-4);
+  --chart-5: var(--cat-5);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-ink-950: var(--ink-950);
+  --color-ink-900: var(--ink-900);
+  --color-ink-850: var(--ink-850);
+  --color-ink-800: var(--ink-800);
+  --color-ink-700: var(--ink-700);
+  --color-ink-600: var(--ink-600);
+  --color-ink-500: var(--ink-500);
+  --color-ink-400: var(--ink-400);
+  --color-ink-300: var(--ink-300);
+  --color-ink-200: var(--ink-200);
+  --color-ink-100: var(--ink-100);
+  --color-ink-50: var(--ink-50);
+  --color-electric-200: var(--electric-200);
+  --color-electric-300: var(--electric-300);
+  --color-electric-400: var(--electric-400);
+  --color-electric-500: var(--electric-500);
+  --color-electric-600: var(--electric-600);
+  --color-electric-700: var(--electric-700);
+  --color-electric: var(--electric-500);
+  --color-neon-200: var(--neon-200);
+  --color-neon-300: var(--neon-300);
+  --color-neon-400: var(--neon-400);
+  --color-neon-500: var(--neon-500);
+  --color-neon-600: var(--neon-600);
+  --color-signal-400: var(--signal-400);
+  --color-signal-500: var(--signal-500);
+  --color-signal: var(--signal-400);
+  --color-rose-400: var(--rose-400);
+  --color-on-electric: var(--on-electric);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-inter), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-heading: var(--font-display);
+}
+
+@theme {
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 20px;
+  --radius-4xl: 24px;
+  --shadow-segment: 0 1px 2px rgb(0 0 0 / 0.05);
+  --shadow-popover: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05);
+  --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --container-atlas: 1320px;
+  --spacing-nav: 64px;
+}
+
+/* Type styles from the design system; `type-` keeps them out of the text-* colour and size namespace. */
+@utility type-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+@utility type-title-lg {
+  font-family: var(--font-display);
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+@utility type-card-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+@utility type-stat {
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+@utility type-body {
+  font-size: 14px;
+  line-height: 1.625;
+}
+@utility type-control {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+@utility type-label {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
+@utility type-kicker {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+@utility type-micro {
+  font-size: 10px;
+  line-height: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+@utility type-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+/*
+ * Lit surfaces, taken from the Studio cards on canhav.com (docs/ATLAS-UI.md, section 1).
+ * A card keeps its flat ink-900 fill. A neon tint glows down from the top edge for a
+ * fixed 7rem, so a chart plot lower in the card still sits on the plain surface the
+ * chart palette was validated against. Hovering lights the border.
+ */
+@utility card-lit {
+  --lit: 14%;
+  background-image: radial-gradient(120% 100% at 50% 0%, color-mix(in oklab, var(--neon-500) var(--lit), transparent), transparent 62%);
+  background-size: 100% 7rem;
+  background-repeat: no-repeat;
+  transition:
+    border-color 150ms,
+    box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  .light & {
+    --lit: 7%;
+  }
+  &:hover {
+    --lit: 24%;
+    border-color: color-mix(in oklab, var(--neon-500) 60%, transparent);
+  }
+  .light &:hover {
+    --lit: 12%;
+  }
+}
+/* A card that is one click target lifts as well. Never on a card that only holds a chart. */
+@utility card-link {
+  transition:
+    border-color 150ms,
+    box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    border-color: color-mix(in oklab, var(--neon-500) 60%, transparent);
+    box-shadow: 0 16px 40px -24px color-mix(in oklab, var(--neon-500) 45%, transparent);
+    transform: translateY(-2px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-ink-950 text-ink-50;
+    font-variant-numeric: tabular-nums;
+  }
+  /*
+   * The ambient glow behind every page, the same three lights as canhav.com. It sits on a
+   * fixed layer of its own so scrolling never repaints it. The light canvas stays flat.
+   */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(900px circle at 50% -10%, color-mix(in oklab, var(--electric-500) 18%, transparent), transparent 60%),
+      radial-gradient(700px circle at 90% 20%, color-mix(in oklab, var(--neon-500) 12%, transparent), transparent 55%),
+      radial-gradient(700px circle at 10% 35%, color-mix(in oklab, var(--signal-400) 8%, transparent), transparent 55%);
+  }
+  .light body::before {
+    background-image: none;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background-color: color-mix(in oklab, var(--electric-500) 40%, transparent);
+  }
+  /*
+   * The export holds each page's default view (prerendered-shell.tsx). On a link with a
+   * query string the layout's head script sets data-query, and that default view stays
+   * unpainted so its numbers never show before the live, filtered view replaces it.
+   */
+  html[data-query] [data-prerender] {
+    visibility: hidden;
+  }
+}
+
+/* ---- Atlas chart palette (validated with the dataviz palette checker; dark first, light under .light) ---- */
+:root {
+  --surface-chart: var(--ink-900);
+  --grid: color-mix(in oklab, var(--ink-700) 60%, transparent);
+  --axis: var(--ink-600);
+  --ink-muted: var(--ink-300);
+  --ink-secondary: var(--ink-300);
+  --status-good: var(--signal-400);
+  --status-critical: var(--rose-400);
+  /* Treemap label ink, picked per tile by luminance; the same in both themes. */
+  --label-on-light: #16171a;
+  --label-on-dark: #fafafa;
+}
+:root,
+.dark {
+  --chain-base: #3987e5;
+  --chain-offchain: #e256a8;
+  --chain-other-evm: #d95926;
+  --chain-other-nonevm: #199e70;
+  --tier-1: #86b6ef;
+  --tier-2: #3987e5;
+  --tier-3: #184f95;
+  --tier-none: #55544f;
+  --event-incident: #d03b3b;
+  --event-milestone: #3987e5;
+  --event-integration: #d95926;
+  --event-program: #199e70;
+  --event-funding: #c98500;
+  --event-incentive: #d55181;
+  --cat-1: #3987e5;
+  --cat-2: #d95926;
+  --cat-3: #199e70;
+  --cat-4: #c98500;
+  --cat-5: #d55181;
+  --cat-6: #008300;
+  --cat-7: #9085e9;
+  --cat-8: #e66767;
+  --cat-notresearched: #3a3a37;
+  --cat-notdisclosed: #898781;
+  --seq-1: #184f95;
+  --seq-2: #256abf;
+  --seq-3: #3987e5;
+  --seq-4: #6da7ec;
+  --seq-5: #9ec5f4;
+  --seq-6: #cde2fb;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --div-neg-3: #9ec5f4;
+  --div-neg-2: #3987e5;
+  --div-neg-1: #184f95;
+  --div-mid: #383835;
+  --div-pos-1: #9a3030;
+  --div-pos-2: #e66767;
+  --div-pos-3: #f4a9a9;
+}
+.light {
+  --chain-base: #2a78d6;
+  --chain-offchain: #be185d;
+  --chain-other-evm: #eb6834;
+  --chain-other-nonevm: #1baf7a;
+  --tier-1: #184f95;
+  --tier-2: #2a78d6;
+  --tier-3: #6da7ec;
+  --tier-none: #a8a69f;
+  --event-incident: #d03b3b;
+  --event-milestone: #2a78d6;
+  --event-integration: #eb6834;
+  --event-program: #1baf7a;
+  --event-funding: #eda100;
+  --event-incentive: #e87ba4;
+  --cat-1: #2a78d6;
+  --cat-2: #eb6834;
+  --cat-3: #1baf7a;
+  --cat-4: #eda100;
+  --cat-5: #e87ba4;
+  --cat-6: #008300;
+  --cat-7: #6250d6;
+  --cat-8: #e34948;
+  --cat-notresearched: #d6d5cf;
+  --cat-notdisclosed: #898781;
+  --seq-1: #b7d3f6;
+  --seq-2: #86b6ef;
+  --seq-3: #5598e7;
+  --seq-4: #2a78d6;
+  --seq-5: #1c5cab;
+  --seq-6: #0d366b;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --div-neg-3: #184f95;
+  --div-neg-2: #2a78d6;
+  --div-neg-1: #86b6ef;
+  --div-mid: #f0efec;
+  --div-pos-1: #e9807f;
+  --div-pos-2: #e34948;
+  --div-pos-3: #a31f1f;
+}
+
+.recharts-wrapper,
+.recharts-surface {
+  outline: none;
+}
+.recharts-cartesian-grid line {
+  stroke: var(--grid);
+}
+.recharts-cartesian-axis line,
+.recharts-cartesian-axis-tick line {
+  stroke: var(--axis);
+}
+.recharts-text {
+  fill: var(--ink-muted);
+  font-size: 11px;
+}
+.tabular {
+  font-variant-numeric: tabular-nums;
+}

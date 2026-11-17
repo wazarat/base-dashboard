@@ -1,0 +1,44 @@
+{
+ "chain": "Robinhood Chain",
+ "totalDataChartBreakdown": [
+  [
+   1793836800,
+   {
+    "Uniswap V3": 102081
+   }
+  ],
+  [
+   1793923200,
+   {
+    "Uniswap V3": 41545
+   }
+  ],
+  [
+   1794009600,
+   {
+    "Uniswap V3": 14083
+   }
+  ],
+  [
+   1794096000,
+   {
+    "Uniswap V3": 28141
+   }
+  ]
+ ],
+ "protocols": [
+  {
+   "name": "Uniswap V3",
+   "defillamaId": "2198",
+   "parentProtocol": "parent#uniswap",
+   "category": "Dexs",
+   "slug": "uniswap-v3"
+  },
+  {
+   "name": "Fables",
+   "defillamaId": "8481",
+   "category": "Dexs",
+   "slug": "fables"
+  }
+ ]
+}

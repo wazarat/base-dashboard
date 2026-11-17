@@ -1,0 +1,194 @@
+{
+ "data": [
+  {
+   "id": "robinhood_0xcbdfea90430a30ee4469c9902e120a77e7c7e4711d5643671c1d1957f2f1ce27",
+   "type": "pool",
+   "attributes": {
+    "address": "0xcbdfea90430a30ee4469c9902e120a77e7c7e4711d5643671c1d1957f2f1ce27",
+    "name": "AI / NVDA",
+    "pool_created_at": "2026-07-14T17:48:31Z",
+    "reserve_in_usd": "1578653.6387",
+    "volume_usd": {
+     "m5": "813.9925727175",
+     "m15": "3106.0220136977",
+     "m30": "3454.0128891371",
+     "h1": "5168.6943255237",
+     "h6": "86333.9598610831",
+     "h24": "999315.03627779"
+    }
+   },
+   "relationships": {
+    "dex": {
+     "data": {
+      "id": "long-xyz",
+      "type": "dex"
+     }
+    },
+    "base_token": {
+     "data": {
+      "id": "robinhood_0x2e8c31162b855a2ffa90f6f8634643ad6f111e18",
+      "type": "token"
+     }
+    },
+    "quote_token": {
+     "data": {
+      "id": "robinhood_0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec",
+      "type": "token"
+     }
+    }
+   }
+  },
+  {
+   "id": "robinhood_0x62ab521f71431f78ac374cdbadc6cda3c8916b6c",
+   "type": "pool",
+   "attributes": {
+    "address": "0x62ab521f71431f78ac374cdbadc6cda3c8916b6c",
+    "name": "NVDA / WETH 0.05%",
+    "pool_created_at": "2026-07-24T14:31:36Z",
+    "reserve_in_usd": "1060007.7557",
+    "volume_usd": {
+     "m5": "805.7476494403",
+     "m15": "3426.2569005025",
+     "m30": "5567.8722101279",
+     "h1": "10208.6474620407",
+     "h6": "109446.870380586",
+     "h24": "951031.325417681"
+    }
+   },
+   "relationships": {
+    "dex": {
+     "data": {
+      "id": "uniswap-v3-robinhood",
+      "type": "dex"
+     }
+    },
+    "base_token": {
+     "data": {
+      "id": "robinhood_0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec",
+      "type": "token"
+     }
+    },
+    "quote_token": {
+     "data": {
+      "id": "robinhood_0x0bd7d308f8e1639fab988df18a8011f41eacad73",
+      "type": "token"
+     }
+    }
+   }
+  },
+  {
+   "id": "robinhood_0xa1513da56f71b83d98124d645828a14a191b8010",
+   "type": "pool",
+   "attributes": {
+    "address": "0xa1513da56f71b83d98124d645828a14a191b8010",
+    "name": "NVDA / USDG 0.024%",
+    "pool_created_at": "2026-10-22T03:11:32Z",
+    "reserve_in_usd": "599784.7403",
+    "volume_usd": {
+     "m5": "3680.6659614358",
+     "m15": "15853.4832362885",
+     "m30": "22702.1957249825",
+     "h1": "29706.3259879474",
+     "h6": "274091.642016868",
+     "h24": "1035654.89150215"
+    }
+   },
+   "relationships": {
+    "dex": {
+     "data": {
+      "id": "aero-slipstream-robinhood",
+      "type": "dex"
+     }
+    },
+    "base_token": {
+     "data": {
+      "id": "robinhood_0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec",
+      "type": "token"
+     }
+    },
+    "quote_token": {
+     "data": {
+      "id": "robinhood_0x5fc5360d0400a0fd4f2af552add042d716f1d168",
+      "type": "token"
+     }
+    }
+   }
+  },
+  {
+   "id": "robinhood_0xd4eb21209c4d6093f80b5b84f5c45cc093ea14a3",
+   "type": "pool",
+   "attributes": {
+    "address": "0xd4eb21209c4d6093f80b5b84f5c45cc093ea14a3",
+    "name": "NVDA / USDG 0.05%",
+    "pool_created_at": "2026-07-21T11:02:06Z",
+    "reserve_in_usd": "1942298.1899",
+    "volume_usd": {
+     "m5": "1070.9618779173",
+     "m15": "3967.271386278",
+     "m30": "4911.7183978046",
+     "h1": "7900.7290954713",
+     "h6": "38073.3436484212",
+     "h24": "296396.330914666"
+    }
+   },
+   "relationships": {
+    "dex": {
+     "data": {
+      "id": "uniswap-v3-robinhood",
+      "type": "dex"
+     }
+    },
+    "base_token": {
+     "data": {
+      "id": "robinhood_0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec",
+      "type": "token"
+     }
+    },
+    "quote_token": {
+     "data": {
+      "id": "robinhood_0x5fc5360d0400a0fd4f2af552add042d716f1d168",
+      "type": "token"
+     }
+    }
+   }
+  },
+  {
+   "id": "robinhood_0xda14bf8a87711e1f30dbe620f2df3fdf371f7503f1a72202d15631f657651ec0",
+   "type": "pool",
+   "attributes": {
+    "address": "0xda14bf8a87711e1f30dbe620f2df3fdf371f7503f1a72202d15631f657651ec0",
+    "name": "SPY / NVDA 0.025%",
+    "pool_created_at": "2026-09-28T01:53:45Z",
+    "reserve_in_usd": "729052.9864",
+    "volume_usd": {
+     "m5": "0.0",
+     "m15": "2400.6905196275",
+     "m30": "4796.877684065",
+     "h1": "8566.9144802612",
+     "h6": "71057.8656639507",
+     "h24": "551070.089577922"
+    }
+   },
+   "relationships": {
+    "dex": {
+     "data": {
+      "id": "uniswap-v4-robinhood",
+      "type": "dex"
+     }
+    },
+    "base_token": {
+     "data": {
+      "id": "robinhood_0x117cc2133c37b721f49de2a7a74833232b3b4c0c",
+      "type": "token"
+     }
+    },
+    "quote_token": {
+     "data": {
+      "id": "robinhood_0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec",
+      "type": "token"
+     }
+    }
+   }
+  }
+ ]
+}

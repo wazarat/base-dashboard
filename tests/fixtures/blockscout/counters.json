@@ -1,0 +1,20 @@
+{
+ "counters": [
+  {
+   "id": "totalTxns",
+   "value": "933400000",
+   "title": "Total txns"
+  },
+  {
+   "id": "totalAccounts",
+   "value": "19011062",
+   "title": "Total accounts"
+  },
+  {
+   "id": "averageBlockTime",
+   "value": "0.101",
+   "title": "Average block time",
+   "units": "s"
+  }
+ ]
+}

@@ -1,0 +1,69 @@
+{
+ "data": {
+  "markets": {
+   "items": [
+    {
+     "marketId": "0xff762c8aee3849902b33d8ec6432668f19f88b755bf3dbf186f66a2cac7750ca",
+     "lltv": "625000000000000000",
+     "loanAsset": {
+      "symbol": "USDG",
+      "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+     },
+     "collateralAsset": {
+      "symbol": "AMZN",
+      "address": "0x12f190a9F9d7D37a250758b26824B97CE941bF54"
+     },
+     "state": {
+      "supplyAssetsUsd": 0,
+      "borrowAssetsUsd": 0,
+      "collateralAssetsUsd": 0
+     }
+    },
+    {
+     "marketId": "0xff2063ef18bc5f71867c56d6d3290b61f3da1d010c8a0552bdb7995cfad8cacc",
+     "lltv": "625000000000000000",
+     "loanAsset": {
+      "symbol": "USDG",
+      "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+     },
+     "collateralAsset": {
+      "symbol": "TSLAon",
+      "address": "0xB197F36C25BA9b66960688882A4dC595C6b04309"
+     },
+     "state": {
+      "supplyAssetsUsd": 149.99824455,
+      "borrowAssetsUsd": 0,
+      "collateralAssetsUsd": 0
+     }
+    },
+    {
+     "marketId": "0xfe1d7da2fbde85b1fee120c88df3e6b55164a2442dab97486d3d4f719a5ff1fb",
+     "lltv": "980000000000000000",
+     "loanAsset": {
+      "symbol": "UNKNOWN",
+      "address": "0x0000000000000000000000000000000000000000"
+     },
+     "collateralAsset": null,
+     "state": null
+    },
+    {
+     "marketId": "0xf6f3dbe0a19e948147e79e66502c6b05709d8dfde977fec7db1528fc8f0ebdfa",
+     "lltv": "860000000000000000",
+     "loanAsset": {
+      "symbol": "USDG",
+      "address": "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168"
+     },
+     "collateralAsset": {
+      "symbol": "SGOV",
+      "address": "0x92FD66527192E3e61d4DDd13322Aa222DE86F9B5"
+     },
+     "state": {
+      "supplyAssetsUsd": 10.979789502019646,
+      "borrowAssetsUsd": 0.03999953188,
+      "collateralAssetsUsd": 0.20098000000000002
+     }
+    }
+   ]
+  }
+ }
+}

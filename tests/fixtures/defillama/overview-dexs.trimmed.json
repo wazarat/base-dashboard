@@ -1,0 +1,109 @@
+{
+ "chain": "Robinhood Chain",
+ "total24h": 301891018.65,
+ "totalDataChart": [
+  [
+   1793750400,
+   866692506.59
+  ],
+  [
+   1793836800,
+   979400705.7300001
+  ],
+  [
+   1793923200,
+   715063320.34
+  ],
+  [
+   1794009600,
+   301891018.65
+  ],
+  [
+   1794096000,
+   268879743.02
+  ]
+ ],
+ "totalDataChartBreakdown": [
+  [
+   1793750400,
+   {
+    "Uniswap V3": 337860929,
+    "Uniswap V4": 295134392,
+    "up v3": 6583020
+   }
+  ],
+  [
+   1793836800,
+   {
+    "Uniswap V3": 353615887,
+    "Uniswap V4": 384384848,
+    "up v3": 5949914
+   }
+  ],
+  [
+   1793923200,
+   {
+    "Uniswap V3": 193794304,
+    "Uniswap V4": 259699201,
+    "up v3": 5082813
+   }
+  ],
+  [
+   1794009600,
+   {
+    "Uniswap V3": 50494199,
+    "Uniswap V4": 176587026,
+    "up v3": 2730681
+   }
+  ],
+  [
+   1794096000,
+   {
+    "Uniswap V3": 46668088,
+    "Uniswap V4": 151154388,
+    "up v3": 3262720
+   }
+  ]
+ ],
+ "protocols": [
+  {
+   "name": "Uniswap V3",
+   "defillamaId": "2198",
+   "module": "uniswap-v3",
+   "parentProtocol": "parent#uniswap",
+   "category": "Dexs",
+   "slug": "uniswap-v3",
+   "total24h": 46668088,
+   "total30d": 7221735464
+  },
+  {
+   "name": "Uniswap V4",
+   "defillamaId": "5690",
+   "module": "uniswap-v4",
+   "parentProtocol": "parent#uniswap",
+   "category": "Dexs",
+   "slug": "uniswap-v4",
+   "total24h": 151154388,
+   "total30d": 9996666844
+  },
+  {
+   "name": "up v3",
+   "defillamaId": "8242",
+   "module": "up-v3",
+   "parentProtocol": "parent#up",
+   "category": "Dexs",
+   "slug": "up-v3",
+   "total24h": 3262720,
+   "total30d": 188225411
+  },
+  {
+   "name": "Fables",
+   "defillamaId": "8481",
+   "module": "fables",
+   "category": "Dexs",
+   "slug": "fables",
+   "total24h": 6795757,
+   "total30d": 1203548178
+  }
+ ]
+}

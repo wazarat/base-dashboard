@@ -1,0 +1,61 @@
+{
+ "name": "Uniswap V3",
+ "chainTvls": {
+  "Robinhood Chain": {
+   "tvl": [
+    {
+     "date": 1793404800,
+     "totalLiquidityUSD": 85951050
+    },
+    {
+     "date": 1793491200,
+     "totalLiquidityUSD": 85313400
+    },
+    {
+     "date": 1793577600,
+     "totalLiquidityUSD": 84964689
+    },
+    {
+     "date": 1793664000,
+     "totalLiquidityUSD": 82925932
+    },
+    {
+     "date": 1793750400,
+     "totalLiquidityUSD": 82251476
+    },
+    {
+     "date": 1793836800,
+     "totalLiquidityUSD": 85739366
+    },
+    {
+     "date": 1793923200,
+     "totalLiquidityUSD": 78265341
+    },
+    {
+     "date": 1794009600,
+     "totalLiquidityUSD": 79847010
+    },
+    {
+     "date": 1794096000,
+     "totalLiquidityUSD": 78625287
+    },
+    {
+     "date": 1794145931,
+     "totalLiquidityUSD": 78476617
+    }
+   ]
+  },
+  "Ethereum": {
+   "tvl": [
+    {
+     "date": 1794096000,
+     "totalLiquidityUSD": 831084845
+    },
+    {
+     "date": 1794145931,
+     "totalLiquidityUSD": 828423538
+    }
+   ]
+  }
+ }
+}
