@@ -113,7 +113,9 @@ export function computeMetricFlags(p: Pick<Project, NumericMetricKey | "counted"
     const v = p[m];
     if (v === null || v <= 0) continue;
     const counted = p.counted?.values[m] ?? null;
-    if (counted !== null && counted >= v * 0.99) continue;
+    // Flag a figure only when most of it sits outside the chain total. A small excluded listing (Aerodrome Ignition,
+    // about 7% of Aerodrome's TVL) must not label the whole figure double counted.
+    if (counted !== null && counted >= v * 0.5) continue;
     if (m === "tvl") {
       const excluded = slugs.filter((s) => exclusionOf.get(s)).sort((a, b) => tvlOfSlug(b) - tvlOfSlug(a));
       out.tvl = (excluded.length ? exclusionOf.get(excluded[0]) : null) ?? "outside-total";
