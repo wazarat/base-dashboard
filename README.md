@@ -64,6 +64,10 @@ These return HTTP 402 or need a paid plan and are not used.
 - GeckoTerminal category endpoints
 - Dune API, Token Terminal, Artemis, Nansen, RootData, CryptoRank, Flipside and the X API
 
+## Deployment
+
+The Vercel project `base-dashboard` (team "Wazarat's projects") deploys `main` to production on every push. `NEXT_PUBLIC_SIBLING_ATLAS_URLS` is set there. `NEXT_PUBLIC_SITE_URL` stays unset until the domain is pointed, so canonical URLs fall back to the Vercel production host.
+
 ## Pointing base.canhav.com at the Vercel project
 
 1. In Vercel, open the project, then Settings, Domains, and add `base.canhav.com`.
