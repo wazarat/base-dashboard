@@ -166,7 +166,8 @@ export const SECTOR_CONFIGS: SectorConfig[] = [
   // Clanker, Zora, Flaunch, Doppler and Ape.Store have no GeckoTerminal venue id on Base, so 30d fees rank them (owner decision, Nov 17 2026).
   measured("Launchpads", ["venueVolume", "fees"], "volume", ["venueVolume", "tokensLaunched", "fees", "revenue", "volume", "tvl"], { optional: ["volume"] }),
   measured("AI Agents", ["venueVolume", "tokenVolume", "fees"], "volume", ["venueVolume", "tokenVolume", "tokensLaunched", "fees", "revenue", "holders", "tvl"], { optional: ["venueVolume"] }),
-  measured("NFTs, Gaming & Collectibles", ["nftHolders"], "none", ["nftHolders", "nftTransfers", "fees", "tvl", "nftVolume"]),
+  // Collection holders need the Blockscout key; until a collection is mapped, fees then TVL rank the sector (holders never set a tier).
+  measured("NFTs, Gaming & Collectibles", ["nftHolders", "fees", "tvl"], "none", ["nftHolders", "nftTransfers", "fees", "tvl", "nftVolume"]),
   measured("Lending & Credit", ["deposited", "tvl"], "tvl", ["deposited", "borrowed", "tvl", "utilization", "supplyApy", "borrowApy", "fees", "revenue"]),
   measured("Yield & Asset Management", ["tvl", "vaultAssets"], "tvl", ["tvl", "vaultAssets", "netApy", "yieldPools", "fees", "revenue"], { flags: { vaultAssets: "doublecounted" } }),
   measured("RWA & Tokenized Assets", ["tvl", "tokenized"], "tvl", ["tvl", "tokenized", "holders", "tokenVolume", "netApy", "morphoCollateral"]),
