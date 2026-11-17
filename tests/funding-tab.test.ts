@@ -4,7 +4,7 @@ import { backerColumns } from "@/components/funding/backers-table";
 import { submitSourceUrl } from "@/components/funding/rounds-table";
 import { events, projects, rounds } from "@/lib/data";
 import { FUNDING_DEFINITIONS, fundingSlices, projectsOfType, typesInBucket } from "@/lib/funding";
-import { filterFlow, FLOW_ALL, flowTypes, moneyFlow, ROUND_FLOW_TYPE } from "@/lib/money-flow";
+import { filterFlow, FLOW_ALL, flowTypes, moneyFlow, ROUND_FLOW_TYPE, roundFlowType } from "@/lib/money-flow";
 import { ROUND_BUCKETS } from "@/lib/rounds";
 import type { EcosystemEvent, Round } from "@/lib/types";
 
@@ -23,6 +23,18 @@ const round = (id: string, date: string | null, projectId: string, related = tru
   related,
   confidence: "Sourced",
   sourceUrl: null,
+});
+
+describe("Base money flow sources", () => {
+  const r = (roundType: string, lead: string[], other: string[] = [], related = false) => ({ roundType, leadInvestors: lead, otherInvestors: other, related });
+  it("types each round by where the money came from", () => {
+    expect(roundFlowType(r("Acquisition", ["Coinbase"]))).toBe("Acquisition");
+    expect(roundFlowType(r("Accelerator", ["Base Batches"]))).toBe("Base Batches");
+    expect(roundFlowType(r("Seed", ["Pantera Capital"], ["Base Ecosystem Fund"]))).toBe("Base Ecosystem Fund");
+    expect(roundFlowType(r("Seed", ["1confirmation"], ["Coinbase Ventures"]))).toBe("Coinbase Ventures");
+    expect(roundFlowType(r("Seed", ["Paradigm"], [], true))).toBe(ROUND_FLOW_TYPE);
+    expect(roundFlowType(r("Seed", ["Paradigm"]))).toBeNull();
+  });
 });
 
 describe("money flow", () => {

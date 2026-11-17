@@ -70,17 +70,26 @@ export function generateInsights(
     });
   }
 
-  // 3. Native share of count vs revenue vs TVL.
-  const nativeCount = projects.filter((p) => p.chain === "Base native").length;
-  const nativeRev = nativeShare(projects, "revenue", valueOf);
+  // 3. Native share of count vs TVL, DEX volume and revenue, and the native project behind most of it.
+  const natives = projects.filter((p) => p.chain === "Base native");
+  const nativeCount = natives.length;
   const nativeTvl = nativeShare(projects, "tvl", valueOf);
-  if (nativeCount > 0 && nativeCount < n && (nativeRev !== null || nativeTvl !== null)) {
+  const nativeVol = nativeShare(projects, "volume", valueOf);
+  const nativeRev = nativeShare(projects, "revenue", valueOf);
+  if (nativeCount > 0 && nativeCount < n && (nativeRev !== null || nativeTvl !== null || nativeVol !== null)) {
     const parts: string[] = [];
-    if (nativeRev !== null) parts.push(`earn ${pct(nativeRev)} of revenue`);
     if (nativeTvl !== null) parts.push(`hold ${pct(nativeTvl)} of TVL`);
+    const flows: string[] = [];
+    if (nativeVol !== null) flows.push(`${pct(nativeVol)} of DEX volume`);
+    if (nativeRev !== null) flows.push(`${pct(nativeRev)} of revenue`);
+    if (flows.length) parts.push(`take ${flows.join(" and ")}`);
+    // The native project with the largest share of native DEX volume, when it carries most of it.
+    const natVol = natives.map((p) => ({ name: p.name, v: valueOf(p, "volume") ?? 0 })).sort((a, b) => b.v - a.v);
+    const natVolTotal = natVol.reduce((a, x) => a + x.v, 0);
+    const lead = natVolTotal > 0 && natVol[0].v / natVolTotal >= 0.5 ? natVol[0] : null;
     out.push({
       id: "native",
-      text: `Base-native projects are ${pct(nativeCount / n)} of the selection but ${parts.join(" and ")}.`,
+      text: `Base-native projects are ${pct(nativeCount / n)} of the selection but ${parts.join(", and ")}${lead ? `. ${lead.name} accounts for ${pct(lead.v / natVolTotal)} of native DEX volume` : ""}.`,
     });
   } else if (nativeCount === n) {
     out.push({ id: "native", text: `Every project in this selection is Base-native.` });

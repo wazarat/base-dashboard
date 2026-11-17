@@ -199,6 +199,11 @@ function ProjectBody({ p, all, onOpen }: { p: Project; all: Project[]; onOpen: (
             <span className="text-ink-300"> · {p.chainConfidence.toLowerCase()} confidence</span>
           </Field>
           <Field label="Status">{p.status}</Field>
+          {unverifiedNote(p) && (
+            <Field label="Unverified">
+              <span className="text-ink-300">{unverifiedNote(p)}</span>
+            </Field>
+          )}
           {p.leaderRank !== null && (
             <Field label="Sector rank">
               #{p.leaderRank} in {p.sector}
@@ -392,4 +397,12 @@ function ProjectBody({ p, all, onOpen }: { p: Project; all: Project[]; onOpen: (
       )}
     </div>
   );
+}
+
+/** A quiet note for rows the research did not re-check: prior-knowledge rows and low-confidence native chain calls. */
+export function unverifiedNote(p: Pick<Project, "discoveredVia" | "chainConfidence">): string | null {
+  const parts: string[] = [];
+  if (/prior knowledge/i.test(p.discoveredVia)) parts.push("Listed from prior knowledge and not re-checked against a source");
+  if (p.chainConfidence === "Low") parts.push("Native chain set from the name and description, not confirmed");
+  return parts.length ? `${parts.join(". ")}.` : null;
 }

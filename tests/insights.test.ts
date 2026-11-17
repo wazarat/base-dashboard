@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { generateInsights } from "@/lib/insights";
 import { concentration, nativeShare, sumMetric, topNShare } from "@/lib/metrics";
 import type { Project } from "@/lib/types";
+import { mkProject } from "./fixtures/project";
 
 function mk(partial: Partial<Project> & { name: string }): Project {
   return {
@@ -88,7 +89,7 @@ describe("generateInsights", () => {
     const text = out.map((i) => i.text).join("\n");
     expect(text).toContain("Top 3 projects hold 100% of TVL");
     expect(text).toContain("Big alone is 80% of TVL");
-    expect(text).toContain("Base-native projects are 60% of the selection but earn 93% of revenue and hold 20% of TVL");
+    expect(text).toContain("Base-native projects are 60% of the selection but hold 20% of TVL, and take 93% of revenue");
     expect(text).toContain("3 of 5 projects (60%) have traction");
   });
   it("follows the selected metric", () => {
@@ -105,5 +106,18 @@ describe("generateInsights", () => {
   it("handles a selection with a single project", () => {
     const out = generateInsights([fixture[0]], "tvl");
     expect(out.find((i) => i.id === "native")?.text).toBe("No Base-native projects in this selection.");
+  });
+});
+
+describe("native headline on Base", () => {
+  it("adds DEX volume and names the native project behind most of it", () => {
+    const ps = [
+      mkProject({ name: "Aero", chain: "Base native", volume: 900, revenue: 50, tvl: 10 }),
+      mkProject({ name: "Small", chain: "Base native", volume: 100, revenue: 10, tvl: 5 }),
+      mkProject({ name: "Uni", chain: "Other EVM", volume: 500, revenue: 40, tvl: 200 }),
+      mkProject({ name: "Lend", chain: "Other EVM", revenue: 20, tvl: 800 }),
+    ];
+    const text = generateInsights(ps, "count").map((i) => i.text).join(" ");
+    expect(text).toContain("Base-native projects are 50% of the selection but hold 1% of TVL, and take 67% of DEX volume and 50% of revenue. Aero accounts for 90% of native DEX volume.");
   });
 });

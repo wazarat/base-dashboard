@@ -1,13 +1,27 @@
 /**
  * The Ecosystem money flow feed on the Funding tab (owner review, 2026-11-09).
  * Pure. Program, Funding and Incentive events from the events file, plus
- * Base related rounds from the rounds file as "Award or investment",
- * skipping a round when an event already covers the same project in the same month.
+ * rounds from the rounds file, typed by where the money came from (Base Ecosystem Fund, Base Batches,
+ * Coinbase Ventures, an acquisition, or another Base related round), skipping a round when an event
+ * already covers the same project in the same month.
  */
 import type { EcosystemEvent, Round } from "./types";
 
 export const FLOW_EVENT_TYPES = ["Program", "Funding", "Incentive"] as const;
-export const ROUND_FLOW_TYPE = "Award or investment";
+export const ROUND_FLOW_TYPE = "Other Base related round";
+/** Round types in the order the filter lists them, before the generic one. */
+export const ROUND_FLOW_TYPES = ["Base Ecosystem Fund", "Base Batches", "Coinbase Ventures", "Acquisition"] as const;
+
+/** Where a round's money came from, or null when it is not part of the Base money flow. */
+export function roundFlowType(r: Pick<Round, "roundType" | "leadInvestors" | "otherInvestors" | "related">): string | null {
+  const names = [...r.leadInvestors, ...r.otherInvestors].map((n) => n.toLowerCase());
+  const has = (k: string) => names.some((n) => n.startsWith(k));
+  if (/acqui/i.test(r.roundType)) return "Acquisition";
+  if (has("base batches")) return "Base Batches";
+  if (has("base ecosystem fund")) return "Base Ecosystem Fund";
+  if (has("coinbase ventures")) return "Coinbase Ventures";
+  return r.related ? ROUND_FLOW_TYPE : null;
+}
 export const FLOW_ALL = "All";
 
 export interface FlowItem {
@@ -31,12 +45,13 @@ export function moneyFlow(events: EcosystemEvent[], rounds: Round[]): FlowItem[]
   const covered = new Set(ev.flatMap((e) => e.projectIds.map((id) => `${id}|${month(e.date)}`)));
   const items: FlowItem[] = ev.map((e) => ({ id: `event-${e.id}`, type: e.type, date: e.date || null, title: e.title, amount: e.amount, amountNote: e.amountNote, detail: e.detail, eventId: e.id }));
   for (const r of rounds) {
-    if (!r.related) continue;
+    const type = roundFlowType(r);
+    if (!type) continue;
     if (r.projectId && covered.has(`${r.projectId}|${month(r.date)}`)) continue;
-    const from = r.leadInvestors.length ? `From ${r.leadInvestors.join(", ")}.` : null;
+    const from = r.leadInvestors.length ? `${type === "Acquisition" ? "By" : "From"} ${r.leadInvestors.join(", ")}.` : null;
     items.push({
       id: `round-${r.id}`,
-      type: ROUND_FLOW_TYPE,
+      type,
       date: r.date,
       title: `${r.project}, ${r.roundType.toLowerCase()}`,
       amount: r.amount,
@@ -53,7 +68,9 @@ export function moneyFlow(events: EcosystemEvent[], rounds: Round[]): FlowItem[]
 export function flowTypes(items: FlowItem[]): Array<{ type: string; count: number }> {
   const counts = new Map<string, number>();
   for (const i of items) counts.set(i.type, (counts.get(i.type) ?? 0) + 1);
-  const known = [...FLOW_EVENT_TYPES, ROUND_FLOW_TYPE] as string[];
+  // Event types always show; round types only when some round has them.
+  const roundTypes = ([...ROUND_FLOW_TYPES, ROUND_FLOW_TYPE] as string[]).filter((t) => counts.has(t));
+  const known = [...FLOW_EVENT_TYPES, ...roundTypes] as string[];
   const others = Array.from(counts.keys()).filter((t) => !known.includes(t)).sort();
   return [{ type: FLOW_ALL, count: items.length }, ...[...known, ...others].map((t) => ({ type: t, count: counts.get(t) ?? 0 }))];
 }

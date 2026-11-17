@@ -41,7 +41,7 @@ const BOX_PAGE_SIZE = 15;
 const ROUNDS_BOX_COLUMNS = { related: false };
 
 const VIEW_TITLE: Record<FundingViewKey, string> = {
-  flow: "Ecosystem money flow",
+  flow: "Base ecosystem money flow",
   rounds: "Funding rounds",
   backers: "Disclosed backers per project",
 };
@@ -167,7 +167,7 @@ export function FundingView() {
               <div key={e.id} className="flex flex-col rounded-lg border border-ink-700/60 p-3 text-sm transition-colors hover:border-neon-500/60">
                 <div className="flex items-start justify-between gap-3">
                   <span className="type-label inline-flex flex-wrap items-center gap-x-1.5 text-ink-300">
-                    <span aria-hidden="true" className="size-2 rounded-full" style={{ backgroundColor: e.type === ROUND_FLOW_TYPE ? ROUND_DOT : EVENT_COLOR[e.type as keyof typeof EVENT_COLOR] }} />
+                    <span aria-hidden="true" className="size-2 rounded-full" style={{ backgroundColor: !(e.type in EVENT_COLOR) ? ROUND_DOT : EVENT_COLOR[e.type as keyof typeof EVENT_COLOR] }} />
                     {e.type}
                     <span className="tabular">{e.date ? fmtDate(e.date) : "undated"}</span>
                   </span>

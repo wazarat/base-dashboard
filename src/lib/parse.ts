@@ -29,6 +29,12 @@ export function clean(v: string | undefined | null): string | null {
   return t === "" ? null : t;
 }
 
+/** A website written without a scheme ("wert.io") gets https so links work. */
+export function withScheme(v: string | null): string | null {
+  if (!v) return v;
+  return /^https?:\/\//i.test(v) ? v : `https://${v}`;
+}
+
 /** Blank means "no data", never zero. Accepts "1,234", "$1,234", "1234.5". */
 export function parseNumber(v: string | undefined | null): number | null {
   const t = clean(v);
@@ -47,6 +53,11 @@ export function splitList(v: string | undefined | null): string[] {
     .split(";")
     .map((s) => s.trim())
     .filter(Boolean);
+}
+
+/** Display text from the research files: an em or en dash between words becomes a comma (copy rule, docs/ATLAS-UI.md section 2). */
+export function cleanDashes(v: string): string {
+  return v.replace(/\s*[\u2014\u2013]\s*/g, ", ").replace(/,\s*,/g, ",");
 }
 
 export function slugify(name: string): string {
@@ -105,8 +116,9 @@ function oneOf<T extends readonly string[]>(
 }
 
 export function toProject(row: RawRow): Project {
-  const name = clean(row["Project/Company Name"]);
-  if (!name) throw new Error("Row without a project name");
+  const rawName = clean(row["Project/Company Name"]);
+  if (!rawName) throw new Error("Row without a project name");
+  const name = cleanDashes(rawName);
 
   const tvl = parseNumber(row["TVL on Base (USD)"]);
   const volume = parseNumber(row["30d DEX Volume (USD)"]);
@@ -123,7 +135,7 @@ export function toProject(row: RawRow): Project {
   return {
     id: slugify(name),
     name,
-    website: clean(row["Website"]),
+    website: withScheme(clean(row["Website"])),
     sector: clean(row["Sector/Category"]) ?? "Other",
     subcategory: clean(row["Subcategory"]),
     chain: oneOf(NATIVE_CHAINS, clean(row["Native Chain"]), "Native Chain", name) as NativeChain,
@@ -154,7 +166,7 @@ export function toProject(row: RawRow): Project {
     incidents: clean(row["Incidents"]),
     redFlags: clean(row["Red Flags"]),
     securitySourceUrl: clean(row["Security Source URL"]),
-    description: clean(row["Description"]) ?? "",
+    description: cleanDashes(clean(row["Description"]) ?? ""),
     status,
     statusGroup: statusGroup(status),
     xHandle: clean(row["X Handle"]),
