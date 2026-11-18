@@ -9,7 +9,7 @@ import { TEST_USER } from "./test-user";
  */
 test.skip(!process.env.CLERK_SECRET_KEY || !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY, "No Clerk keys in the environment, so the logged-in run is skipped.");
 
-const TABS = ["/sectors/", "/traction/", "/funding/", "/explorer/", "/security/", "/stocks/", "/investors/"];
+const TABS = ["/sectors/", "/traction/", "/funding/", "/explorer/", "/security/", "/investors/"];
 
 function watch(page: Page) {
   const errors: string[] = [];
@@ -36,23 +36,23 @@ test("every tab loads its gated data once signed in", async ({ page }) => {
   expect(w.api.length).toBeGreaterThan(0);
   expect(w.api.every((s) => s === 200), `gated API statuses ${w.api.join(",")}`).toBe(true);
   // The Funding event detail and a two-project comparison are there too.
-  await page.goto("/?event=2025-11-11-lighter-raises-68m-with-robinhood-participating");
-  await expect(page.getByTestId("event-dialog")).toContainText("Ribbit Capital");
+  await page.goto("/?event=2026-03-26-megapot-raises-5m-pre-seed");
+  await expect(page.getByTestId("event-dialog")).toContainText("Bankless Ventures");
   await expect(page.getByTestId("event-dialog").getByRole("link", { name: /fortune\.com/ })).toBeVisible();
-  await page.goto("/compare/?compare=uniswap,lighter");
+  await page.goto("/compare/?compare=uniswap,megapot");
   await expect(page.getByRole("main").getByRole("table").first()).toBeVisible();
   expect(w.errors).toEqual([]);
 });
 
 test("an Add to compare clicked while logged out is finished after login", async ({ page }) => {
   const w = watch(page);
-  await page.goto("/compare/?compare=uniswap&project=lighter");
+  await page.goto("/compare/?compare=uniswap&project=megapot");
   await page.waitForLoadState("networkidle");
   await page.getByTestId("project-modal").getByRole("button", { name: "Add to compare" }).click();
   await expect(page.getByTestId("login-dialog")).toBeVisible();
-  await expect(page).not.toHaveURL(/compare=[^&]*lighter/);
+  await expect(page).not.toHaveURL(/compare=[^&]*megapot/);
   await clerk.signIn({ page, emailAddress: TEST_USER });
-  await expect(page).toHaveURL(/compare=[^&]*lighter/, { timeout: 15_000 });
+  await expect(page).toHaveURL(/compare=[^&]*megapot/, { timeout: 15_000 });
   // The gated set arrives without a reload once the reader has logged in on the page.
   await expect.poll(() => w.api.includes(200), { message: `gated API statuses after login: ${w.api.join(",") || "none"}`, timeout: 15_000 }).toBe(true);
   // The project pop-up (and the login pop-up, if still up) hide the page from the accessibility tree; close them first.

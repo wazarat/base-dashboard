@@ -5,7 +5,7 @@
  *
  * Sentinels are the investor names from the gated rounds file that appear in no
  * public JSON and nowhere in the source code (a name the code itself uses, such as
- * an alias or "Robinhood Markets" in the footer, is not data), plus a few fixed names. The scan covers .next/static, public/, and
+ * an alias or "Coinbase" in the footer, is not data), plus a few fixed names. The scan covers .next/static, public/, and
  * the prerendered pages under .next/server/app (HTML and RSC payloads), skipping the
  * api/ route handlers, which are server code. Any hit fails the build.
  */
@@ -14,7 +14,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
-export const FIXED_SENTINELS = ["Ribbit Capital", "Polychain"];
+export const FIXED_SENTINELS = ["Bankless Ventures", "Polychain"];
 /** The URL-slug form of a name ("Ribbit Capital" is "ribbit-capital"), since a source link can carry a gated name in its path. */
 export const slugOf = (name) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const MIN_LENGTH = 8;

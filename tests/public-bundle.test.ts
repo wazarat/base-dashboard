@@ -23,10 +23,10 @@ describe("public bundle check", () => {
     expect(s).not.toContain("Tiny");
     for (const f of FIXED_SENTINELS) expect(s).toContain(f);
     // A gated name inside a URL path is caught too.
-    expect(slugOf("Ribbit Capital")).toBe("ribbit-capital");
-    expect(s).toContain("ribbit-capital");
-    const planted = folder({ "chunks/b.js": 'var u="https://news.example/2025/raise-ribbit-capital-haun";' });
-    expect(scan([planted], s)).toEqual([expect.objectContaining({ sentinel: "ribbit-capital" })]);
+    expect(slugOf("Bankless Ventures")).toBe("bankless-ventures");
+    expect(s).toContain("bankless-ventures");
+    const planted = folder({ "chunks/b.js": 'var u="https://news.example/2026/raise-bankless-ventures-dragonfly";' });
+    expect(scan([planted], s)).toEqual([expect.objectContaining({ sentinel: "bankless-ventures" })]);
     expect(findSentinels(rounds, [], ["'Secret Ventures'"])).not.toContain("Secret Ventures");
   });
 

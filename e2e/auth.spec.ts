@@ -21,11 +21,11 @@ function wallOn(): boolean {
 
 test.skip(!wallOn(), "Clerk keys are not set (.env.local or env) and E2E_BASE_URL is not given, so the login wall is off and there is nothing to test.");
 
-const GATED = ["/sectors/", "/traction/", "/funding/", "/explorer/", "/security/", "/stocks/", "/investors/"];
+const GATED = ["/sectors/", "/traction/", "/funding/", "/explorer/", "/security/", "/investors/"];
 const SHOTS = path.resolve(__dirname, "..", ".claude", "shots");
 /** Gated strings: an investor that only the gated set names, and the Funding event detail that names it. */
-const SENTINELS = ["Ribbit Capital", "Founders Fund and Ribbit", "ribbit-capital"];
-const FUNDING_EVENT = "2025-11-11-lighter-raises-68m-with-robinhood-participating";
+const SENTINELS = ["Bankless Ventures", "founders of FanDuel", "bankless-ventures", "fortune.com"];
+const FUNDING_EVENT = "2026-03-26-megapot-raises-5m-pre-seed";
 
 type Watch = { errors: string[]; api: { url: string; status: number }[]; leaks: string[]; bodies: Promise<void>[] };
 
@@ -80,7 +80,7 @@ test("Overview is public, the header offers Log in, and nothing gated downloads"
   const res = await page.request.get("/api/data/gated/");
   expect(res.status()).toBe(401);
   expect(res.headers()["cache-control"]).toContain("private");
-  expect(await res.text()).not.toContain("Ribbit Capital");
+  expect(await res.text()).not.toContain("Bankless Ventures");
 });
 
 for (const route of GATED) {
@@ -113,22 +113,22 @@ test("Compare takes one project logged out, and a second one asks for login", as
   await expect(page.getByTestId("login-dialog")).toHaveCount(0);
   await expect(page.getByRole("main")).toContainText("Uniswap");
   await page.screenshot({ path: path.join(SHOTS, `auth-compare-${info.project.name}.png`) });
-  await page.goto("/compare/?compare=uniswap&project=lighter");
+  await page.goto("/compare/?compare=uniswap&project=megapot");
   await page.waitForLoadState("networkidle");
   await page.getByTestId("project-modal").getByRole("button", { name: "Add to compare" }).click();
   await expect(page.getByTestId("login-dialog")).toBeVisible();
-  await expect(page).not.toHaveURL(/compare=[^&]*lighter/);
+  await expect(page).not.toHaveURL(/compare=[^&]*megapot/);
   await nothingGated(page, w);
 });
 
 test("a shared comparison of two projects waits behind the login pop-up", async ({ page }) => {
   const w = await watch(page);
-  await page.goto("/compare/?compare=uniswap,lighter");
+  await page.goto("/compare/?compare=uniswap,megapot");
   await page.waitForLoadState("networkidle");
   await expect(page.getByTestId("login-dialog")).toBeVisible();
   await expect(page.getByTestId("login-wall").getByTestId("page-placeholder")).toBeVisible();
   await expect(page.getByRole("main").getByRole("table")).toHaveCount(0);
-  await expect(page).toHaveURL(/compare=uniswap(%2C|,)lighter/);
+  await expect(page).toHaveURL(/compare=uniswap(%2C|,)megapot/);
   await noOverflow(page);
   await nothingGated(page, w);
 });
@@ -138,12 +138,12 @@ test("a Funding event shows title, date and amount, and the detail asks for logi
   await page.goto(`/?event=${FUNDING_EVENT}`);
   const dialog = page.getByTestId("event-dialog");
   await expect(dialog).toBeVisible();
-  await expect(dialog).toContainText("Lighter raises $68M");
+  await expect(dialog).toContainText("Megapot raises $5M pre-seed");
   await expect(dialog.getByTestId("event-detail-login")).toBeVisible();
   // The source link is gated too: its URL names the lead investor.
   await expect(dialog.getByTestId("event-source-login")).toBeVisible();
   await expect(dialog.getByRole("link", { name: /fortune\.com/ })).toHaveCount(0);
-  await expect(dialog).not.toContainText(/ribbit/i);
+  await expect(dialog).not.toContainText(/bankless/i);
   await dialog.getByTestId("event-detail-login").click();
   await expect(page.getByTestId("login-dialog")).toBeVisible();
   await nothingGated(page, w);
