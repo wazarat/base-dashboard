@@ -56,7 +56,7 @@ export function DownloadCsv({ rows }: { rows: Project[] }) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `robinhood-chain-atlas-${meta.asOf}-${rows.length}-projects.csv`;
+    a.download = `base-atlas-${meta.asOf}-${rows.length}-projects.csv`;
     document.body.appendChild(a);
     a.click();
     a.remove();

@@ -123,7 +123,7 @@ export const CAT5 = ["var(--cat-1)", "var(--cat-2)", "var(--cat-3)", "var(--cat-
 export const HATCH_ID = "atlas-hatch";
 export const HATCH_FILL = `url(#${HATCH_ID})`;
 
-/** Human label for a GeckoTerminal dex id such as "uniswap-v3-robinhood". */
+/** Human label for a GeckoTerminal dex id such as "uniswap-v3-base". */
 export function dexLabel(id: string): string {
   const base = id.replace(/-base$/, "").replace(/^base-/, "");
   return base

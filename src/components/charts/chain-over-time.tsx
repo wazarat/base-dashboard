@@ -58,7 +58,7 @@ export function ChainOverTime() {
             return { date: d, tvl: chainData.defillama.tvl[j], volume: chainData.defillama.volume[j], fees: chainData.defillama.fees[j], revenue: chainData.defillama.revenue[j] };
           })
           .reverse(),
-        filename: "robinhood-chain-over-time.csv",
+        filename: "base-chain-over-time.csv",
         maxRows: 400,
       }}
     >

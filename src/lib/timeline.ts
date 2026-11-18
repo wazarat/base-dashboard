@@ -65,7 +65,7 @@ export function eventTable(events: EcosystemEvent[], opts: { gatedHidden?: boole
         detail: e.detail ?? (hidden(e) ? AFTER_LOGIN : null),
         source: isDirectSource(e.sourceUrl) ? e.sourceUrl : hidden(e) && !e.sourceUrl ? AFTER_LOGIN : null,
       })),
-    filename: "robinhood-chain-events.csv",
+    filename: "base-events.csv",
     maxRows: 100,
   };
 }

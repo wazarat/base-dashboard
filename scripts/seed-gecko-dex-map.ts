@@ -64,7 +64,7 @@ async function main() {
   }
   rows.sort((a, b) => a.dexId.localeCompare(b.dexId));
   const mapped = rows.filter((r) => r.project);
-  console.log(`\nGeckoTerminal venues on network robinhood: ${dexes.length} listed, ${mapped.length} mapped to a project, ${rows.length - mapped.length} left out\n`);
+  console.log(`\nGeckoTerminal venues on network base: ${dexes.length} listed, ${mapped.length} mapped to a project, ${rows.length - mapped.length} left out\n`);
   for (const r of rows) console.log(`  ${r.dexId.padEnd(40)} ${(r.project || "(left out)").padEnd(34)} ${r.kind}`);
   if (dry) return;
   const changed = writeCsv(
