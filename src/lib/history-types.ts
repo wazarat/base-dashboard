@@ -18,6 +18,7 @@ export const SOURCE_IDS = [
   "defillama-stablecoins",
   "blockscout-tokens",
   "geckoterminal-tokens",
+  "geckoterminal-holders",
   "blockscout-nfts",
   // Sector metric sources (docs/SECTOR-METRICS.md, section 2).
   "llama-aggregators",
@@ -132,7 +133,7 @@ export interface MorphoVaultsFile {
   vaults: MorphoVaultRecord[];
 }
 
-/** One trading venue on GeckoTerminal (a DEX id on network robinhood): daily 24-hour volume and liquidity, and the pools seen with their creation day. */
+/** One trading venue on GeckoTerminal (a DEX id on network base): daily 24-hour volume and liquidity, and the pools seen with their creation day. */
 export interface GeckoVenueRecord {
   id: string;
   name: string;
@@ -266,7 +267,7 @@ export interface StablecoinRecord {
   series: Series;
 }
 
-/** Token identity as Blockscout reports it, used by the spoof guard (src/lib/token-guard.ts). */
+/** Token identity as GeckoTerminal or Blockscout reports it (type only from Blockscout), used by the spoof guard (src/lib/token-guard.ts). */
 export interface TokenMetaRecord {
   name: string | null;
   symbol: string | null;
@@ -278,7 +279,7 @@ export interface TokenMetaRecord {
 /** [date, holders, total supply (decimals applied), price USD, transfers ever, transfers in the last 30 days (capped)] */
 export type TokenSnapRow = [date: DateStr, holders: number | null, supply: number | null, priceUsd: number | null, transfersTotal: number | null, transfers30d: number | null];
 
-/** DEX activity of one project token on network robinhood only, summed over its pools. */
+/** DEX activity of one project token on network base only, summed over its pools. */
 export interface TokenDexRecord {
   /** [date, liquidity USD summed over pools] */
   liquidity: Array<[DateStr, number]>;

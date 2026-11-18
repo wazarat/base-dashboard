@@ -28,6 +28,7 @@ import * as stablecoins from "./fetch/stablecoins";
 import * as blockscoutTokens from "./fetch/blockscout-tokens";
 import * as blockscoutNfts from "./fetch/blockscout-nfts";
 import * as geckoTokens from "./fetch/geckoterminal-tokens";
+import * as geckoHolders from "./fetch/geckoterminal-holders";
 import * as llamaAggregators from "./fetch/llama-aggregators";
 import * as llamaBridgeAggregators from "./fetch/llama-bridge-aggregators";
 import * as llamaOpenInterest from "./fetch/llama-open-interest";
@@ -62,8 +63,10 @@ const LANES: Source[][] = [
     { id: "llama-hacks", run: llamaHacks.run },
     { id: "llama-yields", run: llamaYields.run },
   ],
-  // Token and NFT snapshots (the Blockscout key's limiter is shared with blockscout-keyed) and Morpho vaults.
+  // Token and NFT snapshots, which share tokens/meta.json and tokens/snapshots.json, and Morpho vaults.
+  // GeckoTerminal holders use the shared GeckoTerminal limiter; the Blockscout ones skip while Base needs a paid plan.
   [
+    { id: "geckoterminal-holders", run: geckoHolders.run },
     { id: "blockscout-tokens", run: blockscoutTokens.run },
     { id: "blockscout-nfts", run: blockscoutNfts.run },
     { id: "morpho-vaults", run: morphoVaults.run },
@@ -187,9 +190,13 @@ async function main() {
   log.info(`\n  Time per source (lanes run in parallel; wall time ${((Date.now() - nowMs) / 60_000).toFixed(1)} min)`);
   for (const t of timed) log.info(`    ${t.id.padEnd(26)}${(t.ms / 1000).toFixed(0).padStart(6)}s ${String(t.calls).padStart(6)} calls`);
   if (!args.dryRun) {
-    meta.lastRun = isoNow();
-    meta.lastRunDate = ctx.today;
-    meta.mode = ctx.mode;
+    // Only a full run moves the window end: after `--only a,b` the other sources still stop at the last full run,
+    // so the build would read a day they never fetched (TVL reconciles against a missing day).
+    if (!args.only.size) {
+      meta.lastRun = isoNow();
+      meta.lastRunDate = ctx.today;
+      meta.mode = ctx.mode;
+    }
     save();
   }
   log.info(`\n  ${ok} sources ok, ${failed} failed. ${meta.newlyDetected.length} unmapped DefiLlama protocols, ${meta.unmatchedMap.length} stale map slugs.\n`);

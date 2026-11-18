@@ -1,9 +1,10 @@
 /**
  * Blockscout for Base.
- * - Chain-level stats service on the explorer host works without a key.
- * - The explorer's /api/v2 sits behind a browser challenge for scripts, so
- *   per-address and token endpoints use the keyed gateway api.blockscout.com/4663
- *   with BLOCKSCOUT_API_KEY (free tier). Without the key those metrics are skipped.
+ * - Base publishes no Blockscout stats service, so runLines always skips.
+ * - The explorer's /api/v2 sits behind a browser challenge for scripts, so per-address and token
+ *   endpoints would use the keyed gateway api.blockscout.com/8453 with BLOCKSCOUT_API_KEY. Base is a
+ *   featured chain there and needs a paid plan, so while CHAIN.blockscoutFree is false the keyed
+ *   sources skip without calling (see BLOCKSCOUT_PAID).
  */
 import path from "node:path";
 import { isFungibleRole } from "../../src/lib/contract-roles";
@@ -22,6 +23,15 @@ import { createClient, HttpError, type HttpClient } from "./http";
 /** Base publishes no Blockscout stats service (probed Nov 17 2026), so chain lines come from growthepie and DefiLlama instead. */
 const STATS: string | null = null;
 const KEYED = CHAIN.blockscoutGateway;
+/** Skip note for every keyed Blockscout source while Base needs a paid plan there. */
+export const BLOCKSCOUT_PAID = "skipped: Blockscout needs a paid plan for Base (featured chain); holders come from GeckoTerminal";
+
+/** Why a keyed Blockscout source should not run, or null when it can. */
+export function keyedSkip(env: Record<string, string | undefined>): string | null {
+  if (!CHAIN.blockscoutFree) return BLOCKSCOUT_PAID;
+  if (!env.BLOCKSCOUT_API_KEY?.trim()) return "skipped: BLOCKSCOUT_API_KEY not set";
+  return null;
+}
 /** Contracts above this many transactions are not backfilled page by page. */
 export const BACKFILL_MAX_TXNS = 50_000;
 
@@ -216,8 +226,9 @@ export function readActivity(): Record<string, ContractActivity> {
 }
 
 export async function runKeyed(ctx: Ctx): Promise<RunResult> {
-  const key = ctx.env.BLOCKSCOUT_API_KEY?.trim();
-  if (!key) return { rows: 0, calls: 0, notes: ["skipped: BLOCKSCOUT_API_KEY not set"] };
+  const skip = keyedSkip(ctx.env);
+  if (skip) return { rows: 0, calls: 0, notes: [skip] };
+  const key = ctx.env.BLOCKSCOUT_API_KEY!.trim();
   const contracts = parseContracts(readCsvOrEmpty(path.join(DATA, "contracts.csv")));
   const client = keyedClient(key);
   const notes: string[] = [];

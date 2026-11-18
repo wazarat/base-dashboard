@@ -11,7 +11,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { parseMapRows } from "../src/lib/mapping";
 import { readProtocols } from "./fetch/defillama";
-import { keyedClient, keyedGet, parseContracts, type ContractRow } from "./fetch/blockscout";
+import { keyedClient, keyedGet, keyedSkip, parseContracts, type ContractRow } from "./fetch/blockscout";
 import { readCsvOrEmpty, writeCsv } from "./lib/csv";
 import { DATA } from "./lib/paths";
 
@@ -37,7 +37,8 @@ interface AddressInfo {
 async function main() {
   loadEnvLocal();
   const dry = process.argv.includes("--dry");
-  const key = process.env.BLOCKSCOUT_API_KEY?.trim();
+  // Base needs a paid Blockscout plan, so roles stay unverified until CHAIN.blockscoutFree is true.
+  const key = keyedSkip(process.env) ? undefined : process.env.BLOCKSCOUT_API_KEY?.trim();
   const protocols = readProtocols();
   const map = parseMapRows(readCsvOrEmpty(path.join(DATA, "defillama-map.csv")));
   const file = path.join(DATA, "contracts.csv");
@@ -53,7 +54,7 @@ async function main() {
     if (!p?.address || have.has(p.address) || candidates.some((c) => c.address === p.address)) continue;
     candidates.push({ project: r.project, address: p.address, slug: r.slug });
   }
-  console.log(`\n${existing.length} existing rows, ${candidates.length} new candidate addresses from DefiLlama listings${key ? "" : " (no BLOCKSCOUT_API_KEY: roles left unverified)"}\n`);
+  console.log(`\n${existing.length} existing rows, ${candidates.length} new candidate addresses from DefiLlama listings${key ? "" : " (no usable Blockscout key: roles left unverified)"}\n`);
 
   const client = key ? keyedClient(key) : null;
   // Existing rows are written back unchanged, with their name, symbol and decimals.

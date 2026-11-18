@@ -13,7 +13,7 @@ import { readCsvOrEmpty } from "../lib/csv";
 import { log } from "../lib/log";
 import { DATA, HISTORY } from "../lib/paths";
 import { appendDated, readJson, writeJsonStable } from "../lib/store";
-import { keyedClient, keyedGet, parseContracts, parseTokenInfo, type ContractRow } from "./blockscout";
+import { keyedClient, keyedGet, keyedSkip, parseContracts, parseTokenInfo, type ContractRow } from "./blockscout";
 import type { Ctx, RunResult } from "./context";
 import type { HttpClient } from "./http";
 
@@ -78,8 +78,9 @@ export async function snapshotToken(client: HttpClient, key: string, address: st
 }
 
 export async function runFor(ctx: Ctx, pick: (c: ContractRow) => boolean, recent: boolean, label: string): Promise<RunResult> {
-  const key = ctx.env.BLOCKSCOUT_API_KEY?.trim();
-  if (!key) return { rows: 0, calls: 0, notes: ["skipped: BLOCKSCOUT_API_KEY not set"] };
+  const skip = keyedSkip(ctx.env);
+  if (skip) return { rows: 0, calls: 0, notes: [skip] };
+  const key = ctx.env.BLOCKSCOUT_API_KEY!.trim();
   const targets = parseContracts(readCsvOrEmpty(path.join(DATA, "contracts.csv"))).filter(pick);
   if (!targets.length) return { rows: 0, calls: 0, notes: [`skipped: no ${label} in data/contracts.csv`] };
   const client = keyedClient(key);

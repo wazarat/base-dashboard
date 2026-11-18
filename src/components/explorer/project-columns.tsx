@@ -133,7 +133,7 @@ export const xColumn = h.accessor((p) => p.xHandle ?? undefined, {
 });
 
 /** Onchain traction columns (src/lib/onchain.ts), optional and hidden by default. Never part of the chain KPIs. */
-const ONCHAIN_SOURCE = "Stablecoin supply from DefiLlama, token volume on network robinhood from GeckoTerminal, holders from Blockscout. Kept apart from TVL and volume so nothing is counted twice.";
+const ONCHAIN_SOURCE = "Stablecoin supply from DefiLlama, token volume and holders on network base from GeckoTerminal. Kept apart from TVL and volume so nothing is counted twice.";
 export const stableSupplyColumn = h.accessor((p) => p.onchain?.stableSupply ?? undefined, { id: "stableSupply", header: "Stablecoin supply", cell: ({ getValue }) => <Usd v={getValue()} />, sortUndefined: "last", meta: { align: "right", info: ONCHAIN_SOURCE } });
 export const tokenVolumeColumn = h.accessor((p) => p.onchain?.tokenVolume30d ?? undefined, { id: "tokenVolume", header: "Token volume (30d)", cell: ({ getValue }) => <Usd v={getValue()} />, sortUndefined: "last", meta: { align: "right", info: ONCHAIN_SOURCE } });
 export const holdersColumn = h.accessor((p) => p.onchain?.holders ?? p.onchain?.nftHolders ?? p.live?.holders ?? undefined, {

@@ -10,6 +10,8 @@ import type { ChainData } from "@/lib/types";
 import { parseChainChart, parseChainCoins, parseCoinHistory } from "../scripts/fetch/stablecoins";
 import { countRecent, parseTokenMeta } from "../scripts/fetch/blockscout-tokens";
 import { poolsFor, sumDaily } from "../scripts/fetch/geckoterminal-tokens";
+import { holderTargets, parseHolders, parseMultiFacts, toMeta, toRow } from "../scripts/fetch/geckoterminal-holders";
+import { keyedSkip } from "../scripts/fetch/blockscout";
 import { mkProject } from "./fixtures/project";
 
 const daily = (start: string, values: number[]): Series =>
@@ -139,13 +141,37 @@ describe("fetcher helpers", () => {
     expect(countRecent([{ timestamp: "2026-11-09T01:00:00Z" }, { timestamp: "2026-10-20T00:00:00Z" }, { timestamp: "2026-10-01T00:00:00Z" }], "2026-10-10")).toEqual({ count: 2, older: true });
   });
 
-  it("sums pools on network robinhood for one token and drops today", () => {
+  it("sums pools on network base for one token and drops today", () => {
     const tok = "0x2222222222222222222222222222222222222222";
     const pool = (base: string, reserve: number, vol: number) => ({ address: `0x${reserve}`, dex: "uni", name: "x", createdAt: "", base, quote: "0xweth", reserveUsd: reserve, volume24h: vol });
     const r = poolsFor([pool(tok, 5_000, 100), pool(tok, 200, 0), pool("0xother", 9e6, 9e6)], tok, 3);
     expect(r.liquidity).toBe(5_200);
     expect(r.pools).toHaveLength(1);
     expect(sumDaily([[["2026-11-07", 5], ["2026-11-08", 1]], [["2026-11-07", 2]]], "2026-11-08")).toEqual([["2026-11-07", 7]]);
+  });
+
+  it("reads GeckoTerminal token facts and holder counts into the token store shape", () => {
+    // Trimmed from api.geckoterminal.com/api/v2/networks/base/tokens/multi and .../tokens/{address}/info, Nov 18 2026.
+    const facts = parseMultiFacts({ data: [{ attributes: { address: "0x3F5BF3EDAC59D650D8FDF9657A71F2F904A3A4EE", name: "Aero", symbol: "AERO", decimals: 18, normalized_total_supply: "2145150339.09444", price_usd: "0.4313746183" } }, { attributes: {} }] });
+    const aero = facts.get("0x3f5bf3edac59d650d8fdf9657a71f2f904a3a4ee");
+    expect(facts.size).toBe(1);
+    expect(aero).toMatchObject({ symbol: "AERO", decimals: 18, supply: 2145150339.09444, priceUsd: 0.4313746183 });
+    expect(parseHolders({ data: { attributes: { holders: { count: 16863 } } } })).toBe(16863);
+    expect(parseHolders({ data: { attributes: { holders: null } } })).toBeNull();
+    expect(toMeta(aero!, "2026-11-18")).toEqual({ name: "Aero", symbol: "AERO", decimals: 18, type: null, checked: "2026-11-18" });
+    expect(toRow(aero, 16863, "2026-11-18")).toEqual(["2026-11-18", 16863, 2145150339.09444, 0.4313746183, null, null]);
+    expect(toRow(undefined, null, "2026-11-18")).toEqual(["2026-11-18", null, null, null, null, null]);
+  });
+
+  it("targets fungible contracts and mapped stablecoins once each", () => {
+    const a = "0x1111111111111111111111111111111111111111";
+    const nft = "0x3333333333333333333333333333333333333333";
+    expect(holderTargets([{ address: a, role: "project-token" }, { address: nft, role: "nft-collection" }], [{ Address: CIRCLE_USDC_BASE }, { Address: "" }, { Address: a.toUpperCase().replace("0X", "0x") }])).toEqual([a, CIRCLE_USDC_BASE].sort());
+  });
+
+  it("skips keyed Blockscout on Base, which needs a paid plan, even with a key", () => {
+    expect(keyedSkip({ BLOCKSCOUT_API_KEY: "k" })).toMatch(/paid plan/);
+    expect(keyedSkip({})).toMatch(/paid plan/);
   });
 });
 

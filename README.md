@@ -74,14 +74,14 @@ The build reconciles the counted projects against DefiLlama's chain totals for T
 | DefiLlama `api.llama.fi` | Per-protocol TVL with borrowed, staking, pool2 and vesting, chain TVL, DEX volume, fees and revenue overviews, aggregators, bridge aggregators, open interest, options, active users, hacks | No key, one request a second |
 | DefiLlama stablecoins and yields | Stablecoin supply on Base per coin, yield pools and lending rates | No key |
 | Morpho GraphQL `api.morpho.org/graphql` | Markets and vaults on chain 8453 | No key. Markets with an absurd APY or unpriced collateral are dropped and logged |
-| GeckoTerminal `api.geckoterminal.com` | Launchpad and agent venue pools, token volume, liquidity and holders | No key, about one call every 7 seconds in practice |
-| Blockscout gateway `api.blockscout.com/8453` | Token holders, supply and transfers | Free key (`BLOCKSCOUT_API_KEY`). The stats service is not published for Base |
+| GeckoTerminal `api.geckoterminal.com` | Launchpad and agent venue pools, token volume and liquidity, and holder count, supply, price, name, symbol and decimals for every mapped token (`geckoterminal-holders`) | No key, about one call every 7 seconds in practice |
 | growthepie `api.growthepie.com` | Daily active addresses, transactions and smart-wallet activity | No key |
 
 ### Deferred (paid)
 
 These return HTTP 402 or need a paid plan and are not used.
 
+- Blockscout gateway `api.blockscout.com/8453`. Base is a featured chain there, so a free key gets HTTP 402 ("requires one of the following plans: Builder, Business, Pro", checked Nov 18 2026). The `blockscout-keyed`, `blockscout-tokens` and `blockscout-nfts` sources skip without calling while `CHAIN.blockscoutFree` in `src/lib/chain.ts` is false. Token transfer counts and per-contract activity are not tracked. On a paid plan, set it to true and keep `BLOCKSCOUT_API_KEY` set. Base also publishes no Blockscout stats service, so chain activity comes from growthepie either way
 - DefiLlama `/raises`, `/emissions`, `/overview/derivatives` (perps volume), `/summary/derivatives/*`, `/oracles`, `/chainAssets`, and `bridges.llama.fi`
 - GeckoTerminal category endpoints
 - Dune API, Token Terminal, Artemis, Nansen, RootData, CryptoRank, Flipside and the X API

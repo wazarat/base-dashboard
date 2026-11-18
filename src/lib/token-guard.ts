@@ -1,6 +1,6 @@
 /**
  * Spoof guard (pure). Many fake tokens on the chain copy real names, so a mapped address is only
- * trusted when what Blockscout reports for it agrees with the row in data/contracts.csv or
+ * trusted when what GeckoTerminal (or Blockscout, on a paid plan) reports for it agrees with the row in data/contracts.csv or
  * data/stablecoin-map.csv. Mapping by name or symbol alone is never allowed.
  */
 import { isFungibleRole, isNftRole } from "./contract-roles";
@@ -31,9 +31,9 @@ export function guardToken(row: GuardRow, meta: TokenMetaRecord | undefined): st
   // Circle's native USDC on Base has one address (developers.circle.com); any other USDC-named stablecoin is a copy.
   if (sym === "usdc" && row.role === "stablecoin" && row.address.toLowerCase() !== CIRCLE_USDC_BASE) out.push(`USDC on Base is ${CIRCLE_USDC_BASE}, so ${row.address} is a copy`);
   if (!meta) return out;
-  if (row.decimals !== null && meta.decimals !== null && row.decimals !== meta.decimals) out.push(`decimals ${meta.decimals} on Blockscout, ${row.decimals} in the source`);
-  if (row.symbol && meta.symbol && norm(row.symbol) !== norm(meta.symbol)) out.push(`symbol ${meta.symbol} on Blockscout, ${row.symbol} in the source`);
-  if (row.name && meta.name && !norm(meta.name).includes(norm(row.name)) && !norm(row.name).includes(norm(meta.name))) out.push(`name ${meta.name} on Blockscout, ${row.name} in the source`);
+  if (row.decimals !== null && meta.decimals !== null && row.decimals !== meta.decimals) out.push(`decimals ${meta.decimals} reported for the address, ${row.decimals} in the source`);
+  if (row.symbol && meta.symbol && norm(row.symbol) !== norm(meta.symbol)) out.push(`symbol ${meta.symbol} reported for the address, ${row.symbol} in the source`);
+  if (row.name && meta.name && !norm(meta.name).includes(norm(row.name)) && !norm(row.name).includes(norm(meta.name))) out.push(`name ${meta.name} reported for the address, ${row.name} in the source`);
   const type = (meta.type ?? "").toUpperCase();
   if (isNftRole(row.role) && type === "ERC-20") out.push("mapped as an NFT collection but Blockscout reports ERC-20");
   if (isFungibleRole(row.role) && (type === "ERC-721" || type === "ERC-1155")) out.push(`mapped as a token but Blockscout reports ${type}`);

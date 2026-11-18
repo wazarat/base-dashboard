@@ -7,10 +7,13 @@ import { isDexTradedRole, isFungibleRole, isNftRole } from "./contract-roles";
 import { addDays, type DateStr } from "./dates";
 import type { StablecoinRecord, TokenDexRecord, TokenMetaRecord, TokenSnapRow } from "./history-types";
 import { sumWindow, valueAt } from "./live";
+import { CHAIN } from "./chain";
 
-export const BLOCKSCOUT_TOKEN = "https://robinhoodchain.blockscout.com/token/";
+export const BLOCKSCOUT_TOKEN = `${CHAIN.explorer}/token/`;
 export const LLAMA_STABLECOINS_CHAIN = "https://defillama.com/stablecoins/base";
-export const GECKO_TOKEN = "https://www.geckoterminal.com/robinhood/tokens/";
+export const GECKO_TOKEN = CHAIN.geckoTokenPage;
+/** Where holder counts come from: keyed Blockscout needs a paid plan on Base, so GeckoTerminal fills in. */
+const holderSource = (address: string) => (CHAIN.blockscoutFree ? { label: "Blockscout", url: `${BLOCKSCOUT_TOKEN}${address}` } : { label: "GeckoTerminal", url: `${GECKO_TOKEN}${address}` });
 /** Transfers counted page by page for the 30-day window stop here; the NFT rule needs 100. */
 export const RECENT_TRANSFER_CAP = 100;
 
@@ -92,7 +95,7 @@ export function computeOnchain(contracts: OnchainContract[], stables: Stablecoin
     if (d && (!asOf || d > asOf)) asOf = d;
   };
 
-  // Stablecoins: supply on the chain from DefiLlama, holders from Blockscout when the address is mapped.
+  // Stablecoins: supply on the chain from DefiLlama, holders from the holder source when the address is mapped.
   const stableUsd: Array<number | null> = [];
   for (const s of stables) {
     const coin = store.coins[s.llamaId];
@@ -102,21 +105,21 @@ export function computeOnchain(contracts: OnchainContract[], stables: Stablecoin
     if (snap) seen(snap[0]);
     stableUsd.push(usd);
     const sources = [{ label: "DefiLlama", url: LLAMA_STABLECOINS_CHAIN }];
-    if (s.address) sources.push({ label: "Blockscout", url: `${BLOCKSCOUT_TOKEN}${s.address}` });
+    if (s.address) sources.push(holderSource(s.address));
     signals.push({ kind: "stablecoin", symbol: s.symbol, usd, holders: snap?.[1] ?? null, transfers30d: null, address: s.address, sources });
   }
 
-  // RWA tokens: supply times price, both from Blockscout.
+  // RWA tokens: supply times price, both from the holder source.
   const rwaUsd: Array<number | null> = [];
   for (const c of contracts.filter((x) => x.role === "rwa-token")) {
     const snap = latest(store.snaps[c.address], end);
     if (snap) seen(snap[0]);
     const usd = snap && snap[2] !== null && snap[3] !== null ? snap[2] * snap[3] : null;
     rwaUsd.push(usd);
-    signals.push({ kind: "rwa", symbol: symOf(c, store), usd, holders: snap?.[1] ?? null, transfers30d: null, address: c.address, sources: [{ label: "Blockscout", url: `${BLOCKSCOUT_TOKEN}${c.address}` }] });
+    signals.push({ kind: "rwa", symbol: symOf(c, store), usd, holders: snap?.[1] ?? null, transfers30d: null, address: c.address, sources: [holderSource(c.address)] });
   }
 
-  // Project tokens: 30-day DEX volume and liquidity on network robinhood (GeckoTerminal), holders from Blockscout.
+  // Project tokens: 30-day DEX volume and liquidity on network base (GeckoTerminal), holders from the holder source.
   const vols: Array<number | null> = [];
   const liqs: Array<number | null> = [];
   for (const c of contracts.filter((x) => isDexTradedRole(x.role))) {
@@ -129,7 +132,7 @@ export function computeOnchain(contracts: OnchainContract[], stables: Stablecoin
     vols.push(vol);
     liqs.push(liq ? liq[1] : null);
     if (vol === null && !snap) continue;
-    signals.push({ kind: "token", symbol: symOf(c, store), usd: vol, holders: snap?.[1] ?? null, transfers30d: null, address: c.address, sources: [{ label: "GeckoTerminal", url: `${GECKO_TOKEN}${c.address}` }, { label: "Blockscout", url: `${BLOCKSCOUT_TOKEN}${c.address}` }] });
+    signals.push({ kind: "token", symbol: symOf(c, store), usd: vol, holders: snap?.[1] ?? null, transfers30d: null, address: c.address, sources: CHAIN.blockscoutFree ? [{ label: "GeckoTerminal", url: `${GECKO_TOKEN}${c.address}` }, holderSource(c.address)] : [{ label: "GeckoTerminal", url: `${GECKO_TOKEN}${c.address}` }] });
   }
 
   // NFT collections: holders and 30-day transfers from Blockscout.

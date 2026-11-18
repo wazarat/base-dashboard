@@ -66,7 +66,7 @@ export function Methodology() {
             <li key={l}>{l}</li>
           ))}
         </ul>
-        <p>Stablecoin supply comes from DefiLlama&rsquo;s stablecoin data for Base, token volume and liquidity from GeckoTerminal on the base network only, and holders and transfers from Blockscout. Token addresses are mapped only from the issuer&rsquo;s own docs or site, DefiLlama or the project&rsquo;s own channels, never by name, and every build checks each address&rsquo;s name and decimals against its source. These figures stay apart from TVL, volume, fees and revenue, so nothing is counted twice.</p>
+        <p>Stablecoin supply comes from DefiLlama&rsquo;s stablecoin data for Base, token volume, liquidity and holder counts from GeckoTerminal on the base network only. Transfer counts are not tracked, since Blockscout needs a paid plan for Base. Token addresses are mapped only from the issuer&rsquo;s own docs or site, DefiLlama or the project&rsquo;s own channels, never by name, and every build checks each address&rsquo;s name and decimals against its source. These figures stay apart from TVL, volume, fees and revenue, so nothing is counted twice.</p>
       </Block>
 
       <Block title="Sector metrics">

@@ -12,7 +12,14 @@ export const CHAIN = {
   geckoNetwork: "base",
   morphoChainId: 8453,
   blockscoutGateway: "https://api.blockscout.com/8453/api/v2",
+  /**
+   * Blockscout lists Base as a featured chain, so its gateway answers HTTP 402 on a free key
+   * ("requires one of the following plans: Builder, Business, Pro", checked Nov 18 2026).
+   * While false the Blockscout sources skip without calling, and holders come from GeckoTerminal.
+   */
+  blockscoutFree: false,
   explorer: "https://base.blockscout.com",
+  geckoTokenPage: "https://www.geckoterminal.com/base/tokens/",
   growthepieKey: "base",
   nativeLabel: "Base native",
   /** Mainnet launch, Aug 9 2023. Chain history before it is left off charts. */
